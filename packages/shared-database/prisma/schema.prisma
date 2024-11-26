@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/shared-database/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("SHARED_DATABASE_URL")
+}
+
+model session {
+  id                     String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tokenIdentifier        String   @db.VarChar(40)
+  refreshTokenIdentifier String   @db.VarChar(40)
+  tenantId               String   @db.Uuid
+  tenant                 tenant   @relation(fields: [tenantId], references: [id])
+  userId                 String   @db.Uuid
+  user                   user     @relation(fields: [userId], references: [id])
+  createdAt              DateTime @default(now()) @db.Timestamp(6)
+
+  @@index([tokenIdentifier], name: "session_token_identifier_index")
+}
+
+model session_challenge {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sessionIdentifier String   @db.VarChar(40)
+  tenantId          String   @db.Uuid
+  tenant            tenant   @relation(fields: [tenantId], references: [id])
+  userId            String   @db.Uuid
+  user              user     @relation(fields: [userId], references: [id])
+  createdAt         DateTime @default(now()) @db.Timestamp(6)
+
+  @@index([sessionIdentifier], name: "session_challenge_session_identifier_index")
+}
+
+model tenant {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code           String    @unique @db.VarChar(30)
+  name           String    @db.VarChar(100)
+  description    String?   @db.Text
+  apikey         String    @db.VarChar(64)
+  availableUntil DateTime? @db.Timestamp(6)
+  createdAt      DateTime  @default(now()) @db.Timestamp(6)
+
+  tenantUser        tenant_user[]
+  session           session[]
+  session_challenge session_challenge[]
+}
+
+model user {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String   @db.VarChar(100)
+  email     String   @unique @db.VarChar(100)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+
+  tenantUser        tenant_user[]
+  session           session[]
+  session_challenge session_challenge[]
+}
+
+model tenant_user {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String   @db.Uuid
+  userId    String   @db.Uuid
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+
+  tenant tenant @relation(fields: [tenantId], references: [id])
+  user   user   @relation(fields: [userId], references: [id])
+
+  @@unique([tenantId, userId])
+}

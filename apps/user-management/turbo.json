@@ -1,0 +1,21 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "lint": {},
+    "dev": {
+      "inputs": [".env"],
+      "cache": false,
+      "persistent": true
+    },
+    "dev:api": {
+      "inputs": [".env"],
+      "cache": false,
+      "persistent": true
+    },
+    "dev:app": {
+      "inputs": [".env"],
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

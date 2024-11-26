@@ -1,0 +1,53 @@
+version: "3"
+
+tasks:
+  # docker commands
+  docker.up:
+    desc: "Starts the docker containers"
+    aliases:
+      - up
+    cmds:
+      - docker compose up -d
+  docker.down:
+    desc: "Stops the docker containers"
+    aliases:
+      - down
+    cmds:
+      - docker compose down
+
+  # setup commands
+  setup:
+    desc: "Setup the project"
+    cmds:
+      - pnpm install
+      - pnpm prisma:generate
+      - task: setup.envs
+      - task: docker.up
+      - task: setup.minio
+      - pnpm db:sync
+  setup.envs:
+    desc: Configure envs in all projects
+    cmds:
+      - for: ["background-check", "callback", "datasources", "document-examination", "liveness", "ocr", "user-management", "hub"]
+        cmd: |
+          cp ./apps/{{.ITEM}}/.env.sample ./apps/{{.ITEM}}/.env
+      - for: ["proxy-helper"]
+        cmd: |
+          cp ./dev-tools/{{.ITEM}}/.env.sample ./dev-tools/{{.ITEM}}/.env
+      - for: ["shared-database"]
+        cmd: |
+          cp ./packages/{{.ITEM}}/.env.sample ./packages/{{.ITEM}}/.env
+  setup.minio:
+    desc: Configure minio in all projects
+    cmds:
+      - cmd: sudo mkdir "{{.VOLUME_PATH}}/biometric-validation-bucket"
+        ignore_error: true
+      - cmd: sudo mkdir "{{.VOLUME_PATH}}/document-examination-bucket"
+        ignore_error: true
+      - cmd: sudo mkdir "{{.VOLUME_PATH}}/liveness-bucket"
+        ignore_error: true
+      - cmd: sudo mkdir "{{.VOLUME_PATH}}/ocr-bucket"
+        ignore_error: true
+    vars:
+      VOLUME_PATH:
+        sh: docker volume inspect --format=\{\{.Mountpoint\}\} services_minio-data

@@ -1,0 +1,37 @@
+{
+  "name": "@solutions/auth",
+  "description": "Pacote responsável por toda a parte de autenticação, autorização e permissionamento da plataforma",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run --silent",
+    "test:watch": "vitest --silent",
+    "test:unit": "vitest run .spec.ts --silent",
+    "test:unit:watch": "vitest .spec.ts --silent",
+    "test:integration": "vitest run .test.ts --silent",
+    "test:integration:watch": "vitest .test.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "pnpm clean:node_modules",
+    "clean:node_modules": "rimraf node_modules"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.614.0",
+    "@solutions/core": "workspace:*",
+    "@solutions/logger": "workspace:*",
+    "amazon-user-pool-srp-client": "^1.0.4",
+    "aws-jwt-verify": "^4.0.1",
+    "dotenv": "^16.3.1",
+    "reflect-metadata": "^0.2.1",
+    "tsyringe": "^4.8.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@solutions/shared-database": "workspace:*",
+    "@solutions/typescript-config": "workspace:*",
+    "@types/node": "^20.5.1",
+    "rimraf": "^5.0.7",
+    "typescript": "^5.1.6",
+    "vitest": "^0.34.5"
+  }
+}
