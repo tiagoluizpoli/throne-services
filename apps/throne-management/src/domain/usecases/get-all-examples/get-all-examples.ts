@@ -1,7 +1,6 @@
-import type { UnexpectedError } from '../errors'
-
 import type { Either } from '@/domain/core'
 import type { Example } from '@/domain/entities'
+import type { UnexpectedError } from '@solutions/core/src/domain/errors'
 
 export interface GetAllExamplesParams {
   tenantCode: string

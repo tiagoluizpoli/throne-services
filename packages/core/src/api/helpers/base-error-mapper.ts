@@ -1,4 +1,4 @@
-import type { UseCaseError } from '@solutions/core/domain'
+import type { UseCaseError } from '../../domain'
 import { serverError } from './http-helper'
 
 export const baseErrorMapper: Record<string, any> = {

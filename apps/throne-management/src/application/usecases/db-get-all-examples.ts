@@ -5,10 +5,10 @@ import {
   type GetAllExamplesParams,
   type GetAllExamplesPossibleErrors,
   type GetAllExamplesResult,
-  UnexpectedError,
   left,
   right,
 } from '@/domain'
+import { UnexpectedError } from '@solutions/core/domain/errors'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

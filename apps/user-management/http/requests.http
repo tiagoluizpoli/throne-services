@@ -56,7 +56,7 @@ Content-Type: application/json
 {
   "username": "tiago.poli@stoneage.com.br",
   "password": "123@Mudar",
-  "tenant": "seuaciuc"
+  "tenant": "stoneage"
 }
 ###
 POST http://localhost:9001/api/auth/signin

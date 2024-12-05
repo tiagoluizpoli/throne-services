@@ -6,12 +6,12 @@ import {
   MockAuthentication,
 } from '@solutions/auth'
 import {
+  DrizzleSessionChallengeRepository,
+  DrizzleSessionRepository,
+  DrizzleUsersRepository,
   InMemorySessionChallengeRepository,
   InMemorySessionRepository,
   InMemoryUsersRepository,
-  PrismaSessionChallengeRepository,
-  PrismaSessionRepository,
-  PrismaUsersRepository,
   type SessionChallengeRepository,
   type SessionRepository,
   type UsersRepository,
@@ -39,11 +39,11 @@ export const registerAuthenticationInjections = (env: string) => {
 
 export const registerRepositoryInjections = (env: string) => {
   if (env === 'prod') {
-    container.register<UsersRepository>(infraestructure.usersRepository, PrismaUsersRepository)
-    container.register<SessionRepository>(infraestructure.sessionRepository, PrismaSessionRepository)
+    container.register<UsersRepository>(infraestructure.usersRepository, DrizzleUsersRepository)
+    container.register<SessionRepository>(infraestructure.sessionRepository, DrizzleSessionRepository)
     container.register<SessionChallengeRepository>(
       infraestructure.sessionChallengeRepository,
-      PrismaSessionChallengeRepository,
+      DrizzleSessionChallengeRepository,
     )
     console.log('prod infra registred: ', env)
   } else {

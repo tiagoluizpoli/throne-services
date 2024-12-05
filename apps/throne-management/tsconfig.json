@@ -1,7 +1,7 @@
 {
-  "extends": "@solutions/typescript-config/base.json",
+  "extends": "@solutions/typescript-config/nodejs.json",
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": "dist/src",
     "baseUrl": "./",
     "types": ["vitest/globals"],
     "paths": {
@@ -9,6 +9,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "tests", "prisma", "commitlint.config.js", ".eslintrc.js", "vitest.config.ts"],
+  "include": ["src", "tests", "prisma", "commitlint.config.js", "vitest.config.ts", "../../packages/auth/src/@types"],
   "exclude": []
 }

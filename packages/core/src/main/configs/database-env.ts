@@ -1,10 +1,25 @@
-export const databaseEnv = () =>
-  ({
+import { z } from 'zod'
+
+const databaseSchema = z.object({
+  database: z.object({
+    url: z.string().min(1),
+  }),
+})
+
+type DatabaseEnv = z.infer<typeof databaseSchema>
+
+export const databaseEnv = (): DatabaseEnv => {
+  const dbEnvData: DatabaseEnv = {
     database: {
-      host: process.env.PG_HOST,
-      port: Number.parseInt(process.env.PG_PORT ?? '') || 5432,
-      user: process.env.PG_USER,
-      password: process.env.PG_PASSWORD,
-      database: process.env.PG_DATABASE,
+      url: process.env.DATABASE_URL ?? '',
     },
-  }) as const
+  }
+
+  const result = databaseSchema.safeParse(dbEnvData)
+
+  if (!result.success) {
+    throw new Error('Invalid database connection env')
+  }
+
+  return result.data
+}

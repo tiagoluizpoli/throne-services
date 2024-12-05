@@ -49,6 +49,9 @@
     "db:seed": {
       "cache": false
     },
+    "db:drizzle:sync": {
+      "cache": false
+    },
     "db:sync": {
       "persistent": true,
       "cache": false

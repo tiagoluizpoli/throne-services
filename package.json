@@ -23,6 +23,7 @@
     "clean:build": "turbo clean:build",
     "clean:node_modules": "turbo clean:node_modules",
     "prisma:generate": "turbo prisma:generate",
+    "db:drizzle:sync": "turbo db:drizzle:sync",
     "db:migrate:dev": "turbo db:migrate:dev",
     "db:seed": "turbo db:seed",
     "db:sync": "turbo db:sync",

@@ -1,7 +1,7 @@
+import { badRequest } from '@solutions/core/api'
 import type { HttpResponse } from '../contracts'
 
 import { errorMapper } from './error-mapper'
-import { badRequest } from './httpHelper'
 
 import type { UseCaseError } from '@/domain'
 
