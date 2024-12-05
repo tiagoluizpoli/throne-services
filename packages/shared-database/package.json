@@ -16,11 +16,10 @@
     "typecheck": "tsc --noEmit",
     "clean": "pnpm clean:node_modules",
     "clean:node_modules": "rimraf node_modules",
-    "prisma:generate": "prisma generate",
-    "db:drizzle:sync": "drizzle-kit generate && drizzle-kit migrate",
-    "db:migrate:dev": "prisma migrate dev",
-    "db:seed": "prisma db seed",
-    "db:sync": "pnpm prisma:generate && pnpm db:migrate:dev && pnpm db:seed"
+    "db:gen": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "",
+    "db:sync": "drizzle-kit generate && drizzle-kit migrate"
   },
   "dependencies": {
     "@prisma/client": "^5.3.1",

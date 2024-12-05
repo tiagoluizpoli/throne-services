@@ -41,15 +41,12 @@
     },
     "clean:build": {},
     "clean:node_modules": {},
-    "prisma:generate": {
+    "db:gen": {
       "persistent": true,
       "cache": false
     },
-    "db:migrate:dev": {},
+    "db:migrate": {},
     "db:seed": {
-      "cache": false
-    },
-    "db:drizzle:sync": {
       "cache": false
     },
     "db:sync": {

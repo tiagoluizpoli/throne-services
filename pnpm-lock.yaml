@@ -38,9 +38,6 @@ importers:
 
   apps/throne-management:
     dependencies:
-      '@prisma/client':
-        specifier: ^5.3.1
-        version: 5.15.0(prisma@5.15.0)
       '@solutions/auth':
         specifier: workspace:*
         version: link:../../packages/auth
@@ -50,9 +47,6 @@ importers:
       '@solutions/logger':
         specifier: workspace:*
         version: link:../../packages/logger
-      '@solutions/shared-database':
-        specifier: workspace:*
-        version: link:../../packages/shared-database
       '@types/uuid':
         specifier: ^9.0.4
         version: 9.0.8
