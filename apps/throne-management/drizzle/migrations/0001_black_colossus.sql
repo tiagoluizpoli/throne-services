@@ -1,0 +1,1 @@
+ALTER TABLE "mapping" ADD CONSTRAINT "unique_integrationId_type" UNIQUE("integrationId","type");
