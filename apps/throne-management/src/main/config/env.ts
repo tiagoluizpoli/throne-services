@@ -1,18 +1,29 @@
 import { config } from 'dotenv'
+import { z } from 'zod'
 
 config({ override: true })
 
-export const env = {
+const envSchema = z.object({
+  baseConfig: z.object({
+    environment: z.string(),
+    logLevel: z.string(),
+    port: z.number(),
+  }),
+  database: z.object({
+    url: z.string(),
+  }),
+})
+
+type Env = z.infer<typeof envSchema>
+export const envData: Env = {
   baseConfig: {
-    environment: process.env.ENVIRONMENT ?? 'local',
-    logLevel: process.env.LOG_LEVEL ?? 'prod',
-    port: process.env.PORT ?? 8001,
+    environment: process.env.NODE_ENV ?? '',
+    logLevel: process.env.LOG_LEVEL ?? '',
+    port: Number(process.env.PORT) ?? 8001,
   },
   database: {
-    host: process.env.PG_HOST,
-    port: Number.parseInt(process.env.PG_PORT ?? '') || 5432,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: process.env.PG_DATABASE,
+    url: process.env.DATABASE_URL ?? '',
   },
 } as const
+
+export const env = envSchema.parse(envData)

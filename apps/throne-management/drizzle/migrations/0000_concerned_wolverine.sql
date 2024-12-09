@@ -1,3 +1,4 @@
+CREATE TYPE "public"."Method" AS ENUM('GET', 'POST', 'PUT', 'DELETE');--> statement-breakpoint
 CREATE TYPE "public"."ExecutionStatus" AS ENUM('processing', 'success', 'failed');--> statement-breakpoint
 CREATE TYPE "public"."MappingType" AS ENUM('input', 'output');--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "execution" (
@@ -15,8 +16,8 @@ CREATE TABLE IF NOT EXISTS "integration" (
 	"code" varchar(128) NOT NULL,
 	"name" varchar(128) NOT NULL,
 	"uniqueCode" varchar(256),
-	"sourceMethod" varchar(28),
-	"targetMethod" varchar(28),
+	"sourceMethod" "Method" DEFAULT 'GET' NOT NULL,
+	"targetMethod" "Method" DEFAULT 'GET' NOT NULL,
 	"targetUrl" varchar(256),
 	"description" text,
 	"createdAt" timestamp (3) DEFAULT now() NOT NULL

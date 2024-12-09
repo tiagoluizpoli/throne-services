@@ -1,5 +1,5 @@
 {
-  "id": "cd9f2d3c-db96-4510-938c-b99a5ad59706",
+  "id": "cc0c77dd-db7b-4e99-89b6-75dafda338e6",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -104,15 +104,19 @@
         },
         "sourceMethod": {
           "name": "sourceMethod",
-          "type": "varchar(28)",
+          "type": "Method",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'GET'"
         },
         "targetMethod": {
           "name": "targetMethod",
-          "type": "varchar(28)",
+          "type": "Method",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'GET'"
         },
         "targetUrl": {
           "name": "targetUrl",
@@ -352,6 +356,11 @@
     }
   },
   "enums": {
+    "public.Method": {
+      "name": "Method",
+      "schema": "public",
+      "values": ["GET", "POST", "PUT", "DELETE"]
+    },
     "public.ExecutionStatus": {
       "name": "ExecutionStatus",
       "schema": "public",

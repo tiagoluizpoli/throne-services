@@ -12,6 +12,8 @@ export const tenantTable = pgTable('tenant', {
   createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
 })
 
+export const MethodEnum = pgEnum('Method', ['GET', 'POST', 'PUT', 'DELETE'])
+
 export const integrationTable = pgTable('integration', {
   id: uuid('id').notNull().primaryKey().defaultRandom(),
   tenantId: uuid('tenantId')
@@ -26,12 +28,8 @@ export const integrationTable = pgTable('integration', {
   uniqueCode: varchar('uniqueCode', {
     length: 256,
   }),
-  sourceMethod: varchar('sourceMethod', {
-    length: 28,
-  }),
-  targetMethod: varchar('targetMethod', {
-    length: 28,
-  }),
+  sourceMethod: MethodEnum('sourceMethod').default('GET').notNull(),
+  targetMethod: MethodEnum('targetMethod').default('GET').notNull(),
   targetUrl: varchar('targetUrl', {
     length: 256,
   }),
