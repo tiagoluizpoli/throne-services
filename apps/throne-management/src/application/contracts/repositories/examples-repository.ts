@@ -1,4 +1,4 @@
-import type { Example } from '@/domain/entities'
+import type { Integration } from '@/domain/entities'
 
 export interface ExamplesRepositoryGetAllParams {
   tenantCode: string
@@ -9,7 +9,7 @@ export interface ExamplesRepositoryGetAllParams {
   orderDirection: 'desc' | 'asc'
 }
 
-export type ExamplesRepositoryGetAllResult = Example[]
+export type ExamplesRepositoryGetAllResult = Integration[]
 
 export interface ExamplesRepositoryCountParams {
   tenantCode: string
@@ -24,6 +24,6 @@ export interface ExamplesRepositoryGetByIdParams {
 export interface ExamplesRepository {
   getAll: (params: ExamplesRepositoryGetAllParams) => Promise<ExamplesRepositoryGetAllResult>
   count: (params: ExamplesRepositoryCountParams) => Promise<number>
-  getById: (params: ExamplesRepositoryGetByIdParams) => Promise<Example | undefined>
-  save: (example: Example) => Promise<void>
+  getById: (params: ExamplesRepositoryGetByIdParams) => Promise<Integration | undefined>
+  save: (example: Integration) => Promise<void>
 }

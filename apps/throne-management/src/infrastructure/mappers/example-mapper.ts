@@ -1,6 +1,6 @@
 import type { example, tenant } from '@prisma/.prisma/client'
 
-import { Example } from '@/domain/entities'
+import { Integration } from '@/domain/entities'
 import { TenantMapper } from '@/infrastructure/mappers/tenant-mapper'
 
 type ExamplePersistence = example & {
@@ -8,8 +8,8 @@ type ExamplePersistence = example & {
 }
 
 export class ExampleMapper {
-  static toDomain(raw: ExamplePersistence): Example {
-    return Example.create(
+  static toDomain(raw: ExamplePersistence): Integration {
+    return Integration.create(
       {
         tenantCode: raw.tenant?.code ?? undefined,
         tenant: raw.tenant ? TenantMapper.toDomain(raw.tenant) : undefined,

@@ -1,2 +1,4 @@
 export * from './tenant'
-export * from './example'
+export * from './integration'
+export * from './schema'
+export * from './mapping'
