@@ -1,0 +1,29 @@
+✔ write tests.todo @done(24-07-18 10:26)
+  ✔ main @done(24-07-18 10:26)
+    ✔ controller-authorization-decorator @done(24-07-18 10:21)
+  ✔ infrastructure @done(24-07-18 10:26)
+    ✔ token-verifier @done(24-07-18 10:26)
+☐ write tests
+  ☐ main
+    ✔ controller-authorization-decorator @done(24-07-18 18:23)
+      ✔ create makeSut @done(24-07-18 11:06)
+      ✔ prepare mock @done(24-07-18 18:23)
+        ✔ mock tenant @done(24-07-18 11:08)
+        ✔ mock user @done(24-07-18 11:08)
+        ✔ mock session @done(24-07-18 18:23)
+        ✔ mock tokens @done(24-07-18 18:23)
+  ☐ infrastructure
+☐ split decorator logic into separate files for more readability
+✔ reorganize files @done(24-07-18 12:08)
+✔ Move authentication logic from user-management to auth @done(24-07-19 11:37)
+✔ merge authentication contract with token-verifier contract @done(24-07-19 12:44)
+
+✔ Não precisa de try/catch no decorator, pois o erro é tratado no decorator controller-error-handler @done(24-07-19 08:15)
+✔ Renomear authorizationtoken -> authorizationToken (camelCase) @done(24-07-19 08:18)
+✔ Não deveria utilizar o either no token-verifier?? @done(24-07-19 09:19)
+✔ Retirar propriedades não utilizadas do session-repository @done(24-07-19 08:21)
+✔ Session repository não deveria incluir o user no retorno do getByTokenIdentifier?? @done(24-07-19 08:36)
+☐ Não deveria utilizar o logger? (em CognitoTokenVerifier e ControllerAuthorizationDecorator)
+✔ Se vamos sempre usar o id, não precisamos da opção tokenUser no TokenVerifierParams @done(24-07-19 09:05)
+✔ O mesmo do anterior vale para groups @done(24-07-19 09:05)
+✔ Pacote não precisar de path, por exemplo, deveria poder importar de @solutions/auth e não de @solutions/auth/repository @done(24-07-19 09:20)

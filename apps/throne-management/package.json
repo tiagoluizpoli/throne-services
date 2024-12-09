@@ -1,0 +1,67 @@
+{
+  "name": "throne-management",
+  "version": "1.2.3",
+  "description": "",
+  "scripts": {
+    "dev": "pnpm dev:api",
+    "dev:api": "tsup src --silent --clean --watch --outDir dist/src --onSuccess \"node dist/src/main/server.js\"",
+    "start": "node dist/src/main/server.js",
+    "build": "tsup src prisma/**/*.ts --clean --outDir dist",
+    "test": "vitest run --silent",
+    "test:watch": "vitest --silent",
+    "test:watch:verbose": "vitest --reporter=verbose",
+    "test:unit": "vitest run .spec.ts --silent",
+    "test:unit:watch": "vitest .spec.ts --silent",
+    "typecheck": "tsc --noEmit",
+    "clean": "pnpm clean:build && pnpm clean:node_modules",
+    "clean:build": "rimraf build",
+    "clean:node_modules": "rimraf node_modules",
+    "db:gen": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "",
+    "db:sync": "drizzle-kit generate && drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@solutions/core": "workspace:*",
+    "@solutions/auth": "workspace:*",
+    "@solutions/logger": "workspace:*",
+    "@types/uuid": "^9.0.4",
+    "aws-sdk": "^2.1462.0",
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.36.4",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "pg": "^8.13.1",
+    "postgres": "^3.3.5",
+    "reflect-metadata": "^0.2.1",
+    "tsyringe": "^4.8.0",
+    "uuid": "^9.0.1",
+    "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "@solutions/typescript-config": "workspace:*",
+    "@types/cors": "^2.8.14",
+    "@types/express": "^4.17.17",
+    "@types/morgan": "^1.9.5",
+    "@types/node": "^20.5.1",
+    "@types/pg": "^8.11.10",
+    "drizzle-kit": "^0.28.1",
+    "drizzle-prisma-generator": "^0.1.7",
+    "prisma": "^5.3.1",
+    "rimraf": "^5.0.7",
+    "tsup": "^8.0.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.1.6",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^0.34.5"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "tsup": {
+    "noExternal": ["@solutions/core", "@solutions/shared-database", "@solutions/logger", "@solutions/auth"]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node-terminal",
+      "request": "launch",
+      "name": "debug ocr",
+      "command": "pnpm dev:app",
+      "cwd": "${workspaceFolder}/apps/ocr",
+      "autoAttachChildProcesses": true,
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/apps/ocr/dist/**/*.js",
+        "${workspaceFolder}/apps/ocr/src/**/*.ts",
+        "!**/node_modules/**"
+      ]
+    },
+    {
+      "type": "node-terminal",
+      "request": "launch",
+      "name": "debug proxy-helper",
+      "command": "pnpm dev:api",
+      "cwd": "${workspaceFolder}/dev-tools/proxy-helper",
+      "autoAttachChildProcesses": true,
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/dev-tools/proxy-helper/dist/**/*.js",
+        "${workspaceFolder}/dev-tools/proxy-helper/src/**/*.ts",
+        "!**/node_modules/**"
+      ]
+    }
+  ]
+}

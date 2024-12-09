@@ -1,0 +1,5 @@
+#!/bin/sh
+
+(cd apps/{{ kebabCase name }} && node_modules/.bin/prisma generate)
+(cd apps/{{ kebabCase name }} && node_modules/.bin/prisma migrate deploy)
+(cd apps/{{ kebabCase name }} && node dist/src/main/server.js)

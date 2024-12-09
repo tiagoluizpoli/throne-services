@@ -1,0 +1,35 @@
+{
+  "editor.rulers": [120],
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "biomejs.biome",
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "livenessUrl": "http://localhost:8003/api/v1"
+    }
+  },
+  "favorites.resources": [
+    {
+      "filePath": "packages/core",
+      "group": "Default"
+    }
+  ],
+  "favorites.groups": ["Default", "teste"],
+  "favorites.currentGroup": "Default",
+  "favorites.sortOrder": "ASC",
+  "conventionalCommits.scopes": ["user-management", "packages"],
+  "conventionalCommits.gitmoji": false,
+  "conventionalCommits.promptFooter": false,
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  }
+}

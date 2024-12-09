@@ -1,0 +1,39 @@
+stages:
+  - build
+  - push
+  - deploy
+
+user_management:build_docker:api:
+  extends:
+    - .build_docker:template
+  variables:
+    IMAGE_PATH: /api
+    FOLDER: $CI_PROJECT_DIR
+    DOCKERFILE: apps/user-management/Dockerfile
+
+.push_aws:template:
+  extends:
+    - .retag_image:template
+  variables:
+    PUSH_REGISTRY_USER: AWS
+    PULL_TAG: ${VERSION}
+    PUSH_TAG: ${VERSION}
+  parallel:
+    matrix:
+      - PULL_IMAGE_PATH: /api
+        PUSH_IMAGE_PATH: /stoneage/user-management/api
+  needs:
+    - job: set_variables_env
+    - job: user_management:build_docker:api
+      optional: true
+
+user_management:terraform_module:
+  extends:
+    - .terraform_module:template
+  needs:
+    - job: set_variables_env
+  variables:
+    TERRAFORM_MODULE_NAME: user-management
+    TERRAFORM_MODULE_SYSTEM: solutions
+    TERRAFORM_MODULE_VERSION: ${VERSION}
+    TERRAFORM_MODULE_DIR: ${CI_PROJECT_DIR}/apps/user-management/terraform

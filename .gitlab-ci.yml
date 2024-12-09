@@ -1,0 +1,79 @@
+stages:
+  - build
+  - push
+  - deploy
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^background-check@/
+    - if: $CI_COMMIT_TAG =~ /^callback@/
+    - if: $CI_COMMIT_TAG =~ /^datasources@/
+    - if: $CI_COMMIT_TAG =~ /^document-examination@/
+    - if: $CI_COMMIT_TAG =~ /^liveness@/
+    - if: $CI_COMMIT_TAG =~ /^ocr@/
+    - if: $CI_COMMIT_TAG =~ /^user-management@/
+    - if: $CI_COMMIT_TAG =~ /^hub@/
+
+
+include:
+  - project: "dev/devops/gitlab-ci-templates"
+    ref: v2
+    file:
+      - "templates/pipelines/base-pipeline-template.gitlab-ci.yml"
+    rules:
+      - if: $CI_COMMIT_TAG =~ /^background-check@/
+      - if: $CI_COMMIT_TAG =~ /^callback@/
+      - if: $CI_COMMIT_TAG =~ /^datasources@/
+      - if: $CI_COMMIT_TAG =~ /^document-examination@/
+      - if: $CI_COMMIT_TAG =~ /^liveness@/
+      - if: $CI_COMMIT_TAG =~ /^ocr@/
+      - if: $CI_COMMIT_TAG =~ /^user-management@/
+      - if: $CI_COMMIT_TAG =~ /^hub@/
+  - project: "dev/devops/gitlab-ci-templates"
+    ref: v2
+    file:
+      - "templates/pipelines/push-aws.gitlab-ci.yml"
+    rules:
+      - if: $CI_COMMIT_TAG =~ /^background-check@/
+      - if: $CI_COMMIT_TAG =~ /^callback@/
+      - if: $CI_COMMIT_TAG =~ /^datasources@/
+      - if: $CI_COMMIT_TAG =~ /^document-examination@/
+      - if: $CI_COMMIT_TAG =~ /^liveness@/
+      - if: $CI_COMMIT_TAG =~ /^ocr@/
+      - if: $CI_COMMIT_TAG =~ /^user-management@/
+
+  - local: "/apps/background-check/.gitlab-ci.yml"
+    rules:
+      - if: $CI_COMMIT_TAG =~ /^background-check@/
+  - local: "/apps/callback/.gitlab-ci.yml"
+    rules:
+      - if: $CI_COMMIT_TAG =~ /^callback@/
+  - local: "/apps/datasources/.gitlab-ci.yml"
+    rules:
+      - if: $CI_COMMIT_TAG =~ /^datasources@/
+  - local: "/apps/document-examination/.gitlab-ci.yml"
+    rules:
+      - if: $CI_COMMIT_TAG =~ /^document-examination@/
+  - local: "/apps/liveness/.gitlab-ci.yml"
+    rules:
+      - if: $CI_COMMIT_TAG =~ /^liveness@/
+  - local: "/apps/ocr/.gitlab-ci.yml"
+    rules:
+      - if: $CI_COMMIT_TAG =~ /^ocr@/
+  - local: "/apps/user-management/.gitlab-ci.yml"
+    rules:
+      - if: $CI_COMMIT_TAG =~ /^user-management@/
+  - local: "/apps/hub/.gitlab-ci.yml"
+    rules:
+      - if: $CI_COMMIT_TAG =~ /^hub@/
+
+set_variables_env:
+  stage: .pre
+  script: |
+    echo "SYSTEM=${CI_COMMIT_TAG%@*}" >> build.env
+    echo "VERSION=${CI_COMMIT_TAG#*@}" >> build.env
+    echo "CI_APPLICATION_REPOSITORY=${CI_REGISTRY_IMAGE}" >> build.env
+    echo "CI_APPLICATION_TAG=${CI_COMMIT_TAG#*@}" >> build.env
+  artifacts:
+    reports:
+      dotenv: build.env
