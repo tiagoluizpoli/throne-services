@@ -3,7 +3,9 @@ import type { Integration } from '@/domain'
 import { db } from '@/main/clients'
 import { eq, sql } from 'drizzle-orm'
 import { integrationTable, tenantTable } from 'drizzle/schemas'
+import { injectable } from 'tsyringe'
 
+@injectable()
 export class DrizzleIntegrationRepository implements IntegrationRepository {
   create = async (integration: Integration): Promise<void> => {
     const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, integration.code))})`
