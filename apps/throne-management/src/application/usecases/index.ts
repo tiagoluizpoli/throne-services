@@ -1,1 +1,1 @@
-export * from './db-get-all-examples'
+export type {}
