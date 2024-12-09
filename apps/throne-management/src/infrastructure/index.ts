@@ -1,2 +1,2 @@
 export * from './repositories'
-export * from './mappers'
+export * from './repositories/drizzle/mappers'
