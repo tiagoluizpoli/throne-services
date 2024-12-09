@@ -17,6 +17,14 @@ interface IntegrationProps {
   createdAt: Date
 }
 
+type CreateIntegrationMandatoryProps = Pick<
+  IntegrationProps,
+  'tenantCode' | 'code' | 'name' | 'description' | 'sourceMethod' | 'targetMethod' | 'targetUrl'
+>
+type CreateIntegrationOptionalProps = Partial<Pick<IntegrationProps, 'uniqueCode' | 'createdAt'>>
+
+type CreateIntegrationProps = CreateIntegrationMandatoryProps & CreateIntegrationOptionalProps
+
 export class Integration extends Entity<IntegrationProps> {
   private constructor(props: IntegrationProps, id?: string) {
     super(props, id)
@@ -62,8 +70,15 @@ export class Integration extends Entity<IntegrationProps> {
     return this.props.createdAt
   }
 
-  public static create(props: IntegrationProps, id?: string): Integration {
-    const example = new Integration(props, id)
+  public static create(props: CreateIntegrationProps, id?: string): Integration {
+    const example = new Integration(
+      {
+        ...props,
+        createdAt: props.createdAt ?? new Date(),
+        uniqueCode: props.uniqueCode ?? 'abc',
+      },
+      id,
+    )
     return example
   }
 }

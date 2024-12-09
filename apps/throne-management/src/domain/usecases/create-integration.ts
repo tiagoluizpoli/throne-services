@@ -1,17 +1,18 @@
-import type { UnexpectedError } from '@solutions/core/domain'
+import type { Either, UnexpectedError } from '@solutions/core/domain'
+import type { Method } from '../entities'
 import type { IntegrationAlreadyExistsError } from '../errors'
 
 export type CreateIntegrationParams = {
   name: string
   code: string
   description: string
-  sourceMethod: string
-  targetMethod: string
+  sourceMethod: Method
+  targetMethod: Method
   targetUrl: string
 }
 
 export type CreateIntegrationPossibleErrors = IntegrationAlreadyExistsError | UnexpectedError
 
 export interface CreateIntegration {
-  execute: (params: CreateIntegrationParams) => Promise<void>
+  execute: (params: CreateIntegrationParams) => Promise<Either<CreateIntegrationPossibleErrors, void>>
 }
