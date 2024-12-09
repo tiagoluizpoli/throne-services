@@ -1,4 +1,14 @@
 import { env } from '@/main/config'
 
-const isLocalEnv = env.baseConfig.environment === 'local'
-const isProdEnv = env.baseConfig.environment === 'prod'
+import { registerGlobalInjections } from './global-injections'
+import { registerInfrastructureInjections } from './infrastructure-injections'
+import { injectionTokens } from './injection-tokens'
+
+export const isLocalEnv = env.baseConfig.environment === 'local'
+export const isProdEnv = env.baseConfig.environment === 'prod'
+
+const { global } = injectionTokens
+
+registerGlobalInjections()
+
+registerInfrastructureInjections()
