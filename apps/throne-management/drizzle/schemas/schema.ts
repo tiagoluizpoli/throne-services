@@ -14,28 +14,34 @@ export const tenantTable = pgTable('tenant', {
 
 export const MethodEnum = pgEnum('Method', ['GET', 'POST', 'PUT', 'DELETE'])
 
-export const integrationTable = pgTable('integration', {
-  id: uuid('id').notNull().primaryKey().defaultRandom(),
-  tenantId: uuid('tenantId')
-    .references(() => tenantTable.id)
-    .notNull(),
-  code: varchar('code', {
-    length: 128,
-  }).notNull(),
-  name: varchar('name', {
-    length: 128,
-  }).notNull(),
-  uniqueCode: varchar('uniqueCode', {
-    length: 256,
-  }),
-  sourceMethod: MethodEnum('sourceMethod').default('GET').notNull(),
-  targetMethod: MethodEnum('targetMethod').default('GET').notNull(),
-  targetUrl: varchar('targetUrl', {
-    length: 256,
-  }),
-  description: text('description'),
-  createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
-})
+export const integrationTable = pgTable(
+  'integration',
+  {
+    id: uuid('id').notNull().primaryKey().defaultRandom(),
+    tenantId: uuid('tenantId')
+      .references(() => tenantTable.id)
+      .notNull(),
+    code: varchar('code', {
+      length: 128,
+    }).notNull(),
+    name: varchar('name', {
+      length: 128,
+    }).notNull(),
+    uniqueCode: varchar('uniqueCode', {
+      length: 256,
+    }),
+    sourceMethod: MethodEnum('sourceMethod').default('GET').notNull(),
+    targetMethod: MethodEnum('targetMethod').default('GET').notNull(),
+    targetUrl: varchar('targetUrl', {
+      length: 256,
+    }),
+    description: text('description'),
+    createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
+  },
+  (table) => [
+    unique('unique_integrationCode_tenantCode_sourceMethod_targetMethod_targetUrl').on(table.tenantId, table.code),
+  ],
+)
 
 export const schemaTable = pgTable('schema', {
   id: uuid('id').notNull().primaryKey().defaultRandom(),

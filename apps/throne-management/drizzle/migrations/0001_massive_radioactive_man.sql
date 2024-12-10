@@ -1,0 +1,1 @@
+ALTER TABLE "integration" ADD CONSTRAINT "unique_integrationCode_tenantCode_sourceMethod_targetMethod_targetUrl" UNIQUE("tenantId","code");

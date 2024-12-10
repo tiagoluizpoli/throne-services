@@ -1,0 +1,391 @@
+{
+  "id": "b2ab994a-5728-4551-91fe-a440d711be17",
+  "prevId": "cc0c77dd-db7b-4e99-89b6-75dafda338e6",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.execution": {
+      "name": "execution",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "integrationId": {
+          "name": "integrationId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "executedAt": {
+          "name": "executedAt",
+          "type": "timestamp (3)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "duration": {
+          "name": "duration",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "ExecutionStatus",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'processing'"
+        },
+        "error": {
+          "name": "error",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "execution_integrationId_integration_id_fk": {
+          "name": "execution_integrationId_integration_id_fk",
+          "tableFrom": "execution",
+          "tableTo": "integration",
+          "columnsFrom": ["integrationId"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.integration": {
+      "name": "integration",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenantId": {
+          "name": "tenantId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "name": "code",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "uniqueCode": {
+          "name": "uniqueCode",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sourceMethod": {
+          "name": "sourceMethod",
+          "type": "Method",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'GET'"
+        },
+        "targetMethod": {
+          "name": "targetMethod",
+          "type": "Method",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'GET'"
+        },
+        "targetUrl": {
+          "name": "targetUrl",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp (3)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "integration_tenantId_tenant_id_fk": {
+          "name": "integration_tenantId_tenant_id_fk",
+          "tableFrom": "integration",
+          "tableTo": "tenant",
+          "columnsFrom": ["tenantId"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "unique_integrationCode_tenantCode_sourceMethod_targetMethod_targetUrl": {
+          "name": "unique_integrationCode_tenantCode_sourceMethod_targetMethod_targetUrl",
+          "nullsNotDistinct": false,
+          "columns": ["tenantId", "code"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.mapping": {
+      "name": "mapping",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "integrationId": {
+          "name": "integrationId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "MappingType",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sourceSchemaId": {
+          "name": "sourceSchemaId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "targetSchemaId": {
+          "name": "targetSchemaId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mappedSchema": {
+          "name": "mappedSchema",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp (3)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "mapping_integrationId_integration_id_fk": {
+          "name": "mapping_integrationId_integration_id_fk",
+          "tableFrom": "mapping",
+          "tableTo": "integration",
+          "columnsFrom": ["integrationId"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "mapping_sourceSchemaId_schema_id_fk": {
+          "name": "mapping_sourceSchemaId_schema_id_fk",
+          "tableFrom": "mapping",
+          "tableTo": "schema",
+          "columnsFrom": ["sourceSchemaId"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "mapping_targetSchemaId_schema_id_fk": {
+          "name": "mapping_targetSchemaId_schema_id_fk",
+          "tableFrom": "mapping",
+          "tableTo": "schema",
+          "columnsFrom": ["targetSchemaId"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "unique_integrationId_type": {
+          "name": "unique_integrationId_type",
+          "nullsNotDistinct": false,
+          "columns": ["integrationId", "type"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.schema": {
+      "name": "schema",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "integrationId": {
+          "name": "integrationId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "name": "code",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "schema": {
+          "name": "schema",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp (3)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "schema_integrationId_integration_id_fk": {
+          "name": "schema_integrationId_integration_id_fk",
+          "tableFrom": "schema",
+          "tableTo": "integration",
+          "columnsFrom": ["integrationId"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tenant": {
+      "name": "tenant",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(60)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "name": "code",
+          "type": "varchar(40)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp (3)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.Method": {
+      "name": "Method",
+      "schema": "public",
+      "values": ["GET", "POST", "PUT", "DELETE"]
+    },
+    "public.ExecutionStatus": {
+      "name": "ExecutionStatus",
+      "schema": "public",
+      "values": ["processing", "success", "failed"]
+    },
+    "public.MappingType": {
+      "name": "MappingType",
+      "schema": "public",
+      "values": ["input", "output"]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
