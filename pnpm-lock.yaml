@@ -71,6 +71,12 @@ importers:
       morgan:
         specifier: ^1.10.0
         version: 1.10.0
+      nanoid:
+        specifier: 3.3.4
+        version: 3.3.4
+      nanoid-dictionary:
+        specifier: ^4.3.0
+        version: 4.3.0
       pg:
         specifier: ^8.13.1
         version: 8.13.1
@@ -102,6 +108,9 @@ importers:
       '@types/morgan':
         specifier: ^1.9.5
         version: 1.9.9
+      '@types/nanoid-dictionary':
+        specifier: ^4.2.3
+        version: 4.2.3
       '@types/node':
         specifier: ^20.5.1
         version: 20.14.9
@@ -1733,6 +1742,9 @@ packages:
   '@types/morgan@1.9.9':
     resolution: {integrity: sha512-iRYSDKVaC6FkGSpEVVIvrRGw0DfJMiQzIn3qr2G5B3C//AWkulhXgaBd7tS9/J79GWSYMTHGs7PfI5b3Y8m+RQ==}
 
+  '@types/nanoid-dictionary@4.2.3':
+    resolution: {integrity: sha512-T98Halw1f2aJ802GtCNMHZgqX2q1LX85eMP+K7N+OXSLagdmAzooAEhB565FQXTiCxdF4wNijOBroAQJat4uig==}
+
   '@types/node@20.14.2':
     resolution: {integrity: sha512-xyu6WAMVwv6AKFLB+e/7ySZVr/0zLCzOa7rSpq6jNwpqOrUbcACDWC+53d4n2QHOnDou0fbIsg8wZu/sxrnI4Q==}
 
@@ -3017,6 +3029,9 @@ packages:
 
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
+
+  nanoid-dictionary@4.3.0:
+    resolution: {integrity: sha512-Xw1+/QnRGWO1KJ0rLfU1xR85qXmAHyLbE3TUkklu9gOIDburP6CsUnLmTaNECGpBh5SHb2uPFmx0VT8UPyoeyw==}
 
   nanoid@3.3.4:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
@@ -5476,6 +5491,8 @@ snapshots:
     dependencies:
       '@types/node': 20.14.9
 
+  '@types/nanoid-dictionary@4.2.3': {}
+
   '@types/node@20.14.2':
     dependencies:
       undici-types: 5.26.5
@@ -6835,6 +6852,8 @@ snapshots:
       any-promise: 1.3.0
       object-assign: 4.1.1
       thenify-all: 1.6.0
+
+  nanoid-dictionary@4.3.0: {}
 
   nanoid@3.3.4: {}
 

@@ -3,8 +3,8 @@ Content-Type: application/json
 x-throne-tenant: yeshua
 
 {
-  "name": "Genesis",
-  "code": "genesis",
+  "name": "Batata",
+  "code": "batata",
   "description": "test",
   "sourceMethod": "GET",
   "targetMethod": "GET",

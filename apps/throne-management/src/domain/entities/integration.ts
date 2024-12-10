@@ -1,5 +1,6 @@
 import type { Tenant } from '@/domain/entities'
 import { Entity } from '@solutions/core/domain'
+import { generateUniqueId } from '../helpers'
 
 export const Methods = ['GET', 'POST', 'PUT', 'DELETE'] as const
 export type Method = (typeof Methods)[number]
@@ -75,7 +76,7 @@ export class Integration extends Entity<IntegrationProps> {
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
-        uniqueCode: props.uniqueCode ?? 'abc',
+        uniqueCode: props.uniqueCode ?? generateUniqueId(props.code),
       },
       id,
     )
