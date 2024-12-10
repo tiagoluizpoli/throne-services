@@ -1,5 +1,7 @@
 import { env } from '@/main/config'
 
+import { registerApplicationInjections } from './application-injections'
+import { registerControllerInjections } from './controller-injections'
 import { registerGlobalInjections } from './global-injections'
 import { registerInfrastructureInjections } from './infrastructure-injections'
 import { injectionTokens } from './injection-tokens'
@@ -12,3 +14,7 @@ const { global } = injectionTokens
 registerGlobalInjections()
 
 registerInfrastructureInjections()
+
+registerApplicationInjections()
+
+registerControllerInjections()

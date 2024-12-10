@@ -8,7 +8,7 @@ import { injectable } from 'tsyringe'
 @injectable()
 export class DrizzleIntegrationRepository implements IntegrationRepository {
   create = async (integration: Integration): Promise<void> => {
-    const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, integration.code))})`
+    const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, integration.tenantCode))})`
 
     await db.insert(integrationTable).values({
       id: integration.id,
@@ -16,6 +16,7 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
       name: integration.name,
       code: integration.code,
       description: integration.description,
+      uniqueCode: integration.uniqueCode,
       sourceMethod: integration.sourceMethod,
       targetMethod: integration.targetMethod,
       targetUrl: integration.targetUrl,

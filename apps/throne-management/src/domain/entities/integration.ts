@@ -9,7 +9,7 @@ interface IntegrationProps {
   tenant?: Tenant
   code: string
   name: string
-  description: string
+  description?: string
   uniqueCode: string
   sourceMethod: Method
   targetMethod: Method
@@ -62,7 +62,7 @@ export class Integration extends Entity<IntegrationProps> {
     return this.props.targetUrl
   }
 
-  get description(): string {
+  get description(): string | undefined {
     return this.props.description
   }
 

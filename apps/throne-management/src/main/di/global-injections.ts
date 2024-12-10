@@ -1,5 +1,5 @@
-import { Logger, type LoggerProps } from '@solutions/logger'
-import { container } from 'tsyringe'
+import { type LogTargetProps, Logger, type LoggerProps } from '@solutions/logger'
+import { Lifecycle, container } from 'tsyringe'
 import { injectionTokens } from './injection-tokens'
 
 const { global } = injectionTokens
@@ -10,17 +10,19 @@ export const registerGlobalInjections = () => {
       {
         name: 'console',
       },
-    ],
+    ] as LogTargetProps[],
   }
 
   container.register<LoggerProps>(global.loggerConfig, {
     useValue: loggerProps,
   })
 
-  container.register<Logger>(global.logger, Logger)
+  container.register<Logger>(global.logger, Logger, {
+    lifecycle: Lifecycle.ResolutionScoped,
+  })
 
   const instancesRegistered = {
-    [global.loggerConfig]: loggerProps,
+    [global.loggerConfig]: JSON.stringify(loggerProps),
     [global.logger]: `instance of ${Logger.name}`,
   }
 

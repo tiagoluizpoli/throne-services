@@ -1,1 +1,1 @@
-export type {}
+export * from './db-create-integration'
