@@ -10,8 +10,8 @@ export const adaptStreamRoute = (controllerName: string) => {
       ...request.body,
       ...request.params,
       ...request.query,
-      tenant: request.headers['x-sta-tenant'],
-      userId: request.headers['x-sta-userid'],
+      tenantCode: request.headers['x-throne-tenant'],
+      userId: request.headers['x-throne-userid'],
     }
 
     const authorizationtokenRegex = /^authorizationtoken$/i

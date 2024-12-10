@@ -24,23 +24,21 @@ export const adaptRoute = (controllerName: string) => {
       }
     }
 
-    if (request.headers['x-sta-tenant']) {
-      requestData.tenant = request.headers['x-sta-tenant']
+    if (request.headers['x-throne-tenant']) {
+      requestData.tenantCode = request.headers['x-throne-tenant']
     }
 
-    if (request.headers['x-sta-userid']) {
-      requestData.userId = request.headers['x-sta-userid']
+    if (request.headers['x-throne-userid']) {
+      requestData.userId = request.headers['x-throne-userid']
     }
 
-    if (request.headers['x-sta-hub']) {
-      requestData.mfaRequired = request.headers['x-sta-hub'] === 'true'
+    if (request.headers['x-throne-hub']) {
+      requestData.mfaRequired = request.headers['x-throne-hub'] === 'true'
     }
 
-    if (request.headers['x-sta-external-user-id']) {
-      requestData.externalUserId = request.headers['x-sta-external-user-id']
+    if (request.headers['x-throne-external-user-id']) {
+      requestData.externalUserId = request.headers['x-throne-external-user-id']
     }
-
-    console.log({ requestData })
 
     const httpResponse = await controller.handle(requestData)
 

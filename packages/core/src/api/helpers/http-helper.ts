@@ -1,10 +1,11 @@
 import type { Readable } from 'node:stream'
 
-import type { UnexpectedError, UseCaseError } from '../../domain/errors'
+import { UnexpectedError, type UseCaseError } from '../../domain/errors'
 import type { HttpResponse } from '../contracts'
 import {
   BadRequestError,
-  type HttpError,
+  ConflictError,
+  NotFoundError,
   ServerError,
   TooManyRequestsError,
   UnauthorizedError,
@@ -38,12 +39,17 @@ export const noContent = (): HttpResponse => ({
 
 export const badRequest = (error: UseCaseError): HttpResponse => ({
   statusCode: 400,
-  body: new BadRequestError(error.code, error.message, error.uuid),
+  body: new BadRequestError(error.code, error.message),
 })
 
 export const notFound = (error: UseCaseError): HttpResponse => ({
   statusCode: 404,
-  body: error,
+  body: new NotFoundError(error.message, error.code),
+})
+
+export const conflict = (error: UseCaseError): HttpResponse => ({
+  statusCode: 409,
+  body: new ConflictError(error.message, error.code),
 })
 
 export const unprocessableEntity = (error: UseCaseError): HttpResponse => ({
@@ -66,8 +72,11 @@ export const tooManyRequests = (error: UseCaseError): HttpResponse => ({
   body: new TooManyRequestsError(error.code, error.message, error.uuid),
 })
 
-type ServerErrors = HttpError | UnexpectedError
-export const serverError = (error: ServerErrors): HttpResponse => ({
-  statusCode: 500,
-  body: new ServerError(error.stack ?? '', error.uuid),
-})
+export const serverError = (error: UseCaseError): HttpResponse => {
+  const validatedError = !error?.toObject ? new UnexpectedError() : error
+
+  return {
+    statusCode: 500,
+    body: new ServerError(validatedError.stack ?? '', validatedError.uuid),
+  }
+}
