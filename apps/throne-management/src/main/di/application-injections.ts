@@ -8,7 +8,7 @@ const { application } = injectionTokens;
 export const registerApplicationInjections = () => {
   container.register<CreateIntegration>(application.createIntegration, DbCreateIntegration);
   container.register<UpdateIntegration>(application.updateIntegration, DbUpdateIntegration);
-  container.register<DeleteIntegration>(application.updateIntegration, DbDeleteIntegration);
+  container.register<DeleteIntegration>(application.deleteIntegration, DbDeleteIntegration);
 
   const instancesRegistered = {
     [application.createIntegration]: `instance of ${DbCreateIntegration.name}`,
