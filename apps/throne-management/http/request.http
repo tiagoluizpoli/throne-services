@@ -35,3 +35,8 @@ x-throne-tenant: yeshua
 GET http://localhost:8001/api/v1/integrations?pageIndex=0&pageSize=15
 Content-Type: application/json
 x-throne-tenant: yeshua
+
+### Get Integration by Id
+GET http://localhost:8001/api/v1/integrations/99e5dd5f-3460-409e-8765-95c46b2890f9
+Content-Type: application/json
+x-throne-tenant: yeshua

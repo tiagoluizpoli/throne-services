@@ -1,6 +1,7 @@
 import {
   CreateIntegrationController,
   DeleteIntegrationController,
+  GetIntegrationByIdController,
   GetIntegrationsController,
   UpdateIntegrationController,
 } from '@/api';
@@ -15,12 +16,14 @@ export const registerControllerInjections = () => {
   container.register<Controller>(controller.updateIntegration, UpdateIntegrationController);
   container.register<Controller>(controller.deleteIntegration, DeleteIntegrationController);
   container.register<Controller>(controller.getIntegrations, GetIntegrationsController);
+  container.register<Controller>(controller.getIntegrationById, GetIntegrationByIdController);
 
   const instancesRegistered = {
     [controller.createIntegration]: `instance of ${CreateIntegrationController.name}`,
     [controller.updateIntegration]: `instance of ${UpdateIntegrationController.name}`,
     [controller.deleteIntegration]: `instance of ${DeleteIntegrationController.name}`,
     [controller.getIntegrations]: `instance of ${GetIntegrationsController.name}`,
+    [controller.getIntegrationById]: `instance of ${GetIntegrationByIdController.name}`,
   };
 
   console.debug('controller injections registered', instancesRegistered);
