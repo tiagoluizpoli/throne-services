@@ -29,6 +29,7 @@ export const integrationTable = pgTable(
     targetUrl: varchar('targetUrl', { length: 256 }).notNull(),
     description: text('description'),
     createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
+    deletedAt: timestamp('deletedAt', { precision: 3 }),
   },
   (table) => [
     unique('unique_integrationCode_tenantCode_sourceMethod_targetMethod_targetUrl').on(table.tenantId, table.code),

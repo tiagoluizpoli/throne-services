@@ -1,0 +1,1 @@
+ALTER TABLE "integration" ADD COLUMN "deletedAt" timestamp (3);
