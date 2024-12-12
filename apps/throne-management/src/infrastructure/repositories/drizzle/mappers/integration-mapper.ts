@@ -8,11 +8,14 @@ type IntegrationPersistence = {
 
 export class IntegrationMapper {
   static toDomain = (raw: IntegrationPersistence[]): any => {
-    const persistence = raw[0];
-    const { integration, tenant } = persistence;
-    if (!tenant || !integration) {
+    if (raw.length === 0 || !raw[0].tenant || !raw[0].integration) {
       return undefined;
     }
+
+    const { integration, tenant } = raw[0];
+    // if (!tenant || !integration) {
+    //   return undefined;
+    // }
 
     return Integration.create(
       {

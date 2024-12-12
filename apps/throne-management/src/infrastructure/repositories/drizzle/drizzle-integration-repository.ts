@@ -5,7 +5,7 @@ import type {
 } from '@/application';
 import type { Integration } from '@/domain';
 import { db } from '@/main/clients';
-import { and, eq, isNotNull, sql } from 'drizzle-orm';
+import { and, eq, isNull, sql } from 'drizzle-orm';
 import { integrationTable, tenantTable } from 'drizzle/schemas';
 import { injectable } from 'tsyringe';
 import { IntegrationMapper } from './mappers';
@@ -32,7 +32,7 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
   update = async (integration: Integration): Promise<void> => {
     const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, integration.tenantCode))})`;
 
-    await db
+    const result = await db
       .update(integrationTable)
       .set({
         name: integration.name,
@@ -46,9 +46,12 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
         and(
           eq(integrationTable.id, integration.id),
           eq(integrationTable.tenantId, tenantId),
-          isNotNull(integrationTable.deletedAt),
+          isNull(integrationTable.deletedAt),
         ),
-      );
+      )
+      .execute();
+
+    console.log(result);
   };
 
   delete = async (params: IntegrationRepositoryDeleteParams): Promise<void> => {
@@ -59,12 +62,9 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
       .update(integrationTable)
       .set({ deletedAt: new Date() })
       .where(
-        and(
-          eq(integrationTable.id, id),
-          eq(integrationTable.tenantId, tenantId),
-          isNotNull(integrationTable.deletedAt),
-        ),
-      );
+        and(eq(integrationTable.id, id), eq(integrationTable.tenantId, tenantId), isNull(integrationTable.deletedAt)),
+      )
+      .execute();
   };
 
   getById = async (params: IntegrationRepositoryGetByIdParams): Promise<Integration | undefined> => {
@@ -74,12 +74,12 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
       .leftJoin(tenantTable, eq(tenantTable.id, integrationTable.tenantId))
       .where(
         and(
+          isNull(integrationTable.deletedAt),
           eq(integrationTable.id, params.id),
           eq(
             integrationTable.tenantId,
             sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, params.tenantCode))})`,
           ),
-          isNotNull(integrationTable.deletedAt),
         ),
       )
       .limit(1)
