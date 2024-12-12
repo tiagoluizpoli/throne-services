@@ -1,14 +1,14 @@
-import { PrismaClient } from '@prisma/shared-database/client'
+import { PrismaClient } from '@prisma/shared-database/client';
 
-import { SessionMapper } from '../../../src'
-import type { Session, SessionChallenge, Tenant, User } from '../../../src/entities'
+import { SessionMapper } from '../../../src';
+import type { Session, SessionChallenge, Tenant, User } from '../../../src/entities';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 type UserAndTenants = {
-  user: User
-  tenants: Tenant[]
-}
+  user: User;
+  tenants: Tenant[];
+};
 
 export const insertUserAndTenants = async ({ user, tenants }: UserAndTenants) => {
   const tenantUserCreate = tenants.map((tenant) => ({
@@ -22,7 +22,7 @@ export const insertUserAndTenants = async ({ user, tenants }: UserAndTenants) =>
         createdAt: tenant.createdAt,
       },
     },
-  }))
+  }));
 
   await prisma.user.create({
     data: {
@@ -34,10 +34,10 @@ export const insertUserAndTenants = async ({ user, tenants }: UserAndTenants) =>
         create: tenantUserCreate,
       },
     },
-  })
+  });
 
-  return { user, tenants }
-}
+  return { user, tenants };
+};
 
 export const deleteUsersAndTenants = async ({ user, tenants }: UserAndTenants) => {
   await prisma.tenant_user.deleteMany({
@@ -46,13 +46,13 @@ export const deleteUsersAndTenants = async ({ user, tenants }: UserAndTenants) =
         email: user.email,
       },
     },
-  })
+  });
 
   await prisma.user.delete({
     where: {
       email: user.email,
     },
-  })
+  });
 
   await prisma.tenant.deleteMany({
     where: {
@@ -60,8 +60,8 @@ export const deleteUsersAndTenants = async ({ user, tenants }: UserAndTenants) =
         in: tenants.map((tenant) => tenant.code),
       },
     },
-  })
-}
+  });
+};
 
 export const insertSessions = async (sessions: Session[]) => {
   await prisma.session.createMany({
@@ -73,16 +73,16 @@ export const insertSessions = async (sessions: Session[]) => {
       userId: session.userId,
       createdAt: session.createdAt,
     })),
-  })
-}
+  });
+};
 
 export const deleteSessions = async (tenant: Tenant) => {
   await prisma.session.deleteMany({
     where: {
       tenantId: tenant.id,
     },
-  })
-}
+  });
+};
 
 export const getSessions = async (sessions: Session[]) => {
   const fetchedSessions = await prisma.session.findMany({
@@ -103,10 +103,10 @@ export const getSessions = async (sessions: Session[]) => {
         },
       },
     },
-  })
+  });
 
-  return fetchedSessions.map((session) => SessionMapper.toDomain(session))
-}
+  return fetchedSessions.map((session) => SessionMapper.toDomain(session));
+};
 
 export const insertSessionChallenges = async (sessionChallenges: SessionChallenge[]) => {
   await prisma.session_challenge.createMany({
@@ -117,16 +117,16 @@ export const insertSessionChallenges = async (sessionChallenges: SessionChalleng
       userId: sessionChallenge.userId,
       createdAt: sessionChallenge.createdAt,
     })),
-  })
-}
+  });
+};
 
 export const deleteSessionChallenges = async (tenant: Tenant) => {
   await prisma.session_challenge.deleteMany({
     where: {
       tenantId: tenant.id,
     },
-  })
-}
+  });
+};
 
 export const getSessionChallenges = async (sessionChallenges: SessionChallenge[]) => {
   const fetchedSessionChallenges = await prisma.session_challenge.findMany({
@@ -138,7 +138,7 @@ export const getSessionChallenges = async (sessionChallenges: SessionChallenge[]
     include: {
       tenant: true,
     },
-  })
+  });
 
-  return fetchedSessionChallenges
-}
+  return fetchedSessionChallenges;
+};

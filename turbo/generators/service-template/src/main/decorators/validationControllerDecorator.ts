@@ -1,6 +1,6 @@
-import type { ZodSchema } from 'zod'
+import type { ZodSchema } from 'zod';
 
-import { type Controller, type HttpResponse, InvalidParamError, badRequest } from '@/api'
+import { type Controller, type HttpResponse, InvalidParamError, badRequest } from '@/api';
 
 export class ValidationControllerDecorator implements Controller {
   constructor(
@@ -9,16 +9,16 @@ export class ValidationControllerDecorator implements Controller {
   ) {}
 
   handle = async (request: any): Promise<HttpResponse> => {
-    const validationResult = await this.schema.safeParseAsync(request)
+    const validationResult = await this.schema.safeParseAsync(request);
 
     if (!validationResult.success) {
-      const firstFieldWithError = validationResult.error.issues[0].path[0].toString()
-      const errorMessage = validationResult.error.issues[0].message
-      return badRequest(new InvalidParamError(firstFieldWithError, errorMessage))
+      const firstFieldWithError = validationResult.error.issues[0].path[0].toString();
+      const errorMessage = validationResult.error.issues[0].message;
+      return badRequest(new InvalidParamError(firstFieldWithError, errorMessage));
     }
 
-    const httpResponse = await this.controller.handle(validationResult.data)
+    const httpResponse = await this.controller.handle(validationResult.data);
 
-    return httpResponse
-  }
+    return httpResponse;
+  };
 }

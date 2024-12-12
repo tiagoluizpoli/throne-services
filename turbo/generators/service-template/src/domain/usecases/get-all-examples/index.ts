@@ -1,1 +1,1 @@
-export * from './get-all-examples'
+export * from './get-all-examples';

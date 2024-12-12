@@ -1,18 +1,18 @@
-import type { Prisma, session, tenant, tenant_user, user } from '../../../client'
-import { Session } from '../../../entities'
-import { TenantMapper } from './tenant-mapper'
-import { UserMapper } from './user-mapper'
+import type { Prisma, session, tenant, tenant_user, user } from '../../../client';
+import { Session } from '../../../entities';
+import { TenantMapper } from './tenant-mapper';
+import { UserMapper } from './user-mapper';
 
 type SessionPersistence = session & {
-  tenant: tenant
+  tenant: tenant;
   user: user & {
     tenantUser: (tenant_user & {
-      tenant: tenant
-    })[]
-  }
-}
+      tenant: tenant;
+    })[];
+  };
+};
 
-type SessionCreatePersistence = Prisma.sessionCreateInput
+type SessionCreatePersistence = Prisma.sessionCreateInput;
 
 export const SessionMapper = {
   toDomain: (session: SessionPersistence): Session => {
@@ -27,7 +27,7 @@ export const SessionMapper = {
         createdAt: session.createdAt,
       },
       session.id,
-    )
+    );
   },
 
   toCreatePersistence: (session: Session): SessionCreatePersistence => {
@@ -46,6 +46,6 @@ export const SessionMapper = {
         },
       },
       createdAt: session.createdAt,
-    }
+    };
   },
-}
+};

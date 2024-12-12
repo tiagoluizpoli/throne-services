@@ -1,4 +1,4 @@
-import type { Prisma } from '@prisma/.prisma/client'
+import type { Prisma } from '@prisma/.prisma/client';
 
 import type {
   ExamplesRepository,
@@ -6,11 +6,11 @@ import type {
   ExamplesRepositoryGetAllParams,
   ExamplesRepositoryGetAllResult,
   ExamplesRepositoryGetByIdParams,
-} from '@/application/contracts'
-import type { Example } from '@/domain'
-import { ExampleMapper } from '@/infrastructure/mappers'
-import { prisma } from '@/main/prisma/client'
-import { injectable } from 'tsyringe'
+} from '@/application/contracts';
+import type { Example } from '@/domain';
+import { ExampleMapper } from '@/infrastructure/mappers';
+import { prisma } from '@/main/prisma/client';
+import { injectable } from 'tsyringe';
 
 @injectable()
 export class PrismaExamplesRepository implements ExamplesRepository {
@@ -22,7 +22,7 @@ export class PrismaExamplesRepository implements ExamplesRepository {
     orderBy,
     orderDirection,
   }: ExamplesRepositoryGetAllParams): Promise<ExamplesRepositoryGetAllResult> {
-    const where = await this.buildSearchWhereClause({ search })
+    const where = await this.buildSearchWhereClause({ search });
 
     const examplesPersistence = await prisma.example.findMany({
       where: {
@@ -39,13 +39,13 @@ export class PrismaExamplesRepository implements ExamplesRepository {
       include: {
         tenant: true,
       },
-    })
+    });
 
-    return examplesPersistence.map((example) => ExampleMapper.toDomain(example))
+    return examplesPersistence.map((example) => ExampleMapper.toDomain(example));
   }
 
   async count({ tenantCode, search }: ExamplesRepositoryCountParams): Promise<number> {
-    const where = await this.buildSearchWhereClause({ search })
+    const where = await this.buildSearchWhereClause({ search });
 
     const count = await prisma.example.count({
       where: {
@@ -54,9 +54,9 @@ export class PrismaExamplesRepository implements ExamplesRepository {
         },
         ...where,
       },
-    })
+    });
 
-    return count
+    return count;
   }
 
   async getById({ exampleId, tenantCode }: ExamplesRepositoryGetByIdParams): Promise<Example | undefined> {
@@ -70,13 +70,13 @@ export class PrismaExamplesRepository implements ExamplesRepository {
       include: {
         tenant: true,
       },
-    })
+    });
 
     if (!examplePersistence) {
-      return undefined
+      return undefined;
     }
 
-    return ExampleMapper.toDomain(examplePersistence)
+    return ExampleMapper.toDomain(examplePersistence);
   }
 
   async save(example: Example): Promise<void> {
@@ -93,7 +93,7 @@ export class PrismaExamplesRepository implements ExamplesRepository {
         description: example.description,
         createdAt: example.createdAt,
       },
-    })
+    });
   }
 
   private async buildSearchWhereClause({
@@ -103,6 +103,6 @@ export class PrismaExamplesRepository implements ExamplesRepository {
       ? {
           OR: [search.length === 36 ? { id: { equals: search } } : {}],
         }
-      : {}
+      : {};
   }
 }

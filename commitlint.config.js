@@ -8,4 +8,4 @@ module.exports = {
       ['user-management', 'throne-management', 'configs', 'dev-tools', 'packages', 'multiple', 'root'],
     ],
   },
-}
+};

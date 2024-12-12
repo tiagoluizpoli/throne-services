@@ -53,7 +53,7 @@
     },
     "formatter": {
       "quoteStyle": "single",
-      "semicolons": "asNeeded"
+      "semicolons": "always"
     }
   },
   "overrides": [

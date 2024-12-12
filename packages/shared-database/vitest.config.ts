@@ -1,5 +1,5 @@
-import path from 'node:path'
-import { defineConfig } from 'vitest/config'
+import path from 'node:path';
+import { defineConfig } from 'vitest/config';
 
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
@@ -12,4 +12,4 @@ export default defineConfig({
       '@prisma/shared-database/client': path.resolve(__dirname, 'node_modules/@prisma/shared-database/client/index.js'),
     },
   },
-})
+});

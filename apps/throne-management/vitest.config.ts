@@ -1,5 +1,5 @@
-import tsconfigPaths from 'vite-tsconfig-paths'
-import { defineConfig } from 'vitest/config'
+import tsconfigPaths from 'vite-tsconfig-paths';
+import { defineConfig } from 'vitest/config';
 
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
@@ -7,4 +7,4 @@ export default defineConfig({
     globals: true,
   },
   plugins: [tsconfigPaths()],
-})
+});

@@ -1,5 +1,5 @@
-import { faker } from '@faker-js/faker'
-import { User } from '../../src/entities'
+import { faker } from '@faker-js/faker';
+import { User } from '../../src/entities';
 
 describe('User', () => {
   it('should create a user', () => {
@@ -8,8 +8,8 @@ describe('User', () => {
       email: faker.internet.email(),
       createdAt: faker.date.recent(),
       tenants: [],
-    })
+    });
 
-    expect(user).toBeInstanceOf(User)
-  })
-})
+    expect(user).toBeInstanceOf(User);
+  });
+});

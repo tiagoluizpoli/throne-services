@@ -1,1 +1,1 @@
-export * from './cognito-authentication'
+export * from './cognito-authentication';

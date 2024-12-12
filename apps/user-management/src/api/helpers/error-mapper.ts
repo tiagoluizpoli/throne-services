@@ -1,5 +1,5 @@
-import { badRequest, baseErrorMapper, tooManyRequests, unauthorized } from '@solutions/core/api'
-import type { UseCaseError } from '@solutions/core/domain'
+import { badRequest, baseErrorMapper, tooManyRequests, unauthorized } from '@solutions/core/api';
+import type { UseCaseError } from '@solutions/core/domain';
 
 export const errorMapper: Record<string, any> = {
   ...baseErrorMapper,
@@ -15,4 +15,4 @@ export const errorMapper: Record<string, any> = {
   USER_NOT_FOUND_ERROR: (error: UseCaseError) => unauthorized(),
   CHALLENGE_SESSION_NOT_FOUND_ERROR: (error: UseCaseError) => unauthorized(),
   PREVIOUS_SESSION_NOT_FOUND_ERROR: (error: UseCaseError) => unauthorized(),
-}
+};

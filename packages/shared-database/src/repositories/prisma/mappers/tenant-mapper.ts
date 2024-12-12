@@ -1,8 +1,8 @@
-import type { tenant } from '../../../client'
+import type { tenant } from '../../../client';
 
-import { Tenant } from '../../../entities'
+import { Tenant } from '../../../entities';
 
-type TenantPersistence = tenant
+type TenantPersistence = tenant;
 
 export class TenantMapper {
   static toDomain(raw: TenantPersistence): Tenant {
@@ -16,6 +16,6 @@ export class TenantMapper {
         createdAt: raw.createdAt,
       },
       raw.id,
-    )
+    );
   }
 }

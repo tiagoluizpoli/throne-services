@@ -3,16 +3,16 @@ import {
   type CreateIntegrationParams,
   type CreateIntegrationPossibleErrors,
   Integration,
-} from '@/domain'
-import { type Either, UnexpectedError, left, right } from '@solutions/core/domain'
-import type { Logger } from '@solutions/logger'
-import { inject, injectable } from 'tsyringe'
-import type { IntegrationRepository } from '../contracts'
+} from '@/domain';
+import { type Either, UnexpectedError, left, right } from '@solutions/core/domain';
+import type { Logger } from '@solutions/logger';
+import { inject, injectable } from 'tsyringe';
+import type { IntegrationRepository } from '../contracts';
 
-import { IntegrationAlreadyExistsError } from '@/domain/errors'
-import { injectionTokens } from '@/main/di/injection-tokens'
-import type { DatabaseError } from 'pg'
-const { global, infrastructure } = injectionTokens
+import { IntegrationAlreadyExistsError } from '@/domain/errors';
+import { injectionTokens } from '@/main/di/injection-tokens';
+import type { DatabaseError } from 'pg';
+const { global, infrastructure } = injectionTokens;
 
 @injectable()
 export class DbCreateIntegration implements CreateIntegration {
@@ -23,8 +23,8 @@ export class DbCreateIntegration implements CreateIntegration {
 
   execute = async (params: CreateIntegrationParams): Promise<Either<CreateIntegrationPossibleErrors, void>> => {
     try {
-      this.logger.info('DbCreateIntegration.execute :: creating integration')
-      const { tenantCode, code, name, description, sourceMethod, targetMethod, targetUrl } = params
+      this.logger.info('DbCreateIntegration.execute :: creating integration');
+      const { tenantCode, code, name, description, sourceMethod, targetMethod, targetUrl } = params;
 
       const integration = Integration.create({
         code,
@@ -34,27 +34,27 @@ export class DbCreateIntegration implements CreateIntegration {
         targetMethod,
         targetUrl,
         tenantCode,
-      })
+      });
 
-      await this.integrationRepository.create(integration)
+      await this.integrationRepository.create(integration);
 
-      this.logger.info('DbCreateIntegration.execute :: integration inserted to the database')
+      this.logger.info('DbCreateIntegration.execute :: integration inserted to the database');
 
-      return right(undefined)
+      return right(undefined);
     } catch (error) {
-      const mappedError = error as DatabaseError
+      const mappedError = error as DatabaseError;
 
       // Postgress code for "unique constraint violated"
       if (mappedError?.code === '23505') {
         this.logger.error('DbCreateIntegration.execute :: a database error has occurred', {
           error: JSON.stringify(error),
-        })
+        });
 
-        return left(new IntegrationAlreadyExistsError())
+        return left(new IntegrationAlreadyExistsError());
       }
-      this.logger.error('DbCreateIntegration.execute :: an error has occurred', { error: JSON.stringify(error) })
+      this.logger.error('DbCreateIntegration.execute :: an error has occurred', { error: JSON.stringify(error) });
 
-      return left(new UnexpectedError())
+      return left(new UnexpectedError());
     }
-  }
+  };
 }

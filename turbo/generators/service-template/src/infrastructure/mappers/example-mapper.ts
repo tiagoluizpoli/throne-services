@@ -1,11 +1,11 @@
-import type { example, tenant } from '@prisma/.prisma/client'
+import type { example, tenant } from '@prisma/.prisma/client';
 
-import { Example } from '@/domain/entities'
-import { TenantMapper } from '@/infrastructure/mappers/tenant-mapper'
+import { Example } from '@/domain/entities';
+import { TenantMapper } from '@/infrastructure/mappers/tenant-mapper';
 
 type ExamplePersistence = example & {
-  tenant: tenant | null
-}
+  tenant: tenant | null;
+};
 
 export class ExampleMapper {
   static toDomain(raw: ExamplePersistence): Example {
@@ -19,6 +19,6 @@ export class ExampleMapper {
         createdAt: raw.createdAt,
       },
       raw.id,
-    )
+    );
   }
 }

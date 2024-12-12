@@ -4,4 +4,4 @@ export const commonEnv = () =>
       environment: process.env.ENVIRONMENT ?? 'local',
       logLevel: process.env.LOG_LEVEL ?? 'prod',
     },
-  }) as const
+  }) as const;

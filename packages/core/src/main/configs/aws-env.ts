@@ -6,4 +6,4 @@ export const awsEnv = () =>
       secretKey: process.env.AWS_SECRET_ACCESS_KEY ?? '',
       sessionToken: process.env.AWS_SESSION_TOKEN ?? '',
     },
-  }) as const
+  }) as const;

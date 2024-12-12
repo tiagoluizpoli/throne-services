@@ -1,6 +1,6 @@
-import 'reflect-metadata'
+import 'reflect-metadata';
 
-import { Logger } from './src/main'
+import { Logger } from './src/main';
 
 const logger = new Logger({
   level: 'warn',
@@ -15,8 +15,8 @@ const logger = new Logger({
       },
     },
   ],
-})
+});
 
-logger.info('teste info')
-logger.warn('teste warn')
-logger.error('teste warn')
+logger.info('teste info');
+logger.warn('teste warn');
+logger.error('teste warn');

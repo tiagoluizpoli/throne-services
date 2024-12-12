@@ -1,1 +1,1 @@
-export * from './controller-authorization-decorator'
+export * from './controller-authorization-decorator';

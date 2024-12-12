@@ -1,17 +1,17 @@
-import type { Session } from '../../../entities'
+import type { Session } from '../../../entities';
 
 export interface GetByTokenIdentifierSessionRepositoryParams {
-  tokenIdentifier: string
+  tokenIdentifier: string;
 }
 
 export interface GetByRefreshTokenIdentifierSessionRepositoryParams {
-  refreshTokenIdentifier: string
+  refreshTokenIdentifier: string;
 }
 
 export interface SessionRepository {
-  save: (session: Session) => Promise<void>
-  getByTokenIdentifier: (params: GetByTokenIdentifierSessionRepositoryParams) => Promise<Session | undefined>
+  save: (session: Session) => Promise<void>;
+  getByTokenIdentifier: (params: GetByTokenIdentifierSessionRepositoryParams) => Promise<Session | undefined>;
   getByRefreshTokenIdentifier: (
     params: GetByRefreshTokenIdentifierSessionRepositoryParams,
-  ) => Promise<Session | undefined>
+  ) => Promise<Session | undefined>;
 }

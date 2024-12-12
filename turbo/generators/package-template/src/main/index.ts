@@ -1,3 +1,3 @@
 export const main = () => {
-  console.log('{{kebabCase name}} package')
-}
+  console.log('{{kebabCase name}} package');
+};

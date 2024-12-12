@@ -1,3 +1,3 @@
 export interface TenantParams {
-  tenantCode: string
+  tenantCode: string;
 }

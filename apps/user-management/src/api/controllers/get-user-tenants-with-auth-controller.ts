@@ -1,21 +1,21 @@
-import { errorMapper } from '@/api/helpers'
+import { errorMapper } from '@/api/helpers';
 
-import type { GetUserTenantsWithAuth } from '@/domain'
-import { injectionTokens } from '@/main/di'
-import { type Controller, type HttpResponse, mapErrorsByCode, ok } from '@solutions/core/api'
-import { controllerErrorHandling, controllerValidationHandling } from '@solutions/core/main'
-import type { Tenant } from '@solutions/shared-database'
-import { inject, injectable } from 'tsyringe'
-import { z } from 'zod'
+import type { GetUserTenantsWithAuth } from '@/domain';
+import { injectionTokens } from '@/main/di';
+import { type Controller, type HttpResponse, mapErrorsByCode, ok } from '@solutions/core/api';
+import { controllerErrorHandling, controllerValidationHandling } from '@solutions/core/main';
+import type { Tenant } from '@solutions/shared-database';
+import { inject, injectable } from 'tsyringe';
+import { z } from 'zod';
 
-const { usecases } = injectionTokens
+const { usecases } = injectionTokens;
 
 export const getUserTenantsWithAuthSchema = z.object({
   username: z.string().email(),
   password: z.string().min(8),
-})
+});
 
-export type GetUserTenantsWithAuthRequest = z.infer<typeof getUserTenantsWithAuthSchema>
+export type GetUserTenantsWithAuthRequest = z.infer<typeof getUserTenantsWithAuthSchema>;
 
 @injectable()
 @controllerErrorHandling()
@@ -27,26 +27,26 @@ export class GetUserTenantsWithAuthController implements Controller {
   ) {}
 
   async handle(request: GetUserTenantsWithAuthRequest): Promise<HttpResponse> {
-    const { username, password } = request
+    const { username, password } = request;
 
     const getTenantsFromUserResult = await this.getUserTenantsWithAuth.execute({
       username,
       password,
-    })
+    });
 
     if (getTenantsFromUserResult.isLeft()) {
-      return mapErrorsByCode(getTenantsFromUserResult.value, errorMapper)
+      return mapErrorsByCode(getTenantsFromUserResult.value, errorMapper);
     }
 
-    const tenants = getTenantsFromUserResult.value
+    const tenants = getTenantsFromUserResult.value;
 
     const response = tenants.map((tenant: Tenant) => ({
       code: tenant.code,
       name: tenant.name,
       description: tenant.description,
       createdAt: tenant.createdAt,
-    }))
+    }));
 
-    return ok(response)
+    return ok(response);
   }
 }

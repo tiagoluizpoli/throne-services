@@ -1,8 +1,8 @@
-import type { GetByFieldRepositoryParams } from '@solutions/core/application'
-import { prisma } from '../../client'
-import type { User } from '../../entities'
-import type { UsersRepository } from '../contracts'
-import { UserMapper } from './mappers'
+import type { GetByFieldRepositoryParams } from '@solutions/core/application';
+import { prisma } from '../../client';
+import type { User } from '../../entities';
+import type { UsersRepository } from '../contracts';
+import { UserMapper } from './mappers';
 
 export class PrismaUsersRepository implements UsersRepository {
   async getByField({ tenantCode, field, value }: GetByFieldRepositoryParams): Promise<User | undefined> {
@@ -24,13 +24,13 @@ export class PrismaUsersRepository implements UsersRepository {
           },
         },
       },
-    })
+    });
 
     if (!userPersistence) {
-      return
+      return;
     }
 
-    return UserMapper.toDomain(userPersistence)
+    return UserMapper.toDomain(userPersistence);
   }
 
   async getByEmail(email: string): Promise<User | undefined> {
@@ -45,12 +45,12 @@ export class PrismaUsersRepository implements UsersRepository {
           },
         },
       },
-    })
+    });
 
     if (!userPersistence) {
-      return
+      return;
     }
 
-    return UserMapper.toDomain(userPersistence)
+    return UserMapper.toDomain(userPersistence);
   }
 }

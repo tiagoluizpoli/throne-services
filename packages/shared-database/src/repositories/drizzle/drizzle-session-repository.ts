@@ -1,18 +1,18 @@
-import { eq, sql } from 'drizzle-orm'
-import { session, tenant, user } from '../../../drizzle/schemas/schema'
-import { db } from '../../client/drizzle'
-import type { Session } from '../../entities'
+import { eq, sql } from 'drizzle-orm';
+import { session, tenant, user } from '../../../drizzle/schemas/schema';
+import { db } from '../../client/drizzle';
+import type { Session } from '../../entities';
 import type {
   GetByRefreshTokenIdentifierSessionRepositoryParams,
   GetByTokenIdentifierSessionRepositoryParams,
   SessionRepository,
-} from '../contracts'
-import { SessionMapper } from './mappers'
+} from '../contracts';
+import { SessionMapper } from './mappers';
 
 export class DrizzleSessionRepository implements SessionRepository {
   save = async (params: Session): Promise<void> => {
-    const tenantId = sql`(${db.select({ id: tenant.id }).from(tenant).where(eq(tenant.code, params.tenantCode)).limit(1).getSQL()})`
-    const userId = sql`(${db.select({ id: user.id }).from(user).where(eq(user.id, params.userId)).limit(1).getSQL()})`
+    const tenantId = sql`(${db.select({ id: tenant.id }).from(tenant).where(eq(tenant.code, params.tenantCode)).limit(1).getSQL()})`;
+    const userId = sql`(${db.select({ id: user.id }).from(user).where(eq(user.id, params.userId)).limit(1).getSQL()})`;
 
     await db
       .insert(session)
@@ -24,8 +24,8 @@ export class DrizzleSessionRepository implements SessionRepository {
         userId,
         createdAt: params.createdAt,
       })
-      .execute()
-  }
+      .execute();
+  };
 
   getByTokenIdentifier = async ({
     tokenIdentifier,
@@ -36,10 +36,10 @@ export class DrizzleSessionRepository implements SessionRepository {
       .leftJoin(tenant, eq(tenant.id, session.tenantId))
       .where(eq(session.tokenIdentifier, tokenIdentifier))
       .limit(1)
-      .execute()
+      .execute();
 
-    return SessionMapper.toDomain(result)
-  }
+    return SessionMapper.toDomain(result);
+  };
 
   getByRefreshTokenIdentifier = async (
     params: GetByRefreshTokenIdentifierSessionRepositoryParams,
@@ -50,8 +50,8 @@ export class DrizzleSessionRepository implements SessionRepository {
       .leftJoin(tenant, eq(tenant.id, session.tenantId))
       .where(eq(session.refreshTokenIdentifier, params.refreshTokenIdentifier))
       .limit(1)
-      .execute()
+      .execute();
 
-    return SessionMapper.toDomain(result)
-  }
+    return SessionMapper.toDomain(result);
+  };
 }

@@ -1,7 +1,7 @@
-import { config } from 'dotenv'
-import { z } from 'zod'
+import { config } from 'dotenv';
+import { z } from 'zod';
 
-config({ override: true })
+config({ override: true });
 
 const envSchema = z.object({
   baseConfig: z.object({
@@ -12,9 +12,9 @@ const envSchema = z.object({
   database: z.object({
     url: z.string(),
   }),
-})
+});
 
-type Env = z.infer<typeof envSchema>
+type Env = z.infer<typeof envSchema>;
 export const envData: Env = {
   baseConfig: {
     environment: process.env.NODE_ENV ?? '',
@@ -24,6 +24,6 @@ export const envData: Env = {
   database: {
     url: process.env.DATABASE_URL ?? '',
   },
-} as const
+} as const;
 
-export const env = envSchema.parse(envData)
+export const env = envSchema.parse(envData);

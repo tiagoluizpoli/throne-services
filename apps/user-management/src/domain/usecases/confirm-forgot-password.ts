@@ -1,4 +1,4 @@
-import type { Either, UnexpectedError } from '@solutions/core/domain'
+import type { Either, UnexpectedError } from '@solutions/core/domain';
 import type {
   CodeMismatchError,
   ExpiredCodeError,
@@ -8,12 +8,12 @@ import type {
   PasswordPreviouslyUsedError,
   TooManyRequestsError,
   UserNotFoundError,
-} from './errors'
+} from './errors';
 
 export interface ConfirmForgotPasswordParams {
-  username: string
-  confirmationCode: string
-  password: string
+  username: string;
+  confirmationCode: string;
+  password: string;
 }
 
 export type ConfirmForgotPasswordError =
@@ -25,8 +25,8 @@ export type ConfirmForgotPasswordError =
   | InvalidPasswordError
   | PasswordPreviouslyUsedError
   | UserNotFoundError
-  | UnexpectedError
+  | UnexpectedError;
 
 export interface ConfirmForgotPassword {
-  execute: (params: ConfirmForgotPasswordParams) => Promise<Either<ConfirmForgotPasswordError, void>>
+  execute: (params: ConfirmForgotPasswordParams) => Promise<Either<ConfirmForgotPasswordError, void>>;
 }

@@ -1,2 +1,2 @@
-export * from './errorHandlingControllerDecorator'
-export * from './validationControllerDecorator'
+export * from './errorHandlingControllerDecorator';
+export * from './validationControllerDecorator';

@@ -1,86 +1,86 @@
-import type { Tenant } from '@/domain/entities'
-import { Entity } from '@solutions/core/domain'
-import { generateUniqueId } from '../helpers'
+import type { Tenant } from '@/domain/entities';
+import { Entity } from '@solutions/core/domain';
+import { generateUniqueId } from '../helpers';
 
-export const Methods = ['GET', 'POST', 'PUT', 'DELETE'] as const
-export type Method = (typeof Methods)[number]
+export const Methods = ['GET', 'POST', 'PUT', 'DELETE'] as const;
+export type Method = (typeof Methods)[number];
 
 interface IntegrationProps {
-  tenantCode: string
-  tenant?: Tenant
-  code: string
-  name: string
-  description?: string
-  uniqueCode: string
-  sourceMethod: Method
-  targetMethod: Method
-  targetUrl: string
-  createdAt: Date
+  tenantCode: string;
+  tenant?: Tenant;
+  code: string;
+  name: string;
+  description?: string;
+  uniqueCode: string;
+  sourceMethod: Method;
+  targetMethod: Method;
+  targetUrl: string;
+  createdAt: Date;
 }
 
 type CreateIntegrationMandatoryProps = Pick<
   IntegrationProps,
   'tenantCode' | 'code' | 'name' | 'description' | 'sourceMethod' | 'targetMethod' | 'targetUrl'
->
-type CreateIntegrationOptionalProps = Partial<Pick<IntegrationProps, 'uniqueCode' | 'createdAt'>>
+>;
+type CreateIntegrationOptionalProps = Partial<Pick<IntegrationProps, 'uniqueCode' | 'createdAt'>>;
 
-type CreateIntegrationProps = CreateIntegrationMandatoryProps & CreateIntegrationOptionalProps
+type CreateIntegrationProps = CreateIntegrationMandatoryProps & CreateIntegrationOptionalProps;
 
 export class Integration extends Entity<IntegrationProps> {
   private constructor(props: IntegrationProps, id?: string) {
-    super(props, id)
+    super(props, id);
   }
 
   get tenantCode(): string {
-    return this.props.tenantCode
+    return this.props.tenantCode;
   }
 
   get tenant(): Tenant | undefined {
-    return this.props.tenant
+    return this.props.tenant;
   }
 
   get code(): string {
-    return this.props.code
+    return this.props.code;
   }
 
   get name(): string {
-    return this.props.name
+    return this.props.name;
   }
 
   get uniqueCode(): string {
-    return this.props.uniqueCode
+    return this.props.uniqueCode;
   }
 
   get sourceMethod(): Method {
-    return this.props.sourceMethod
+    return this.props.sourceMethod;
   }
 
   get targetMethod(): Method {
-    return this.props.targetMethod
+    return this.props.targetMethod;
   }
 
   get targetUrl(): string {
-    return this.props.targetUrl
+    return this.props.targetUrl;
   }
 
   get description(): string | undefined {
-    return this.props.description
+    return this.props.description;
   }
 
   get createdAt(): Date {
-    return this.props.createdAt
+    return this.props.createdAt;
   }
 
   public update(
     props: Pick<IntegrationProps, 'code' | 'name' | 'description' | 'sourceMethod' | 'targetMethod' | 'targetUrl'>,
   ): void {
-    const { code, name, description, sourceMethod, targetMethod, targetUrl } = props
-    this.props.code = code
-    this.props.name = name
-    this.props.description = description
-    this.props.sourceMethod = sourceMethod
-    this.props.targetMethod = targetMethod
-    this.props.targetUrl = targetUrl
+    const { code, name, description, sourceMethod, targetMethod, targetUrl } = props;
+    this.props.code = code;
+    this.props.name = name;
+    this.props.description = description;
+    this.props.sourceMethod = sourceMethod;
+    this.props.targetMethod = targetMethod;
+    this.props.targetUrl = targetUrl;
   }
 
   public static create(props: CreateIntegrationProps, id?: string): Integration {
@@ -91,7 +91,7 @@ export class Integration extends Entity<IntegrationProps> {
         uniqueCode: props.uniqueCode ?? generateUniqueId(props.code),
       },
       id,
-    )
-    return example
+    );
+    return example;
   }
 }

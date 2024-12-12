@@ -1,2 +1,2 @@
-export * from './tenant'
-export * from './example'
+export * from './tenant';
+export * from './example';

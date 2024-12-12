@@ -7,15 +7,15 @@ import {
   AdminSetUserPasswordCommand,
   CognitoIdentityProviderClient,
   type UserNotFoundException,
-} from '@aws-sdk/client-cognito-identity-provider'
-import { faker } from '@faker-js/faker'
+} from '@aws-sdk/client-cognito-identity-provider';
+import { faker } from '@faker-js/faker';
 
-const UserPoolId = process.env.COGNITO_USER_POOL_ID ?? ''
+const UserPoolId = process.env.COGNITO_USER_POOL_ID ?? '';
 
 export type Credentials = {
-  email: string
-  password: string
-}
+  email: string;
+  password: string;
+};
 
 export const cognitoClient = new CognitoIdentityProviderClient({
   credentials: {
@@ -24,12 +24,12 @@ export const cognitoClient = new CognitoIdentityProviderClient({
     sessionToken: process.env.AWS_SESSION_TOKEN,
   },
   region: process.env.AWS_REGION ?? 'us-east-1',
-})
+});
 
 export const validCredentials: Credentials = {
   email: 'luiz.boldrin+teste@stoneage.com.br',
   password: faker.internet.password({ length: 10, prefix: 'aA@0', pattern: /[a-zA-Z0-9]/ }),
-}
+};
 
 export const createUser = async ({ email, password }: Credentials) => {
   await cognitoClient.send(
@@ -49,8 +49,8 @@ export const createUser = async ({ email, password }: Credentials) => {
         },
       ],
     }),
-  )
-}
+  );
+};
 
 export const getUser = async ({ email }: Pick<Credentials, 'email'>) => {
   try {
@@ -59,16 +59,16 @@ export const getUser = async ({ email }: Pick<Credentials, 'email'>) => {
         UserPoolId,
         Username: email,
       }),
-    )
+    );
 
-    return user
+    return user;
   } catch (error) {
     if ((error as UserNotFoundException).name === 'UserNotFoundException') {
-      return
+      return;
     }
-    throw new Error('Não foi possível se conectar ao Cognito')
+    throw new Error('Não foi possível se conectar ao Cognito');
   }
-}
+};
 
 export const deleteUser = async ({ email }: Pick<Credentials, 'email'>) => {
   await cognitoClient.send(
@@ -76,8 +76,8 @@ export const deleteUser = async ({ email }: Pick<Credentials, 'email'>) => {
       UserPoolId,
       Username: email,
     }),
-  )
-}
+  );
+};
 
 export const setPassword = async ({ email, password }: Credentials) => {
   await cognitoClient.send(
@@ -87,8 +87,8 @@ export const setPassword = async ({ email, password }: Credentials) => {
       Password: password,
       Permanent: true,
     }),
-  )
-}
+  );
+};
 
 export const resetPassword = async ({ email }: Pick<Credentials, 'email'>) => {
   await cognitoClient.send(
@@ -96,8 +96,8 @@ export const resetPassword = async ({ email }: Pick<Credentials, 'email'>) => {
       UserPoolId,
       Username: email,
     }),
-  )
-}
+  );
+};
 
 export const updateUserMFA = async ({ email, flag }: Pick<Credentials, 'email'> & { flag: boolean }) => {
   try {
@@ -110,17 +110,17 @@ export const updateUserMFA = async ({ email, flag }: Pick<Credentials, 'email'> 
           PreferredMfa: flag,
         },
       }),
-    )
+    );
   } catch (error) {
-    throw new Error('Não foi possível se conectar ao Cognito')
+    throw new Error('Não foi possível se conectar ao Cognito');
   }
-}
+};
 
 export const prepareUserToTest = async ({ email, password }: Credentials) => {
-  const user = await getUser({ email })
+  const user = await getUser({ email });
 
   if (!user) {
-    await createUser({ email, password })
-    await setPassword({ email, password })
+    await createUser({ email, password });
+    await setPassword({ email, password });
   }
-}
+};

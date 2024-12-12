@@ -1,4 +1,4 @@
-import type { Either, UnexpectedError } from '@solutions/core/domain'
+import type { Either, UnexpectedError } from '@solutions/core/domain';
 import type {
   ForbiddenError,
   InvalidPasswordError,
@@ -8,12 +8,12 @@ import type {
   TooManyRequestsError,
   UserNotConfirmedError,
   UserNotFoundError,
-} from './errors'
+} from './errors';
 
 export interface ChangePasswordParams {
-  previousPassword: string
-  newPassword: string
-  accessToken: string
+  previousPassword: string;
+  newPassword: string;
+  accessToken: string;
 }
 
 export type ChangePasswordError =
@@ -25,8 +25,8 @@ export type ChangePasswordError =
   | TooManyRequestsError
   | UserNotConfirmedError
   | UserNotFoundError
-  | UnexpectedError
+  | UnexpectedError;
 
 export type ChangePassword = {
-  execute: (params: ChangePasswordParams) => Promise<Either<ChangePasswordError, void>>
-}
+  execute: (params: ChangePasswordParams) => Promise<Either<ChangePasswordError, void>>;
+};

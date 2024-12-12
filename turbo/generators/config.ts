@@ -1,4 +1,4 @@
-import type { PlopTypes } from '@turbo/gen'
+import type { PlopTypes } from '@turbo/gen';
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator('service', {
@@ -37,7 +37,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         templateFile: 'service-template/.env.sample',
       },
     ],
-  })
+  });
 
   plop.setGenerator('package', {
     description: 'Gera uma nova lib na pasta packages',
@@ -60,5 +60,5 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         templateFiles: 'package-template/**',
       },
     ],
-  })
+  });
 }

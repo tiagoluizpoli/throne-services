@@ -1,5 +1,5 @@
-import { injectionLoggerTokens } from '@solutions/logger'
-import { injectionAuthTokens } from 'node_modules/@solutions/auth/src/injections'
+import { injectionLoggerTokens } from '@solutions/logger';
+import { injectionAuthTokens } from 'node_modules/@solutions/auth/src/injections';
 
 export const injectionTokens = {
   usecases: {
@@ -35,4 +35,4 @@ export const injectionTokens = {
   global: {
     ...injectionLoggerTokens,
   },
-}
+};

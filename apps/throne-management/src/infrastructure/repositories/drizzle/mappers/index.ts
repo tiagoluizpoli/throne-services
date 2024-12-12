@@ -1,1 +1,1 @@
-export * from './integration-mapper'
+export * from './integration-mapper';

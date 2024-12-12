@@ -1,4 +1,4 @@
 export interface UseCaseError extends Error {
-  code: string
-  uuid?: string
+  code: string;
+  uuid?: string;
 }

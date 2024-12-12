@@ -1,2 +1,2 @@
-export * from './either'
-export * from './hash'
+export * from './either';
+export * from './hash';

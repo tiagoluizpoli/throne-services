@@ -6,29 +6,29 @@ import type {
   UserHasMultipleTenantsError,
   UserNotConfirmedError,
   UserNotFoundError,
-} from '@/domain/usecases/errors'
-import type { Either, UnexpectedError } from '@solutions/core/domain'
+} from '@/domain/usecases/errors';
+import type { Either, UnexpectedError } from '@solutions/core/domain';
 
 export type SigninParams = {
-  email: string
-  password: string
-  tenantCode?: string
-  mfaRequired?: boolean
-}
+  email: string;
+  password: string;
+  tenantCode?: string;
+  mfaRequired?: boolean;
+};
 
 export type InitSigninResult = {
-  challengeName: string
-  session: string
-  secretCode?: string
-}
+  challengeName: string;
+  session: string;
+  secretCode?: string;
+};
 
 export interface SimpleSigninResult {
-  token: string
-  accessToken: string
-  refreshToken: string
+  token: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
-export type SigninResult = InitSigninResult | SimpleSigninResult
+export type SigninResult = InitSigninResult | SimpleSigninResult;
 
 export type SigninError =
   | UserHasMultipleTenantsError
@@ -38,8 +38,8 @@ export type SigninError =
   | TooManyRequestsError
   | UserNotConfirmedError
   | UserNotFoundError
-  | UnexpectedError
+  | UnexpectedError;
 
 export interface Signin {
-  execute: (params: SigninParams) => Promise<Either<SigninError, SigninResult>>
+  execute: (params: SigninParams) => Promise<Either<SigninError, SigninResult>>;
 }

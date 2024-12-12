@@ -1,1 +1,1 @@
-export * from './controller-tenant-syncronization-decorator'
+export * from './controller-tenant-syncronization-decorator';

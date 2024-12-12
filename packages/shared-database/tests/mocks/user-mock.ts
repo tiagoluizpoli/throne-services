@@ -1,10 +1,10 @@
-import { faker } from '@faker-js/faker'
-import { User } from '../../src/entities'
-import { mockTenant } from './tenant-mock'
+import { faker } from '@faker-js/faker';
+import { User } from '../../src/entities';
+import { mockTenant } from './tenant-mock';
 
 export type MockUserParams = {
-  [key in keyof User]?: User[key]
-}
+  [key in keyof User]?: User[key];
+};
 
 export const mockUser = (props: MockUserParams = {}) =>
   User.create({
@@ -13,4 +13,4 @@ export const mockUser = (props: MockUserParams = {}) =>
     createdAt: faker.date.recent(),
     tenants: [mockTenant(), mockTenant()],
     ...props,
-  })
+  });

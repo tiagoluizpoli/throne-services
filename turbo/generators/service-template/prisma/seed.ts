@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/.prisma/client'
+import { PrismaClient } from '@prisma/.prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main(): Promise<void> {
   await prisma.tenant.upsert({
@@ -10,7 +10,7 @@ async function main(): Promise<void> {
       code: 'stoneage',
       name: 'Stone Age',
     },
-  })
+  });
 
   await prisma.example.upsert({
     where: { code: 'example-1' },
@@ -25,7 +25,7 @@ async function main(): Promise<void> {
         },
       },
     },
-  })
+  });
 
   await prisma.example.upsert({
     where: { code: 'example-2' },
@@ -40,15 +40,15 @@ async function main(): Promise<void> {
         },
       },
     },
-  })
+  });
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

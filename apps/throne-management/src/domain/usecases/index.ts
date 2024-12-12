@@ -1,2 +1,2 @@
-export * from './create-integration'
-export * from './update-integration'
+export * from './create-integration';
+export * from './update-integration';

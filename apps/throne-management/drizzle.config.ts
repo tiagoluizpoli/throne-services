@@ -1,14 +1,14 @@
-import fs from 'node:fs'
-import dotenv from 'dotenv'
-import { defineConfig } from 'drizzle-kit'
+import fs from 'node:fs';
+import dotenv from 'dotenv';
+import { defineConfig } from 'drizzle-kit';
 
-const envFile = '.env'
+const envFile = '.env';
 
 if (!fs.existsSync(envFile)) {
-  throw new Error('.env file not found')
+  throw new Error('.env file not found');
 }
 
-dotenv.config({ path: envFile })
+dotenv.config({ path: envFile });
 
 export default defineConfig({
   schema: './drizzle/schemas/schema.ts',
@@ -17,4 +17,4 @@ export default defineConfig({
   dbCredentials: {
     url: process.env.DATABASE_URL ?? '',
   },
-})
+});

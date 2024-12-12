@@ -1,2 +1,2 @@
-export * from './injections'
-export * from './injection-tokens'
+export * from './injections';
+export * from './injection-tokens';

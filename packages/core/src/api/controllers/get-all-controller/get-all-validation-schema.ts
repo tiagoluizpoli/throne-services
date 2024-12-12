@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 export const getAllValidationSchema = z.object({
   tenant: z.string(),
@@ -7,4 +7,4 @@ export const getAllValidationSchema = z.object({
   pageSize: z.coerce.number().min(1).max(100).default(10),
   orderBy: z.enum(['createdAt']).default('createdAt'),
   orderDirection: z.enum(['desc', 'asc']).default('desc'),
-})
+});

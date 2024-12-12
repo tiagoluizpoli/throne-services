@@ -1,4 +1,4 @@
-import { injectionLoggerTokens } from '@solutions/logger'
+import { injectionLoggerTokens } from '@solutions/logger';
 
 export const injectionTokens = {
   global: {
@@ -16,4 +16,4 @@ export const injectionTokens = {
     createIntegration: 'controller.create-integration',
     updateIntegration: 'controller.update-integration',
   },
-}
+};

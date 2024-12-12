@@ -1,1 +1,1 @@
-export * from './integration-errors'
+export * from './integration-errors';

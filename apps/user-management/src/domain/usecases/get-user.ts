@@ -1,29 +1,29 @@
-import type { Either, UnexpectedError } from '@solutions/core/domain'
+import type { Either, UnexpectedError } from '@solutions/core/domain';
 import type {
   ForbiddenError,
   NotAuthorizedError,
   TooManyRequestsError,
   UserNotConfirmedError,
   UserNotFoundError,
-} from './errors'
+} from './errors';
 
 export interface GetUserParams {
-  username: string
-  email: string
-  tenant: string
+  username: string;
+  email: string;
+  tenant: string;
 }
 
 export interface GetUserTenantResult {
-  code: string
-  name: string
+  code: string;
+  name: string;
 }
 export interface GetUserResult {
-  email: string
-  currentTenant: GetUserTenantResult
-  tenants: GetUserTenantResult[]
-  services: string[]
-  createdAt: Date
-  status: string
+  email: string;
+  currentTenant: GetUserTenantResult;
+  tenants: GetUserTenantResult[];
+  services: string[];
+  createdAt: Date;
+  status: string;
 }
 
 export type GetUserError =
@@ -32,8 +32,8 @@ export type GetUserError =
   | UnexpectedError
   | TooManyRequestsError
   | UserNotConfirmedError
-  | UserNotFoundError
+  | UserNotFoundError;
 
 export interface GetUser {
-  execute(params: GetUserParams): Promise<Either<GetUserError, GetUserResult>>
+  execute(params: GetUserParams): Promise<Either<GetUserError, GetUserResult>>;
 }

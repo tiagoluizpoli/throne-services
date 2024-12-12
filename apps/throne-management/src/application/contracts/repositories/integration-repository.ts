@@ -1,30 +1,30 @@
-import type { Integration } from '@/domain/entities'
+import type { Integration } from '@/domain/entities';
 
 export interface IntegrationRepositoryGetAllParams {
-  tenantCode: string
-  search?: string
-  pageIndex: number
-  pageSize: number
-  orderBy: 'createdAt'
-  orderDirection: 'desc' | 'asc'
+  tenantCode: string;
+  search?: string;
+  pageIndex: number;
+  pageSize: number;
+  orderBy: 'createdAt';
+  orderDirection: 'desc' | 'asc';
 }
 
-export type IntegrationRepositoryGetAllResult = Integration[]
+export type IntegrationRepositoryGetAllResult = Integration[];
 
 export interface IntegrationRepositoryCountParams {
-  tenantCode: string
-  search?: string
+  tenantCode: string;
+  search?: string;
 }
 
 export interface IntegrationRepositoryGetByIdParams {
-  tenantCode: string
-  id: string
+  tenantCode: string;
+  id: string;
 }
 
 export interface IntegrationRepository {
-  create: (integration: Integration) => Promise<void>
-  update: (integration: Integration) => Promise<void>
+  create: (integration: Integration) => Promise<void>;
+  update: (integration: Integration) => Promise<void>;
   // count: (params: IntegrationRepositoryCountParams) => Promise<number>
   // getAll: (params: IntegrationRepositoryGetAllParams) => Promise<IntegrationRepositoryGetAllResult>
-  getById: (params: IntegrationRepositoryGetByIdParams) => Promise<Integration | undefined>
+  getById: (params: IntegrationRepositoryGetByIdParams) => Promise<Integration | undefined>;
 }

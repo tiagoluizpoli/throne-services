@@ -1,6 +1,6 @@
-import { type Either, right } from '../../domain'
-import type { GetAll, GetAllErrors, GetAllParams, GetAllResult } from '../../domain/usecases/get-all'
-import type { GetAllRepository } from '../contracts'
+import { type Either, right } from '../../domain';
+import type { GetAll, GetAllErrors, GetAllParams, GetAllResult } from '../../domain/usecases/get-all';
+import type { GetAllRepository } from '../contracts';
 
 export class DbGetAll<R> implements GetAll<R> {
   constructor(private readonly getAllRepository: GetAllRepository<R>) {}
@@ -20,8 +20,8 @@ export class DbGetAll<R> implements GetAll<R> {
       pageSize,
       orderBy,
       orderDirection,
-    })
+    });
 
-    return right(result)
+    return right(result);
   }
 }

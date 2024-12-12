@@ -1,9 +1,9 @@
-import type { TenantParams } from '../../../domain'
+import type { TenantParams } from '../../../domain';
 
 export interface GetByIdRepositoryParams extends TenantParams {
-  id: string
+  id: string;
 }
 
 export interface GetByIdRepository<R> {
-  getById: (params: GetByIdRepositoryParams) => Promise<R | undefined>
+  getById: (params: GetByIdRepositoryParams) => Promise<R | undefined>;
 }

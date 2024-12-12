@@ -1,1 +1,1 @@
-export * from './mock-tenant'
+export * from './mock-tenant';

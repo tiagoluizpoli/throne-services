@@ -10,9 +10,9 @@ import {
   TooManyRequestsError,
   UserNotConfirmedError,
   UserNotFoundError,
-} from '@/domain'
-import type { InitiateAuthenticationError, RespondChallengeAuthError } from '@solutions/auth'
-import { UnexpectedError, type UseCaseError } from '@solutions/core/domain'
+} from '@/domain';
+import type { InitiateAuthenticationError, RespondChallengeAuthError } from '@solutions/auth';
+import { UnexpectedError, type UseCaseError } from '@solutions/core/domain';
 
 export const authenticationErrorMapper: Record<InitiateAuthenticationError, UseCaseError> = {
   ForbiddenException: new ForbiddenError(),
@@ -30,7 +30,7 @@ export const authenticationErrorMapper: Record<InitiateAuthenticationError, UseC
   CodeDeliveryFailureException: new CodeDeliveryFailureError(),
   LimitExceededException: new TooManyRequestsError(),
   TooManyFailedAttemptsException: new TooManyRequestsError(),
-}
+};
 
 export const challengeErrorMapper: Record<RespondChallengeAuthError, UseCaseError> = {
   CodeMismatchException: new CodeMismatchError(),
@@ -40,4 +40,4 @@ export const challengeErrorMapper: Record<RespondChallengeAuthError, UseCaseErro
   TooManyRequestsException: new TooManyRequestsError(),
   UnexpectedException: new UnexpectedError(),
   InvalidParameterException: new NotAuthorizedError(),
-}
+};

@@ -7,7 +7,8 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "biomejs.biome",
   "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.formatOnSaveMode": "file"
   },
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
@@ -31,5 +32,8 @@
   "conventionalCommits.promptFooter": false,
   "[terraform]": {
     "editor.defaultFormatter": "hashicorp.terraform"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
   }
 }

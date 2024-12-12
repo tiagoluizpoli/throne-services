@@ -1,4 +1,4 @@
-import type { Either } from '@solutions/core/domain'
+import type { Either } from '@solutions/core/domain';
 
 const GeneralPossibleErrors = [
   'ForbiddenException',
@@ -6,10 +6,10 @@ const GeneralPossibleErrors = [
   'TooManyRequestsException',
   'UserNotFoundException',
   'UnexpectedException',
-]
+];
 
 export interface GetUserParams {
-  username: string
+  username: string;
 }
 export type userStatus =
   | 'ARCHIVED'
@@ -19,38 +19,38 @@ export type userStatus =
   | 'FORCE_CHANGE_PASSWORD'
   | 'RESET_REQUIRED'
   | 'UNCONFIRMED'
-  | 'UNKNOWN'
+  | 'UNKNOWN';
 
 export interface GetUserResult {
-  username: string
-  email: string
-  groups: string[]
-  createdAt: Date
-  status: userStatus
+  username: string;
+  email: string;
+  groups: string[];
+  createdAt: Date;
+  status: userStatus;
 }
 
-export const GetUserPossibleErrors = [...GeneralPossibleErrors] as const
+export const GetUserPossibleErrors = [...GeneralPossibleErrors] as const;
 
-export type GetUserError = (typeof GetUserPossibleErrors)[number]
+export type GetUserError = (typeof GetUserPossibleErrors)[number];
 
 export interface SigninAuthenticationParams {
-  email: string
-  password: string
-  metadata?: Record<string, string>
+  email: string;
+  password: string;
+  metadata?: Record<string, string>;
 }
 
 export interface SigninAuthenticationResult {
-  token: string
-  accessToken: string
-  refreshToken: string
+  token: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface RefreshTokenAuthenticationResult extends Pick<SigninAuthenticationResult, 'accessToken' | 'token'> {}
 
 export interface ChangePasswordParams {
-  previousPassword: string
-  proposedPassword: string
-  accessToken: string
+  previousPassword: string;
+  proposedPassword: string;
+  accessToken: string;
 }
 
 export const ChangePasswordPossibleErrors = [
@@ -60,28 +60,28 @@ export const ChangePasswordPossibleErrors = [
   'LimitExceededException',
   'PasswordResetRequiredException',
   'UserNotConfirmedException',
-] as const
+] as const;
 
-export type ChangePasswordError = (typeof ChangePasswordPossibleErrors)[number]
+export type ChangePasswordError = (typeof ChangePasswordPossibleErrors)[number];
 
 export interface ForgotPasswordParams {
-  username: string
+  username: string;
 }
 
 export interface ForgotPasswordResult {
-  attributeName: string
-  deliveryType: 'EMAIL' | 'SMS'
-  destination: string
+  attributeName: string;
+  deliveryType: 'EMAIL' | 'SMS';
+  destination: string;
 }
 
-export const ForgotPasswordPossibleErrors = [...GeneralPossibleErrors, 'CodeDeliveryFailureException'] as const
+export const ForgotPasswordPossibleErrors = [...GeneralPossibleErrors, 'CodeDeliveryFailureException'] as const;
 
-export type ForgotPasswordError = (typeof ForgotPasswordPossibleErrors)[number]
+export type ForgotPasswordError = (typeof ForgotPasswordPossibleErrors)[number];
 
 export interface ConfirmForgotPasswordParams {
-  username: string
-  confirmationCode: string
-  password: string
+  username: string;
+  confirmationCode: string;
+  password: string;
 }
 
 export const ConfirmForgotPasswordPossibleErrors = [
@@ -91,91 +91,91 @@ export const ConfirmForgotPasswordPossibleErrors = [
   'InvalidPasswordException',
   'PasswordHistoryPolicyViolationException',
   'TooManyFailedAttemptsException',
-] as const
+] as const;
 
-export type ConfirmForgotPasswordError = (typeof ConfirmForgotPasswordPossibleErrors)[number]
+export type ConfirmForgotPasswordError = (typeof ConfirmForgotPasswordPossibleErrors)[number];
 
 export interface SignoutAuthenticationParams {
-  accessToken: string
+  accessToken: string;
 }
 
 export const SignoutAuthenticationPossibleErrors = [
   ...GeneralPossibleErrors,
   'PasswordResetRequiredException',
   'UserNotConfirmedException',
-] as const
+] as const;
 
-export type SignoutAuthenticationError = (typeof SignoutAuthenticationPossibleErrors)[number]
+export type SignoutAuthenticationError = (typeof SignoutAuthenticationPossibleErrors)[number];
 
 export const InitiateAuthenticationPossibleErrors = [
   ...GeneralPossibleErrors,
   'PasswordResetRequiredException',
   'UserNotConfirmedException',
-] as const
+] as const;
 
-export type InitiateAuthenticationError = (typeof InitiateAuthenticationPossibleErrors)[number]
+export type InitiateAuthenticationError = (typeof InitiateAuthenticationPossibleErrors)[number];
 
 export interface InitSigninAuthenticationResult {
-  challengeName: string
-  session: string
-  secretCode?: string
+  challengeName: string;
+  session: string;
+  secretCode?: string;
 }
 
 export type RespondChallengeAuthParams = {
-  challengeName: 'MFA_SETUP' | 'SOFTWARE_TOKEN_MFA'
-  session: string
+  challengeName: 'MFA_SETUP' | 'SOFTWARE_TOKEN_MFA';
+  session: string;
   params: {
-    code: string
-    username: string
-  }
-}
+    code: string;
+    username: string;
+  };
+};
 
 export const RespondChallengeAuthPossibleErrors = [
   ...GeneralPossibleErrors,
   'CodeMismatchException',
   'ExpiredCodeException',
-] as const
+] as const;
 
-export type RespondChallengeAuthError = (typeof RespondChallengeAuthPossibleErrors)[number]
+export type RespondChallengeAuthError = (typeof RespondChallengeAuthPossibleErrors)[number];
 
-export type RespondChallengeAuthResult = SigninAuthenticationResult
+export type RespondChallengeAuthResult = SigninAuthenticationResult;
 
 export type TokenVerifierResult = {
-  sub?: string
-  email?: string
-  groups?: string[]
-}
+  sub?: string;
+  email?: string;
+  groups?: string[];
+};
 
-export type TokenVerifierError = 'InvalidTokenError'
+export type TokenVerifierError = 'InvalidTokenError';
 
 export interface Authentication {
   signin: (
     params: SigninAuthenticationParams,
-  ) => Promise<Either<InitiateAuthenticationError, SigninAuthenticationResult>>
+  ) => Promise<Either<InitiateAuthenticationError, SigninAuthenticationResult>>;
 
   initSignin: (
     params: SigninAuthenticationParams,
-  ) => Promise<Either<InitiateAuthenticationError, InitSigninAuthenticationResult>>
+  ) => Promise<Either<InitiateAuthenticationError, InitSigninAuthenticationResult>>;
 
   respondChallenge: (
     params: RespondChallengeAuthParams,
-  ) => Promise<Either<RespondChallengeAuthError, RespondChallengeAuthResult>>
+  ) => Promise<Either<RespondChallengeAuthError, RespondChallengeAuthResult>>;
 
-  verify(token: string): Promise<Either<TokenVerifierError, TokenVerifierResult>>
+  verify(token: string): Promise<Either<TokenVerifierError, TokenVerifierResult>>;
 
-  refreshToken(refreshToken: string): Promise<Either<InitiateAuthenticationError, RefreshTokenAuthenticationResult>>
+  refreshToken(refreshToken: string): Promise<Either<InitiateAuthenticationError, RefreshTokenAuthenticationResult>>;
 
   // Change password
-  changePassword(params: ChangePasswordParams): Promise<Either<ChangePasswordError, void>>
+  changePassword(params: ChangePasswordParams): Promise<Either<ChangePasswordError, void>>;
 
   // Forgot password
-  forgotPassword(params: ForgotPasswordParams): Promise<Either<ForgotPasswordError, ForgotPasswordResult>>
+  forgotPassword(params: ForgotPasswordParams): Promise<Either<ForgotPasswordError, ForgotPasswordResult>>;
 
   // Confirm forgot password
-  confirmForgotPassword(params: ConfirmForgotPasswordParams): Promise<Either<ConfirmForgotPasswordError, void>>
+  confirmForgotPassword(params: ConfirmForgotPasswordParams): Promise<Either<ConfirmForgotPasswordError, void>>;
 
   // Signout
-  signout(params: SignoutAuthenticationParams): Promise<Either<SignoutAuthenticationError, void>>
+  signout(params: SignoutAuthenticationParams): Promise<Either<SignoutAuthenticationError, void>>;
 
-  getUser(params: GetUserParams): Promise<Either<GetUserError, GetUserResult>>
+  getUser(params: GetUserParams): Promise<Either<GetUserError, GetUserResult>>;
 }

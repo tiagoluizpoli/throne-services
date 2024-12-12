@@ -7,16 +7,16 @@ import type {
   UserHasMultipleTenantsError,
   UserNotConfirmedError,
   UserNotFoundError,
-} from '@/domain/usecases/errors'
-import type { Either, UnexpectedError } from '@solutions/core/domain'
+} from '@/domain/usecases/errors';
+import type { Either, UnexpectedError } from '@solutions/core/domain';
 
 export interface RefreshTokenParams {
-  refreshToken: string
+  refreshToken: string;
 }
 
 export interface RefreshTokenResult {
-  accessToken: string
-  token: string
+  accessToken: string;
+  token: string;
 }
 
 export type RefreshTokenError =
@@ -28,8 +28,8 @@ export type RefreshTokenError =
   | TooManyRequestsError
   | UserNotConfirmedError
   | UserNotFoundError
-  | UnexpectedError
+  | UnexpectedError;
 
 export interface RefreshToken {
-  execute: (params: RefreshTokenParams) => Promise<Either<RefreshTokenError, RefreshTokenResult>>
+  execute: (params: RefreshTokenParams) => Promise<Either<RefreshTokenError, RefreshTokenResult>>;
 }

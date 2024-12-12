@@ -1,1 +1,1 @@
-export * from './authentication-mapper'
+export * from './authentication-mapper';

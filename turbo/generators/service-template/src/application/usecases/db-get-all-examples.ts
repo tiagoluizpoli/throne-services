@@ -1,4 +1,4 @@
-import type { ExamplesRepository } from '@/application/contracts'
+import type { ExamplesRepository } from '@/application/contracts';
 import {
   type Either,
   type GetAllExamples,
@@ -8,8 +8,8 @@ import {
   UnexpectedError,
   left,
   right,
-} from '@/domain'
-import { inject, injectable } from 'tsyringe'
+} from '@/domain';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class DbGetAllExamples implements GetAllExamples {
@@ -24,7 +24,7 @@ export class DbGetAllExamples implements GetAllExamples {
     orderDirection,
   }: GetAllExamplesParams): Promise<Either<GetAllExamplesPossibleErrors, GetAllExamplesResult>> => {
     try {
-      const countResult = await this.examplesRepository.count({ tenantCode, search })
+      const countResult = await this.examplesRepository.count({ tenantCode, search });
 
       const getAllExamplesResult = await this.examplesRepository.getAll({
         tenantCode,
@@ -33,16 +33,16 @@ export class DbGetAllExamples implements GetAllExamples {
         pageSize,
         orderBy,
         orderDirection,
-      })
+      });
 
       return right({
         total: countResult,
         examples: getAllExamplesResult,
-      })
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
 
-      return left(new UnexpectedError())
+      return left(new UnexpectedError());
     }
-  }
+  };
 }

@@ -1,8 +1,8 @@
-import type { tenant } from '@prisma/.prisma/client'
+import type { tenant } from '@prisma/.prisma/client';
 
-import { Tenant } from '@/domain/entities'
+import { Tenant } from '@/domain/entities';
 
-type TenantPersistence = tenant
+type TenantPersistence = tenant;
 
 export class TenantMapper {
   static toDomain(raw: TenantPersistence): Tenant {
@@ -11,6 +11,6 @@ export class TenantMapper {
         code: raw.code,
       },
       raw.id,
-    )
+    );
   }
 }

@@ -1,7 +1,7 @@
-import { awsEnv, cognitoEnv, commonEnv, serverEnv } from '@solutions/core/main'
-import { config } from 'dotenv'
+import { awsEnv, cognitoEnv, commonEnv, serverEnv } from '@solutions/core/main';
+import { config } from 'dotenv';
 
-config({ override: true })
+config({ override: true });
 
 export const env = {
   logger: {
@@ -12,4 +12,4 @@ export const env = {
   ...serverEnv(),
   ...awsEnv(),
   ...cognitoEnv(),
-} as const
+} as const;

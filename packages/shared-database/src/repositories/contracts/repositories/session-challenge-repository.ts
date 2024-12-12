@@ -1,12 +1,12 @@
-import type { SessionChallenge } from '../../../entities'
+import type { SessionChallenge } from '../../../entities';
 
 export interface GetBySessionIdentifierSessionChallengeRepositoryParams {
-  sessionIdentifier: string
+  sessionIdentifier: string;
 }
 
 export interface SessionChallengeRepository {
-  save: (sessionChallenge: SessionChallenge) => Promise<void>
+  save: (sessionChallenge: SessionChallenge) => Promise<void>;
   getBySessionIdentifier: (
     params: GetBySessionIdentifierSessionChallengeRepositoryParams,
-  ) => Promise<SessionChallenge | undefined>
+  ) => Promise<SessionChallenge | undefined>;
 }

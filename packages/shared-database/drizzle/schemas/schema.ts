@@ -1,5 +1,5 @@
-import { relations, sql } from 'drizzle-orm'
-import { foreignKey, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core'
+import { relations, sql } from 'drizzle-orm';
+import { foreignKey, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
 
 export const session = pgTable(
   'session',
@@ -27,7 +27,7 @@ export const session = pgTable(
       .onDelete('cascade')
       .onUpdate('cascade'),
   }),
-)
+);
 
 export const session_challenge = pgTable(
   'session_challenge',
@@ -54,7 +54,7 @@ export const session_challenge = pgTable(
       .onDelete('cascade')
       .onUpdate('cascade'),
   }),
-)
+);
 
 export const tenant = pgTable('tenant', {
   id: text('id').notNull().primaryKey().default(sql`gen_random_uuid()`),
@@ -64,14 +64,14 @@ export const tenant = pgTable('tenant', {
   apikey: text('apikey').notNull(),
   availableUntil: timestamp('availableUntil', { precision: 3 }),
   createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
-})
+});
 
 export const user = pgTable('user', {
   id: text('id').notNull().primaryKey().default(sql`gen_random_uuid()`),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
   createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
-})
+});
 
 export const tenant_user = pgTable(
   'tenant_user',
@@ -101,7 +101,7 @@ export const tenant_user = pgTable(
       tenant_user.userId,
     ),
   }),
-)
+);
 
 export const sessionRelations = relations(session, ({ one }) => ({
   tenant: one(tenant, {
@@ -114,7 +114,7 @@ export const sessionRelations = relations(session, ({ one }) => ({
     fields: [session.userId],
     references: [user.id],
   }),
-}))
+}));
 
 export const session_challengeRelations = relations(session_challenge, ({ one }) => ({
   tenant: one(tenant, {
@@ -127,7 +127,7 @@ export const session_challengeRelations = relations(session_challenge, ({ one })
     fields: [session_challenge.userId],
     references: [user.id],
   }),
-}))
+}));
 
 export const tenantRelations = relations(tenant, ({ many }) => ({
   tenantUser: many(tenant_user, {
@@ -139,7 +139,7 @@ export const tenantRelations = relations(tenant, ({ many }) => ({
   session_challenge: many(session_challenge, {
     relationName: 'session_challengeTotenant',
   }),
-}))
+}));
 
 export const userRelations = relations(user, ({ many }) => ({
   tenantUser: many(tenant_user, {
@@ -151,7 +151,7 @@ export const userRelations = relations(user, ({ many }) => ({
   session_challenge: many(session_challenge, {
     relationName: 'session_challengeTouser',
   }),
-}))
+}));
 
 export const tenant_userRelations = relations(tenant_user, ({ one }) => ({
   tenant: one(tenant, {
@@ -164,4 +164,4 @@ export const tenant_userRelations = relations(tenant_user, ({ one }) => ({
     fields: [tenant_user.userId],
     references: [user.id],
   }),
-}))
+}));

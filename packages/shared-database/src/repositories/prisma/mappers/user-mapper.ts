@@ -1,13 +1,13 @@
-import { User } from '../../../entities'
-import { TenantMapper } from './tenant-mapper'
+import { User } from '../../../entities';
+import { TenantMapper } from './tenant-mapper';
 
-import type { tenant, tenant_user, user } from '../../../client'
+import type { tenant, tenant_user, user } from '../../../client';
 
 type UserPersistence = user & {
   tenantUser: (tenant_user & {
-    tenant: tenant
-  })[]
-}
+    tenant: tenant;
+  })[];
+};
 
 export class UserMapper {
   static toDomain(raw: UserPersistence): User {
@@ -19,6 +19,6 @@ export class UserMapper {
         tenants: raw.tenantUser.map((tu) => TenantMapper.toDomain(tu.tenant)),
       },
       raw.id,
-    )
+    );
   }
 }

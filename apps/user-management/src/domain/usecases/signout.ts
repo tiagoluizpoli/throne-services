@@ -1,4 +1,4 @@
-import type { Either, UnexpectedError } from '@solutions/core/domain'
+import type { Either, UnexpectedError } from '@solutions/core/domain';
 import type {
   ForbiddenError,
   NotAuthorizedError,
@@ -7,10 +7,10 @@ import type {
   UserHasMultipleTenantsError,
   UserNotConfirmedError,
   UserNotFoundError,
-} from './errors'
+} from './errors';
 
 export interface SignoutParams {
-  accessToken: string
+  accessToken: string;
 }
 
 export type SignoutError =
@@ -21,8 +21,8 @@ export type SignoutError =
   | TooManyRequestsError
   | UserNotConfirmedError
   | UserNotFoundError
-  | UnexpectedError
+  | UnexpectedError;
 
 export interface Signout {
-  execute: (params: SignoutParams) => Promise<Either<SignoutError, void>>
+  execute: (params: SignoutParams) => Promise<Either<SignoutError, void>>;
 }

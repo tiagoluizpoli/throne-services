@@ -1,7 +1,7 @@
-import { Router } from 'express'
+import { Router } from 'express';
 
-import { adaptRoute } from '@/main/adapters'
+import { adaptRoute } from '@/main/adapters';
 
-export const exampleRouter = Router()
+export const exampleRouter = Router();
 
-exampleRouter.get('/', adaptRoute('GetAllExamplesController'))
+exampleRouter.get('/', adaptRoute('GetAllExamplesController'));

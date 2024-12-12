@@ -1,3 +1,3 @@
 export interface SearchParams {
-  search?: string
+  search?: string;
 }

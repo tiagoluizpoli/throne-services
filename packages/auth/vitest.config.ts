@@ -1,5 +1,5 @@
-import path from 'node:path'
-import { defineConfig } from 'vitest/config'
+import path from 'node:path';
+import { defineConfig } from 'vitest/config';
 
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
@@ -15,4 +15,4 @@ export default defineConfig({
       ),
     },
   },
-})
+});

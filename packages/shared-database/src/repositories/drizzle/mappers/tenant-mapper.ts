@@ -1,7 +1,7 @@
-import type { tenant } from '../../../../drizzle/schemas/schema'
-import { Tenant } from '../../../entities'
+import type { tenant } from '../../../../drizzle/schemas/schema';
+import { Tenant } from '../../../entities';
 
-type TenantPersistence = typeof tenant.$inferSelect
+type TenantPersistence = typeof tenant.$inferSelect;
 
 export class TenantMapper {
   static toDomain(raw: TenantPersistence): Tenant {
@@ -15,8 +15,8 @@ export class TenantMapper {
         description: raw.description ?? undefined,
       },
       raw.id,
-    )
+    );
 
-    return tenant
+    return tenant;
   }
 }

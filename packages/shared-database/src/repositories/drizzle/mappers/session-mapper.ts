@@ -1,20 +1,20 @@
-import type { session, tenant } from '../../../../drizzle/schemas/schema'
-import { Session } from '../../../entities'
-import { TenantMapper } from './tenant-mapper'
+import type { session, tenant } from '../../../../drizzle/schemas/schema';
+import { Session } from '../../../entities';
+import { TenantMapper } from './tenant-mapper';
 
 type SessionPersistence = {
-  tenant: typeof tenant.$inferSelect | null
-  session: typeof session.$inferSelect
-}
+  tenant: typeof tenant.$inferSelect | null;
+  session: typeof session.$inferSelect;
+};
 
 export class SessionMapper {
   static toDomain(raw: SessionPersistence[]): Session | undefined {
-    const persistence = raw[0]
+    const persistence = raw[0];
 
-    const { session: sessionPersistence, tenant: tenantPersistence } = persistence
+    const { session: sessionPersistence, tenant: tenantPersistence } = persistence;
 
     if (!sessionPersistence || !tenantPersistence) {
-      return undefined
+      return undefined;
     }
 
     return Session.create(
@@ -27,6 +27,6 @@ export class SessionMapper {
         tenant: TenantMapper.toDomain(tenantPersistence),
       },
       sessionPersistence.id,
-    )
+    );
   }
 }

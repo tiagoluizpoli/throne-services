@@ -1,19 +1,19 @@
-import type { Either, UnexpectedError } from '@solutions/core/domain'
+import type { Either, UnexpectedError } from '@solutions/core/domain';
 import type {
   CodeDeliveryFailureError,
   ForbiddenError,
   NotAuthorizedError,
   TooManyRequestsError,
   UserNotFoundError,
-} from './errors'
+} from './errors';
 
 export interface ForgotPasswordParams {
-  username: string
+  username: string;
 }
 
 export interface ForgotPasswordResult {
-  attributeName: string
-  destination: string
+  attributeName: string;
+  destination: string;
 }
 
 export type ForgotPasswordError =
@@ -22,8 +22,8 @@ export type ForgotPasswordError =
   | NotAuthorizedError
   | TooManyRequestsError
   | UserNotFoundError
-  | UnexpectedError
+  | UnexpectedError;
 
 export interface ForgotPassword {
-  execute: (params: ForgotPasswordParams) => Promise<Either<ForgotPasswordError, ForgotPasswordResult>>
+  execute: (params: ForgotPasswordParams) => Promise<Either<ForgotPasswordError, ForgotPasswordResult>>;
 }

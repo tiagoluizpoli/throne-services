@@ -1,8 +1,8 @@
-import { injectable } from 'tsyringe'
-import { prisma } from '../../client'
-import type { Tenant } from '../../entities'
-import type { GetByCodeTenantsRepositoryParams, TenantsRepository } from '../contracts'
-import { TenantMapper } from './mappers'
+import { injectable } from 'tsyringe';
+import { prisma } from '../../client';
+import type { Tenant } from '../../entities';
+import type { GetByCodeTenantsRepositoryParams, TenantsRepository } from '../contracts';
+import { TenantMapper } from './mappers';
 
 @injectable()
 export class PrismaTenantsRepository implements TenantsRepository {
@@ -11,12 +11,12 @@ export class PrismaTenantsRepository implements TenantsRepository {
       where: {
         code,
       },
-    })
+    });
 
     if (!tenantPersistence) {
-      return undefined
+      return undefined;
     }
 
-    return TenantMapper.toDomain(tenantPersistence)
+    return TenantMapper.toDomain(tenantPersistence);
   }
 }

@@ -5,16 +5,16 @@ import type {
   ForbiddenError,
   NotAuthorizedError,
   TooManyRequestsError,
-} from '@/domain/usecases/errors'
-import type { Either, UnexpectedError } from '@solutions/core/domain'
+} from '@/domain/usecases/errors';
+import type { Either, UnexpectedError } from '@solutions/core/domain';
 
 export type RespondChallengeParams = {
-  challengeName: 'MFA_SETUP' | 'SOFTWARE_TOKEN_MFA'
-  session: string
+  challengeName: 'MFA_SETUP' | 'SOFTWARE_TOKEN_MFA';
+  session: string;
   params: {
-    code: string
-  }
-}
+    code: string;
+  };
+};
 
 export type RespondChallengeError =
   | ChallengeSessionNotFoundError
@@ -23,14 +23,14 @@ export type RespondChallengeError =
   | ForbiddenError
   | NotAuthorizedError
   | TooManyRequestsError
-  | UnexpectedError
+  | UnexpectedError;
 
 export type RespondChallengeResult = {
-  token: string
-  accessToken: string
-  refreshToken: string
-}
+  token: string;
+  accessToken: string;
+  refreshToken: string;
+};
 
 export interface RespondChallenge {
-  execute: (params: RespondChallengeParams) => Promise<Either<RespondChallengeError, RespondChallengeResult>>
+  execute: (params: RespondChallengeParams) => Promise<Either<RespondChallengeError, RespondChallengeResult>>;
 }

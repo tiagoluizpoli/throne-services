@@ -1,18 +1,18 @@
-import { prisma } from '../../client'
-import type { Session } from '../../entities'
+import { prisma } from '../../client';
+import type { Session } from '../../entities';
 import type {
   GetByRefreshTokenIdentifierSessionRepositoryParams,
   GetByTokenIdentifierSessionRepositoryParams,
   SessionRepository,
-} from '../contracts'
-import { SessionMapper } from './mappers'
+} from '../contracts';
+import { SessionMapper } from './mappers';
 
 export class PrismaSessionRepository implements SessionRepository {
   save = async (session: Session): Promise<void> => {
     await prisma.session.create({
       data: SessionMapper.toCreatePersistence(session),
-    })
-  }
+    });
+  };
 
   getByTokenIdentifier = async ({
     tokenIdentifier,
@@ -33,14 +33,14 @@ export class PrismaSessionRepository implements SessionRepository {
           },
         },
       },
-    })
+    });
 
     if (!session) {
-      return undefined
+      return undefined;
     }
 
-    return SessionMapper.toDomain(session)
-  }
+    return SessionMapper.toDomain(session);
+  };
 
   getByRefreshTokenIdentifier = async ({
     refreshTokenIdentifier,
@@ -64,12 +64,12 @@ export class PrismaSessionRepository implements SessionRepository {
           },
         },
       },
-    })
+    });
 
     if (!session) {
-      return undefined
+      return undefined;
     }
 
-    return SessionMapper.toDomain(session)
-  }
+    return SessionMapper.toDomain(session);
+  };
 }

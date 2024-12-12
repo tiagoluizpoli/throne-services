@@ -1,4 +1,4 @@
-import { integer, jsonb, pgEnum, pgTable, text, timestamp, unique, uuid, varchar } from 'drizzle-orm/pg-core'
+import { integer, jsonb, pgEnum, pgTable, text, timestamp, unique, uuid, varchar } from 'drizzle-orm/pg-core';
 
 export const tenantTable = pgTable('tenant', {
   id: uuid('id').notNull().primaryKey().defaultRandom(),
@@ -10,9 +10,9 @@ export const tenantTable = pgTable('tenant', {
   }).notNull(),
   description: varchar('description'),
   createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
-})
+});
 
-export const MethodEnum = pgEnum('Method', ['GET', 'POST', 'PUT', 'DELETE'])
+export const MethodEnum = pgEnum('Method', ['GET', 'POST', 'PUT', 'DELETE']);
 
 export const integrationTable = pgTable(
   'integration',
@@ -21,44 +21,32 @@ export const integrationTable = pgTable(
     tenantId: uuid('tenantId')
       .references(() => tenantTable.id)
       .notNull(),
-    code: varchar('code', {
-      length: 128,
-    }).notNull(),
-    name: varchar('name', {
-      length: 128,
-    }).notNull(),
-    uniqueCode: varchar('uniqueCode', {
-      length: 256,
-    }),
+    code: varchar('code', { length: 128 }).notNull(),
+    name: varchar('name', { length: 128 }).notNull(),
+    uniqueCode: varchar('uniqueCode', { length: 256 }),
     sourceMethod: MethodEnum('sourceMethod').default('GET').notNull(),
     targetMethod: MethodEnum('targetMethod').default('GET').notNull(),
-    targetUrl: varchar('targetUrl', {
-      length: 256,
-    }).notNull(),
+    targetUrl: varchar('targetUrl', { length: 256 }).notNull(),
     description: text('description'),
     createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
   },
   (table) => [
     unique('unique_integrationCode_tenantCode_sourceMethod_targetMethod_targetUrl').on(table.tenantId, table.code),
   ],
-)
+);
 
 export const schemaTable = pgTable('schema', {
   id: uuid('id').notNull().primaryKey().defaultRandom(),
   integrationId: uuid('integrationId')
     .references(() => integrationTable.id)
     .notNull(),
-  code: varchar('code', {
-    length: 128,
-  }).notNull(),
-  name: varchar('name', {
-    length: 128,
-  }).notNull(),
+  code: varchar('code', { length: 128 }).notNull(),
+  name: varchar('name', { length: 128 }).notNull(),
   schema: jsonb('schema').notNull(),
   createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
-})
+});
 
-export const mappingTypeEnum = pgEnum('MappingType', ['input', 'output'])
+export const mappingTypeEnum = pgEnum('MappingType', ['input', 'output']);
 
 export const mappingTable = pgTable(
   'mapping',
@@ -78,9 +66,9 @@ export const mappingTable = pgTable(
     createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
   },
   (table) => [unique('unique_integrationId_type').on(table.integrationId, table.type)],
-)
+);
 
-export const executionStatusEnum = pgEnum('ExecutionStatus', ['processing', 'success', 'failed'])
+export const executionStatusEnum = pgEnum('ExecutionStatus', ['processing', 'success', 'failed']);
 
 export const executionTable = pgTable('execution', {
   id: uuid('id').notNull().primaryKey().defaultRandom(),
@@ -91,4 +79,4 @@ export const executionTable = pgTable('execution', {
   duration: integer('duration').notNull(),
   status: executionStatusEnum('status').default('processing').notNull(),
   error: jsonb('error'),
-})
+});

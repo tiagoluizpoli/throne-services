@@ -1,7 +1,7 @@
-import 'reflect-metadata'
+import 'reflect-metadata';
 
-import { RespondChallengeController } from '@/api'
-import { RemoteRespondChallenge } from '@/application'
+import { RespondChallengeController } from '@/api';
+import { RemoteRespondChallenge } from '@/application';
 import {
   ChallengeSessionNotFoundError,
   CodeMismatchError,
@@ -9,21 +9,21 @@ import {
   ForbiddenError,
   NotAuthorizedError,
   TooManyRequestsError,
-} from '@/domain'
-import { faker } from '@faker-js/faker'
-import { MockAuthentication, type RespondChallengeAuthParams } from '@solutions/auth'
-import { getHash } from '@solutions/core/domain'
-import { UnexpectedError, left } from '@solutions/core/domain'
-import { Logger } from '@solutions/logger'
-import { InMemorySessionChallengeRepository, InMemorySessionRepository } from '@solutions/shared-database'
-import { mockSessionChallenge } from '@solutions/shared-database/tests'
+} from '@/domain';
+import { faker } from '@faker-js/faker';
+import { MockAuthentication, type RespondChallengeAuthParams } from '@solutions/auth';
+import { getHash } from '@solutions/core/domain';
+import { UnexpectedError, left } from '@solutions/core/domain';
+import { Logger } from '@solutions/logger';
+import { InMemorySessionChallengeRepository, InMemorySessionRepository } from '@solutions/shared-database';
+import { mockSessionChallenge } from '@solutions/shared-database/tests';
 
-const initialSessionChallengeIdentifier = faker.string.uuid()
+const initialSessionChallengeIdentifier = faker.string.uuid();
 const initialSessionChallenge = mockSessionChallenge({
   sessionChallengeParams: {
     sessionIdentifier: getHash({ content: initialSessionChallengeIdentifier }),
   },
-})
+});
 
 const makeValidSutParams = (override: Partial<RespondChallengeAuthParams> = {}): RespondChallengeAuthParams => ({
   challengeName: faker.helpers.arrayElement(['MFA_SETUP', 'SOFTWARE_TOKEN_MFA']),
@@ -33,34 +33,34 @@ const makeValidSutParams = (override: Partial<RespondChallengeAuthParams> = {}):
     username: initialSessionChallenge.user?.email!,
   },
   ...override,
-})
+});
 
 type SutTypes = {
-  sut: RespondChallengeController
-  respondChallenge: RemoteRespondChallenge
-}
+  sut: RespondChallengeController;
+  respondChallenge: RemoteRespondChallenge;
+};
 
 const makeSut = (initialSessionChallenges = []): SutTypes => {
   const sessionChallengeRepository = new InMemorySessionChallengeRepository([
     initialSessionChallenge,
     ...initialSessionChallenges,
-  ])
-  const sessionRepository = new InMemorySessionRepository()
-  const authentication = new MockAuthentication()
-  const logger = new Logger({ level: 'info' })
+  ]);
+  const sessionRepository = new InMemorySessionRepository();
+  const authentication = new MockAuthentication();
+  const logger = new Logger({ level: 'info' });
 
   const respondChallenge = new RemoteRespondChallenge(
     sessionChallengeRepository,
     sessionRepository,
     authentication,
     logger,
-  )
-  const sut = new RespondChallengeController(respondChallenge)
+  );
+  const sut = new RespondChallengeController(respondChallenge);
   return {
     sut,
     respondChallenge,
-  }
-}
+  };
+};
 
 describe('RespondChallengeController', () => {
   it.each([
@@ -69,13 +69,13 @@ describe('RespondChallengeController', () => {
     },
     { params: makeValidSutParams({ challengeName: 'SOFTWARE_TOKEN_MFA' }) },
   ])('should return 200 when successfully respond to challenge $params.challengeName', async () => {
-    const { sut } = makeSut()
+    const { sut } = makeSut();
 
-    const result = await sut.handle(makeValidSutParams())
+    const result = await sut.handle(makeValidSutParams());
 
-    expect(result.statusCode).toBe(200)
-    expect(result.body).toEqual
-  })
+    expect(result.statusCode).toBe(200);
+    expect(result.body).toEqual;
+  });
 
   it.each([
     {
@@ -125,14 +125,14 @@ describe('RespondChallengeController', () => {
       message: 'The received value for field "params" is invalid. Required',
     },
   ])('should return 400 when $condition', async ({ message, params }) => {
-    const { sut } = makeSut()
+    const { sut } = makeSut();
 
     // @ts-expect-error: testing purpose
-    const result = await sut.handle(params)
+    const result = await sut.handle(params);
 
-    expect(result.statusCode).toBe(400)
-    expect(result.body.message).toBe(message)
-  })
+    expect(result.statusCode).toBe(400);
+    expect(result.body.message).toBe(message);
+  });
 
   it.each([
     { code: 400, respondChallengeError: new CodeMismatchError() },
@@ -145,35 +145,35 @@ describe('RespondChallengeController', () => {
   ])(
     'should return $code when respondChallenge left $respondChallengeError.code',
     async ({ code, respondChallengeError }) => {
-      const { sut, respondChallenge } = makeSut()
-      vi.spyOn(respondChallenge, 'execute').mockResolvedValueOnce(left(respondChallengeError))
+      const { sut, respondChallenge } = makeSut();
+      vi.spyOn(respondChallenge, 'execute').mockResolvedValueOnce(left(respondChallengeError));
 
-      const result = await sut.handle(makeValidSutParams())
+      const result = await sut.handle(makeValidSutParams());
 
-      expect(result.statusCode).toBe(code)
+      expect(result.statusCode).toBe(code);
     },
-  )
+  );
 
   it('should return 500 when respondChallenge throws', async () => {
-    const { sut, respondChallenge } = makeSut()
+    const { sut, respondChallenge } = makeSut();
     vi.spyOn(respondChallenge, 'execute').mockImplementationOnce(() => {
-      throw new Error()
-    })
+      throw new Error();
+    });
 
-    const result = await sut.handle(makeValidSutParams())
+    const result = await sut.handle(makeValidSutParams());
 
-    expect(result.statusCode).toBe(500)
-    expect(result.body.message).toBe('Internal server error')
-  })
+    expect(result.statusCode).toBe(500);
+    expect(result.body.message).toBe('Internal server error');
+  });
 
   it('should return 500 when respondChallenge left a unmapped error', async () => {
-    const { sut, respondChallenge } = makeSut()
+    const { sut, respondChallenge } = makeSut();
     // @ts-expect-error: testing unmapped error
-    vi.spyOn(respondChallenge, 'execute').mockResolvedValue(left(new Error()))
+    vi.spyOn(respondChallenge, 'execute').mockResolvedValue(left(new Error()));
 
-    const result = await sut.handle(makeValidSutParams())
+    const result = await sut.handle(makeValidSutParams());
 
-    expect(result.statusCode).toBe(500)
-    expect(result.body.message).toBe('Internal server error')
-  })
-})
+    expect(result.statusCode).toBe(500);
+    expect(result.body.message).toBe('Internal server error');
+  });
+});

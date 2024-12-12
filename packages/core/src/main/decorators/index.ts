@@ -1,2 +1,2 @@
-export * from './controller-decorators'
-export * from './decorator-types'
+export * from './controller-decorators';
+export * from './decorator-types';

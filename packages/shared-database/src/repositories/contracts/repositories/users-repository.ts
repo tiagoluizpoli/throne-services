@@ -1,6 +1,6 @@
-import type { GetByFieldRepository } from '@solutions/core/application'
-import type { User } from '../../../entities'
+import type { GetByFieldRepository } from '@solutions/core/application';
+import type { User } from '../../../entities';
 
 export interface UsersRepository extends GetByFieldRepository<User> {
-  getByEmail: (email: string) => Promise<User | undefined>
+  getByEmail: (email: string) => Promise<User | undefined>;
 }

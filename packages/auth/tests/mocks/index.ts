@@ -1,2 +1,2 @@
-export * from './tokens'
-export * from './setup-mocks'
+export * from './tokens';
+export * from './setup-mocks';

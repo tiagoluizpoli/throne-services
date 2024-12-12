@@ -1,22 +1,22 @@
-import { type Controller, GetAllExamplesController, getAllExamplesRequestSchema } from '@/api'
-import { DbGetAllExamples, type ExamplesRepository } from '@/application'
-import type { GetAllExamples } from '@/domain'
-import { PrismaExamplesRepository } from '@/infrastructure'
-import { env } from '@/main/config'
-import { ErrorHandlingControllerDecorator, ValidationControllerDecorator } from '@/main/decorators'
-import { container } from 'tsyringe'
+import { type Controller, GetAllExamplesController, getAllExamplesRequestSchema } from '@/api';
+import { DbGetAllExamples, type ExamplesRepository } from '@/application';
+import type { GetAllExamples } from '@/domain';
+import { PrismaExamplesRepository } from '@/infrastructure';
+import { env } from '@/main/config';
+import { ErrorHandlingControllerDecorator, ValidationControllerDecorator } from '@/main/decorators';
+import { container } from 'tsyringe';
 
-const isLocalEnv = env.baseConfig.environment === 'local'
-const isProdEnv = env.baseConfig.environment === 'prod'
+const isLocalEnv = env.baseConfig.environment === 'local';
+const isProdEnv = env.baseConfig.environment === 'prod';
 
 // Infra injections
 
 // Repositories
-container.register<ExamplesRepository>('ExamplesRepository', PrismaExamplesRepository)
+container.register<ExamplesRepository>('ExamplesRepository', PrismaExamplesRepository);
 
 // usecases
 // Examples
-container.register<GetAllExamples>('GetAllExamples', DbGetAllExamples)
+container.register<GetAllExamples>('GetAllExamples', DbGetAllExamples);
 
 // Api
 container.register<Controller>('GetAllCategoriesController', {
@@ -26,6 +26,6 @@ container.register<Controller>('GetAllCategoriesController', {
         new GetAllExamplesController(container.resolve('GetAllExamples')),
         getAllExamplesRequestSchema,
       ),
-    )
+    );
   },
-})
+});

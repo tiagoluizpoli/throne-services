@@ -1,17 +1,17 @@
-import { type Controller, unauthorized } from '@solutions/core/api'
-import type { TenantsRepository as ServiceTenantsRepository } from '@solutions/core/application'
-import { Tenant as ServiceTenant } from '@solutions/core/domain'
-import type { Constructor } from '@solutions/core/main'
+import { type Controller, unauthorized } from '@solutions/core/api';
+import type { TenantsRepository as ServiceTenantsRepository } from '@solutions/core/application';
+import { Tenant as ServiceTenant } from '@solutions/core/domain';
+import type { Constructor } from '@solutions/core/main';
 
-import { container } from 'tsyringe'
-import type { Tenant as CentralTenant } from '../entities/tenant'
-import type { TenantsRepository as CentralTenantsRepository } from '../repositories'
+import { container } from 'tsyringe';
+import type { Tenant as CentralTenant } from '../entities/tenant';
+import type { TenantsRepository as CentralTenantsRepository } from '../repositories';
 
 type ControllerTenantSyncronizationHandlingProps = {
-  serviceTenantsRepositoryToken: string
-  centralTenantsRepositoryToken: string
-  callback?: (tenant: CentralTenant) => Promise<void>
-}
+  serviceTenantsRepositoryToken: string;
+  centralTenantsRepositoryToken: string;
+  callback?: (tenant: CentralTenant) => Promise<void>;
+};
 
 export const controllerTenantSyncronizationHandling = ({
   serviceTenantsRepositoryToken,
@@ -19,36 +19,36 @@ export const controllerTenantSyncronizationHandling = ({
   callback,
 }: ControllerTenantSyncronizationHandlingProps) => {
   return <T extends Constructor<Controller>>(target: T) => {
-    const originalHandle = target.prototype.handle
+    const originalHandle = target.prototype.handle;
 
     target.prototype.handle = async function (request: any) {
-      const serviceTenantsRepository = container.resolve<ServiceTenantsRepository>(serviceTenantsRepositoryToken)
-      const centralTenantsRepository = container.resolve<CentralTenantsRepository>(centralTenantsRepositoryToken)
+      const serviceTenantsRepository = container.resolve<ServiceTenantsRepository>(serviceTenantsRepositoryToken);
+      const centralTenantsRepository = container.resolve<CentralTenantsRepository>(centralTenantsRepositoryToken);
 
-      const { tenant } = request
-      const serviceTenant = await serviceTenantsRepository.getByCode({ code: tenant })
+      const { tenant } = request;
+      const serviceTenant = await serviceTenantsRepository.getByCode({ code: tenant });
 
       if (!serviceTenant) {
-        const centralTenant = await centralTenantsRepository.getByCode({ code: tenant })
+        const centralTenant = await centralTenantsRepository.getByCode({ code: tenant });
 
         if (!centralTenant) {
-          return unauthorized()
+          return unauthorized();
         }
 
         const newServiceTenant = ServiceTenant.create({
           code: centralTenant.code,
-        })
+        });
 
-        await serviceTenantsRepository.save(newServiceTenant)
+        await serviceTenantsRepository.save(newServiceTenant);
 
-        await callback?.(centralTenant)
+        await callback?.(centralTenant);
       }
 
-      const httpResponse = await originalHandle.apply(this, [request])
+      const httpResponse = await originalHandle.apply(this, [request]);
 
-      return httpResponse
-    }
+      return httpResponse;
+    };
 
-    return target
-  }
-}
+    return target;
+  };
+};

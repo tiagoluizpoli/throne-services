@@ -1,11 +1,11 @@
-import type { HttpError, HttpErrorResult } from '@/api/errors'
+import type { HttpError, HttpErrorResult } from '@/api/errors';
 
 export class UnprocessableEntityError extends Error implements HttpError {
   constructor(code: string, message: string, uuid?: string) {
-    super(message)
-    this.name = 'UnprocessableEntityError'
-    this.code = code
-    this.uuid = uuid
+    super(message);
+    this.name = 'UnprocessableEntityError';
+    this.code = code;
+    this.uuid = uuid;
   }
 
   toResult = (): HttpErrorResult => {
@@ -13,9 +13,9 @@ export class UnprocessableEntityError extends Error implements HttpError {
       code: this.code,
       message: this.message,
       uuid: this.uuid,
-    }
-  }
+    };
+  };
 
-  code: string
-  uuid?: string
+  code: string;
+  uuid?: string;
 }

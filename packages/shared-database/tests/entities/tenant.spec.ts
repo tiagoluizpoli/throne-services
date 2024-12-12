@@ -1,5 +1,5 @@
-import { faker } from '@faker-js/faker'
-import { Tenant } from '../../src/entities'
+import { faker } from '@faker-js/faker';
+import { Tenant } from '../../src/entities';
 
 describe('Tenant', () => {
   it('should create a tenant', () => {
@@ -9,8 +9,8 @@ describe('Tenant', () => {
       description: faker.company.catchPhrase(),
       apiKey: faker.string.alphanumeric(10),
       createdAt: faker.date.recent(),
-    })
+    });
 
-    expect(tenant).toBeInstanceOf(Tenant)
-  })
-})
+    expect(tenant).toBeInstanceOf(Tenant);
+  });
+});

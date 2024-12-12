@@ -1,1 +1,1 @@
-export * from './timer-helper'
+export * from './timer-helper';

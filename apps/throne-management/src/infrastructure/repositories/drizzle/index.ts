@@ -1,1 +1,1 @@
-export * from './drizzle-integration-repository'
+export * from './drizzle-integration-repository';

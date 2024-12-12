@@ -1,18 +1,18 @@
-import type { Prisma, session_challenge, tenant, tenant_user, user } from '../../../client'
-import { SessionChallenge } from '../../../entities'
-import { TenantMapper } from './tenant-mapper'
-import { UserMapper } from './user-mapper'
+import type { Prisma, session_challenge, tenant, tenant_user, user } from '../../../client';
+import { SessionChallenge } from '../../../entities';
+import { TenantMapper } from './tenant-mapper';
+import { UserMapper } from './user-mapper';
 
 type SessionChallengePersistence = session_challenge & {
-  tenant: tenant
+  tenant: tenant;
   user: user & {
     tenantUser: (tenant_user & {
-      tenant: tenant
-    })[]
-  }
-}
+      tenant: tenant;
+    })[];
+  };
+};
 
-type SessionChallengeCreatePersistence = Prisma.session_challengeCreateInput
+type SessionChallengeCreatePersistence = Prisma.session_challengeCreateInput;
 
 export const SessionChallengeMapper = {
   toDomain: (sessionChallenge: SessionChallengePersistence): SessionChallenge => {
@@ -26,7 +26,7 @@ export const SessionChallengeMapper = {
         createdAt: sessionChallenge.createdAt,
       },
       sessionChallenge.id,
-    )
+    );
   },
 
   toCreatePersistence: (sessionChallenge: SessionChallenge): SessionChallengeCreatePersistence => {
@@ -44,6 +44,6 @@ export const SessionChallengeMapper = {
         },
       },
       createdAt: sessionChallenge.createdAt,
-    }
+    };
   },
-}
+};
