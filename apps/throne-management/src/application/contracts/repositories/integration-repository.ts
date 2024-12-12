@@ -21,9 +21,15 @@ export interface IntegrationRepositoryGetByIdParams {
   id: string;
 }
 
+export interface IntegrationRepositoryDeleteParams {
+  tenantCode: string;
+  id: string;
+}
+
 export interface IntegrationRepository {
   create: (integration: Integration) => Promise<void>;
   update: (integration: Integration) => Promise<void>;
+  delete: (params: IntegrationRepositoryDeleteParams) => Promise<void>;
   // count: (params: IntegrationRepositoryCountParams) => Promise<number>
   // getAll: (params: IntegrationRepositoryGetAllParams) => Promise<IntegrationRepositoryGetAllResult>
   getById: (params: IntegrationRepositoryGetByIdParams) => Promise<Integration | undefined>;

@@ -1,7 +1,11 @@
-import type { IntegrationRepository, IntegrationRepositoryGetByIdParams } from '@/application';
+import type {
+  IntegrationRepository,
+  IntegrationRepositoryDeleteParams,
+  IntegrationRepositoryGetByIdParams,
+} from '@/application';
 import type { Integration } from '@/domain';
 import { db } from '@/main/clients';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, eq, isNotNull, sql } from 'drizzle-orm';
 import { integrationTable, tenantTable } from 'drizzle/schemas';
 import { injectable } from 'tsyringe';
 import { IntegrationMapper } from './mappers';
@@ -38,7 +42,29 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
         targetMethod: integration.targetMethod,
         targetUrl: integration.targetUrl,
       })
-      .where(and(eq(integrationTable.id, integration.id), eq(integrationTable.tenantId, tenantId)));
+      .where(
+        and(
+          eq(integrationTable.id, integration.id),
+          eq(integrationTable.tenantId, tenantId),
+          isNotNull(integrationTable.deletedAt),
+        ),
+      );
+  };
+
+  delete = async (params: IntegrationRepositoryDeleteParams): Promise<void> => {
+    const { id, tenantCode } = params;
+    const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, tenantCode))})`;
+
+    await db
+      .update(integrationTable)
+      .set({ deletedAt: new Date() })
+      .where(
+        and(
+          eq(integrationTable.id, id),
+          eq(integrationTable.tenantId, tenantId),
+          isNotNull(integrationTable.deletedAt),
+        ),
+      );
   };
 
   getById = async (params: IntegrationRepositoryGetByIdParams): Promise<Integration | undefined> => {
@@ -53,6 +79,7 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
             integrationTable.tenantId,
             sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, params.tenantCode))})`,
           ),
+          isNotNull(integrationTable.deletedAt),
         ),
       )
       .limit(1)
