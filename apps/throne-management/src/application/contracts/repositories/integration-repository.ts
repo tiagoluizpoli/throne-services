@@ -9,12 +9,10 @@ export interface IntegrationRepositoryGetAllParams {
   orderDirection: 'desc' | 'asc';
 }
 
-export type IntegrationRepositoryGetAllResult = Integration[];
-
-export interface IntegrationRepositoryCountParams {
-  tenantCode: string;
-  search?: string;
-}
+export type IntegrationRepositoryGetAllResult = {
+  total: number;
+  integrations: Integration[];
+};
 
 export interface IntegrationRepositoryGetByIdParams {
   tenantCode: string;
@@ -30,7 +28,6 @@ export interface IntegrationRepository {
   create: (integration: Integration) => Promise<void>;
   update: (integration: Integration) => Promise<void>;
   delete: (params: IntegrationRepositoryDeleteParams) => Promise<void>;
-  // count: (params: IntegrationRepositoryCountParams) => Promise<number>
-  // getAll: (params: IntegrationRepositoryGetAllParams) => Promise<IntegrationRepositoryGetAllResult>
+  getAll: (params: IntegrationRepositoryGetAllParams) => Promise<IntegrationRepositoryGetAllResult>;
   getById: (params: IntegrationRepositoryGetByIdParams) => Promise<Integration | undefined>;
 }

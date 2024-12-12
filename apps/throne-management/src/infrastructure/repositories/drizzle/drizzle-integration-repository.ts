@@ -1,11 +1,13 @@
 import type {
   IntegrationRepository,
   IntegrationRepositoryDeleteParams,
+  IntegrationRepositoryGetAllParams,
+  IntegrationRepositoryGetAllResult,
   IntegrationRepositoryGetByIdParams,
 } from '@/application';
 import type { Integration } from '@/domain';
 import { db } from '@/main/clients';
-import { and, eq, isNull, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, isNull, like, or, sql } from 'drizzle-orm';
 import { integrationTable, tenantTable } from 'drizzle/schemas';
 import { injectable } from 'tsyringe';
 import { IntegrationMapper } from './mappers';
@@ -13,7 +15,7 @@ import { IntegrationMapper } from './mappers';
 @injectable()
 export class DrizzleIntegrationRepository implements IntegrationRepository {
   create = async (integration: Integration): Promise<void> => {
-    const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, integration.tenantCode))})`;
+    const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, integration.tenantCode)).getSQL()})`;
 
     await db.insert(integrationTable).values({
       id: integration.id,
@@ -30,7 +32,7 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
   };
 
   update = async (integration: Integration): Promise<void> => {
-    const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, integration.tenantCode))})`;
+    const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, integration.tenantCode)).getSQL()})`;
 
     const result = await db
       .update(integrationTable)
@@ -56,7 +58,7 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
 
   delete = async (params: IntegrationRepositoryDeleteParams): Promise<void> => {
     const { id, tenantCode } = params;
-    const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, tenantCode))})`;
+    const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, tenantCode)).getSQL()})`;
 
     await db
       .update(integrationTable)
@@ -65,6 +67,54 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
         and(eq(integrationTable.id, id), eq(integrationTable.tenantId, tenantId), isNull(integrationTable.deletedAt)),
       )
       .execute();
+  };
+
+  getAll = async (params: IntegrationRepositoryGetAllParams): Promise<IntegrationRepositoryGetAllResult> => {
+    const { tenantCode, search, pageIndex, pageSize, orderBy, orderDirection } = params;
+
+    const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, tenantCode)).getSQL()})`;
+
+    const count = await db
+      .select()
+      .from(integrationTable)
+      .leftJoin(tenantTable, eq(tenantTable.id, integrationTable.tenantId))
+      .where(
+        and(
+          isNull(integrationTable.deletedAt),
+          eq(integrationTable.tenantId, tenantId),
+          or(
+            like(sql`lower(${integrationTable.name})`, `%${search?.toLowerCase()}%`),
+            like(sql`lower(${integrationTable.code})`, `%${search?.toLowerCase()}%`),
+          ),
+        ),
+      )
+      .execute();
+
+    const integrationPersistence = await db
+      .select()
+      .from(integrationTable)
+      .leftJoin(tenantTable, eq(tenantTable.id, integrationTable.tenantId))
+      .where(
+        and(
+          isNull(integrationTable.deletedAt),
+          eq(integrationTable.tenantId, tenantId),
+          or(
+            like(sql`lower(${integrationTable.name})`, `%${search?.toLowerCase()}%`),
+            like(sql`lower(${integrationTable.code})`, `%${search?.toLowerCase()}%`),
+          ),
+        ),
+      )
+      .limit(pageSize)
+      .offset(pageIndex * pageSize)
+      .orderBy(orderDirection === 'asc' ? asc(integrationTable[orderBy]) : desc(integrationTable[orderBy]))
+      .execute();
+
+    const result: IntegrationRepositoryGetAllResult = {
+      total: count.length,
+      integrations: IntegrationMapper.toDomainList(integrationPersistence),
+    };
+
+    return result;
   };
 
   getById = async (params: IntegrationRepositoryGetByIdParams): Promise<Integration | undefined> => {

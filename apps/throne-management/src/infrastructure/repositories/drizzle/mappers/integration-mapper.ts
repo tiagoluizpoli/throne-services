@@ -31,4 +31,27 @@ export class IntegrationMapper {
       integration.id,
     );
   };
+
+  static toDomainList = (raw: IntegrationPersistence[]): Integration[] => {
+    if (raw.length === 0 || !raw[0].tenant || !raw[0].integration) {
+      return [];
+    }
+
+    return raw.map((item) => {
+      const { integration, tenant } = item;
+      return Integration.create(
+        {
+          code: integration.code,
+          name: integration.name,
+          description: integration.description ?? undefined,
+          sourceMethod: integration.sourceMethod,
+          targetMethod: integration.targetMethod,
+          targetUrl: integration.targetUrl,
+          createdAt: integration.createdAt,
+          tenantCode: tenant!.code,
+        },
+        integration.id,
+      );
+    });
+  };
 }
