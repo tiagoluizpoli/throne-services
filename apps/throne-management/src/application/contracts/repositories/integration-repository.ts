@@ -18,13 +18,13 @@ export interface IntegrationRepositoryCountParams {
 
 export interface IntegrationRepositoryGetByIdParams {
   tenantCode: string
-  exampleId: string
+  id: string
 }
 
 export interface IntegrationRepository {
   create: (integration: Integration) => Promise<void>
-  // update: (integration: Integration) => Promise<void>
+  update: (integration: Integration) => Promise<void>
   // count: (params: IntegrationRepositoryCountParams) => Promise<number>
   // getAll: (params: IntegrationRepositoryGetAllParams) => Promise<IntegrationRepositoryGetAllResult>
-  // getById: (params: IntegrationRepositoryGetByIdParams) => Promise<Integration | undefined>
+  getById: (params: IntegrationRepositoryGetByIdParams) => Promise<Integration | undefined>
 }

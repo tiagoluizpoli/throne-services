@@ -15,6 +15,13 @@
       "when": 1733783688042,
       "tag": "0001_massive_radioactive_man",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1733969718041,
+      "tag": "0002_freezing_firebird",
+      "breakpoints": true
     }
   ]
 }

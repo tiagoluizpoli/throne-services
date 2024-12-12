@@ -10,3 +10,17 @@ x-throne-tenant: yeshua
   "targetMethod": "GET",
   "targetUrl": "http://localhost:3000/api/v1/integrations"
 }
+
+### Update Integration
+PUT http://localhost:8001/api/v1/integrations/f9902ab2-f90c-4447-8d12-ba821ff7d1ae
+Content-Type: application/json
+x-throne-tenant: yeshua
+
+{
+  "name": "Yeshua",
+  "code": "batata",
+  "description": "test",
+  "sourceMethod": "GET",
+  "targetMethod": "GET",
+  "targetUrl": "http://localhost:3000/api/v1/integrationsd"
+}

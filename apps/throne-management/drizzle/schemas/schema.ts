@@ -34,7 +34,7 @@ export const integrationTable = pgTable(
     targetMethod: MethodEnum('targetMethod').default('GET').notNull(),
     targetUrl: varchar('targetUrl', {
       length: 256,
-    }),
+    }).notNull(),
     description: text('description'),
     createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
   },

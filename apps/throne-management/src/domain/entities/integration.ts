@@ -71,6 +71,18 @@ export class Integration extends Entity<IntegrationProps> {
     return this.props.createdAt
   }
 
+  public update(
+    props: Pick<IntegrationProps, 'code' | 'name' | 'description' | 'sourceMethod' | 'targetMethod' | 'targetUrl'>,
+  ): void {
+    const { code, name, description, sourceMethod, targetMethod, targetUrl } = props
+    this.props.code = code
+    this.props.name = name
+    this.props.description = description
+    this.props.sourceMethod = sourceMethod
+    this.props.targetMethod = targetMethod
+    this.props.targetUrl = targetUrl
+  }
+
   public static create(props: CreateIntegrationProps, id?: string): Integration {
     const example = new Integration(
       {

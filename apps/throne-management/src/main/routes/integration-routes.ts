@@ -7,3 +7,4 @@ export const integrationRouter = Router()
 const { controller } = injectionTokens
 
 integrationRouter.post('/', adaptRoute(controller.createIntegration))
+integrationRouter.put('/:integrationId', adaptRoute(controller.updateIntegration))

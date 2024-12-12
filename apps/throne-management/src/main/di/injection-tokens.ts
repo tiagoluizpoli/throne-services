@@ -10,8 +10,10 @@ export const injectionTokens = {
   },
   application: {
     createIntegration: 'application.create-integration',
+    updateIntegration: 'application.update-integration',
   },
   controller: {
     createIntegration: 'controller.create-integration',
+    updateIntegration: 'controller.update-integration',
   },
 }
