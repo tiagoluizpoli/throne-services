@@ -4,6 +4,6 @@ export const generateUniqueId = (prefix: string): string => {
   const customNanoId = customAlphabet(alphanumeric, 32);
 
   const uniqueId = customNanoId();
-  console.log(uniqueId);
+
   return uniqueId;
 };

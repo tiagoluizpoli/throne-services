@@ -3,8 +3,8 @@ Content-Type: application/json
 x-throne-tenant: yeshua
 
 {
-  "name": "Batata",
-  "code": "batata",
+  "name": "Deus",
+  "code": "deus",
   "description": "test",
   "sourceMethod": "GET",
   "targetMethod": "GET",
@@ -27,5 +27,11 @@ x-throne-tenant: yeshua
 
 ### Delete Integration
 DELETE http://localhost:8001/api/v1/integrations/f9902ab2-f90c-4447-8d12-ba821ff7d1ae
+Content-Type: application/json
+x-throne-tenant: yeshua
+
+
+### Get Integrations
+GET http://localhost:8001/api/v1/integrations?pageIndex=0&pageSize=15
 Content-Type: application/json
 x-throne-tenant: yeshua

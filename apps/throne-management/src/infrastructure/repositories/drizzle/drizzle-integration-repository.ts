@@ -73,37 +73,28 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
     const { tenantCode, search, pageIndex, pageSize, orderBy, orderDirection } = params;
 
     const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, tenantCode)).getSQL()})`;
-
+    const where = and(
+      isNull(integrationTable.deletedAt),
+      eq(integrationTable.tenantId, tenantId),
+      search
+        ? or(
+            like(sql`lower(${integrationTable.name})`, `%${search?.toLowerCase()}%`),
+            like(sql`lower(${integrationTable.code})`, `%${search?.toLowerCase()}%`),
+          )
+        : undefined,
+    );
     const count = await db
       .select()
       .from(integrationTable)
       .leftJoin(tenantTable, eq(tenantTable.id, integrationTable.tenantId))
-      .where(
-        and(
-          isNull(integrationTable.deletedAt),
-          eq(integrationTable.tenantId, tenantId),
-          or(
-            like(sql`lower(${integrationTable.name})`, `%${search?.toLowerCase()}%`),
-            like(sql`lower(${integrationTable.code})`, `%${search?.toLowerCase()}%`),
-          ),
-        ),
-      )
+      .where(where)
       .execute();
 
     const integrationPersistence = await db
       .select()
       .from(integrationTable)
       .leftJoin(tenantTable, eq(tenantTable.id, integrationTable.tenantId))
-      .where(
-        and(
-          isNull(integrationTable.deletedAt),
-          eq(integrationTable.tenantId, tenantId),
-          or(
-            like(sql`lower(${integrationTable.name})`, `%${search?.toLowerCase()}%`),
-            like(sql`lower(${integrationTable.code})`, `%${search?.toLowerCase()}%`),
-          ),
-        ),
-      )
+      .where(where)
       .limit(pageSize)
       .offset(pageIndex * pageSize)
       .orderBy(orderDirection === 'asc' ? asc(integrationTable[orderBy]) : desc(integrationTable[orderBy]))

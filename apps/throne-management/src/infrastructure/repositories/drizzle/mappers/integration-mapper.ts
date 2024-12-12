@@ -13,14 +13,12 @@ export class IntegrationMapper {
     }
 
     const { integration, tenant } = raw[0];
-    // if (!tenant || !integration) {
-    //   return undefined;
-    // }
 
     return Integration.create(
       {
         code: integration.code,
         name: integration.name,
+        uniqueCode: integration.uniqueCode ?? undefined,
         description: integration.description ?? undefined,
         sourceMethod: integration.sourceMethod,
         targetMethod: integration.targetMethod,
@@ -43,6 +41,7 @@ export class IntegrationMapper {
         {
           code: integration.code,
           name: integration.name,
+          uniqueCode: integration.uniqueCode ?? undefined,
           description: integration.description ?? undefined,
           sourceMethod: integration.sourceMethod,
           targetMethod: integration.targetMethod,
