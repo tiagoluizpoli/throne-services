@@ -16,5 +16,6 @@ export const injectionTokens = {
   controller: {
     createIntegration: 'controller.create-integration',
     updateIntegration: 'controller.update-integration',
+    deleteIntegration: 'controller.delete-integration',
   },
 };
