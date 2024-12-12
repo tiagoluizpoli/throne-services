@@ -18,21 +18,9 @@
       "livenessUrl": "http://localhost:8003/api/v1"
     }
   },
-  "favorites.resources": [
-    {
-      "filePath": "packages/core",
-      "group": "Default"
-    }
-  ],
-  "favorites.groups": ["Default", "teste"],
-  "favorites.currentGroup": "Default",
-  "favorites.sortOrder": "ASC",
   "conventionalCommits.scopes": ["user-management", "packages"],
   "conventionalCommits.gitmoji": false,
   "conventionalCommits.promptFooter": false,
-  "[terraform]": {
-    "editor.defaultFormatter": "hashicorp.terraform"
-  },
   "[json]": {
     "editor.defaultFormatter": "biomejs.biome"
   }
