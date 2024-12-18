@@ -1,6 +1,6 @@
 import type { Either, UnexpectedError } from '@solutions/core/domain';
-import type { Integration } from '../entities';
-import type { IntegrationNotFoundError } from '../errors';
+import type { Integration } from '../../entities';
+import type { IntegrationNotFoundError } from '../../errors';
 
 export interface GetIntegrationByIdParams {
   tenantCode: string;

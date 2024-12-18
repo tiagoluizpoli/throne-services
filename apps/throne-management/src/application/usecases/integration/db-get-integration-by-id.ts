@@ -9,7 +9,7 @@ import { injectionTokens } from '@/main/di';
 import { type Either, UnexpectedError, left, right } from '@solutions/core/domain';
 import type { Logger } from '@solutions/logger';
 import { inject, injectable } from 'tsyringe';
-import type { IntegrationRepository } from '../contracts';
+import type { IntegrationRepository } from '../../contracts';
 
 const { infrastructure, global } = injectionTokens;
 

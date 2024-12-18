@@ -4,7 +4,7 @@ import { type Controller, type HttpResponse, mapErrorsByCode, ok } from '@soluti
 import { controllerErrorHandling, controllerValidationHandling } from '@solutions/core/main';
 import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
-import { errorMapper } from '../helpers';
+import { errorMapper } from '../../helpers';
 const { application } = injectionTokens;
 
 const methodEnum = z.enum(['GET', 'POST', 'PUT', 'DELETE']);

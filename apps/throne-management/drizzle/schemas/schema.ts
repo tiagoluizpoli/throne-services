@@ -41,7 +41,6 @@ export const schemaTable = pgTable('schema', {
   integrationId: uuid('integrationId')
     .references(() => integrationTable.id)
     .notNull(),
-  code: varchar('code', { length: 128 }).notNull(),
   name: varchar('name', { length: 128 }).notNull(),
   schema: jsonb('schema').notNull(),
   createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),

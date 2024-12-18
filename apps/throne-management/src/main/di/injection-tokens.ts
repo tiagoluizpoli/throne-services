@@ -7,6 +7,7 @@ export const injectionTokens = {
   },
   infrastructure: {
     integrationRepository: 'infrastructure.integration-repository',
+    mappingRepository: 'infrastructure.mapping-repository',
   },
   application: {
     createIntegration: 'application.create-integration',
@@ -14,6 +15,7 @@ export const injectionTokens = {
     deleteIntegration: 'application.delete-integration',
     getIntegrations: 'application.get-integrations',
     getIntegrationById: 'application.get-integration-by-id',
+    createMapping: 'application.create-mapping',
   },
   controller: {
     createIntegration: 'controller.create-integration',
@@ -21,5 +23,6 @@ export const injectionTokens = {
     deleteIntegration: 'controller.delete-integration',
     getIntegrations: 'controller.get-integrations',
     getIntegrationById: 'controller.get-integration-by-id',
+    createMapping: 'controller.create-mapping',
   },
 };

@@ -10,9 +10,9 @@ interface MappingProps {
   integration: Integration;
   type: MappingType;
   sourceSchemaId: string;
-  sourceSchema: Schema;
+  sourceSchema?: Schema;
   targetSchemaId: string;
-  targetSchema: Schema;
+  targetSchema?: Schema;
   mappedSchema: object;
   createdAt: Date;
 }
@@ -38,8 +38,16 @@ export class Mapping extends Entity<MappingProps> {
     return this.props.sourceSchemaId;
   }
 
+  get sourceSchema(): Schema | undefined {
+    return this.props.sourceSchema;
+  }
+
   get targetSchemaId(): string {
     return this.props.targetSchemaId;
+  }
+
+  get targetSchema(): Schema | undefined {
+    return this.props.targetSchema;
   }
 
   get mappedSchema(): object {

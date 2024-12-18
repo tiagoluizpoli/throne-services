@@ -7,7 +7,7 @@ import {
 import { type Either, UnexpectedError, left, right } from '@solutions/core/domain';
 import type { Logger } from '@solutions/logger';
 import { inject, injectable } from 'tsyringe';
-import type { IntegrationRepository } from '../contracts';
+import type { IntegrationRepository } from '../../contracts';
 
 import { IntegrationAlreadyExistsError } from '@/domain/errors';
 import { injectionTokens } from '@/main/di/injection-tokens';

@@ -5,4 +5,5 @@ export const errorMapper: Record<string, any> = {
   UNEXPECTED_ERROR: (error: UseCaseError) => serverError(error),
   INTEGRATION_ALREADY_EXISTS_ERROR: (error: UseCaseError) => conflict(error),
   INTEGRATION_NOT_FOUND_ERROR: (error: UseCaseError) => conflict(error),
+  MAPPING_ALREADY_EXISTS_ERROR: (error: UseCaseError) => conflict(error),
 };

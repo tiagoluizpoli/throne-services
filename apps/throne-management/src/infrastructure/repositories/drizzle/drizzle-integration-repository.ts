@@ -17,18 +17,21 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
   create = async (integration: Integration): Promise<void> => {
     const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, integration.tenantCode)).getSQL()})`;
 
-    await db.insert(integrationTable).values({
-      id: integration.id,
-      tenantId,
-      name: integration.name,
-      code: integration.code,
-      description: integration.description,
-      uniqueCode: integration.uniqueCode,
-      sourceMethod: integration.sourceMethod,
-      targetMethod: integration.targetMethod,
-      targetUrl: integration.targetUrl,
-      createdAt: integration.createdAt,
-    });
+    await db
+      .insert(integrationTable)
+      .values({
+        id: integration.id,
+        tenantId,
+        name: integration.name,
+        code: integration.code,
+        description: integration.description,
+        uniqueCode: integration.uniqueCode,
+        sourceMethod: integration.sourceMethod,
+        targetMethod: integration.targetMethod,
+        targetUrl: integration.targetUrl,
+        createdAt: integration.createdAt,
+      })
+      .execute();
   };
 
   update = async (integration: Integration): Promise<void> => {

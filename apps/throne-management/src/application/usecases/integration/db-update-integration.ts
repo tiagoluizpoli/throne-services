@@ -6,7 +6,7 @@ import { type Either, UnexpectedError, left, right } from '@solutions/core/domai
 import type { Logger } from '@solutions/logger';
 import type { DatabaseError } from 'pg';
 import { inject, injectable } from 'tsyringe';
-import type { IntegrationRepository } from '../contracts';
+import type { IntegrationRepository } from '../../contracts';
 
 const { global, infrastructure } = injectionTokens;
 

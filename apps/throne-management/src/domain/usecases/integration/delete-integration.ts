@@ -1,5 +1,5 @@
 import type { Either, UnexpectedError } from '@solutions/core/domain';
-import type { IntegrationNotFoundError } from '../errors';
+import type { IntegrationNotFoundError } from '../../errors';
 
 export interface DeleteIntegrationParams {
   tenantCode: string;

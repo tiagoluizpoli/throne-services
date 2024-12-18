@@ -4,7 +4,6 @@ import type { Integration } from './integration';
 interface SchemaProps {
   integrationId: string;
   integration: Integration;
-  code: string;
   name: string;
   schema: object;
   createdAt: Date;
@@ -21,10 +20,6 @@ export class Schema extends Entity<SchemaProps> {
 
   get integration(): Integration {
     return this.props.integration;
-  }
-
-  get code(): string {
-    return this.props.code;
   }
 
   get name(): string {

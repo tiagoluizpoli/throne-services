@@ -4,7 +4,7 @@ import { injectionTokens } from '@/main/di/injection-tokens';
 import { type Either, UnexpectedError, left, right } from '@solutions/core/domain';
 import type { Logger } from '@solutions/logger';
 import { inject, injectable } from 'tsyringe';
-import type { IntegrationRepository } from '../contracts';
+import type { IntegrationRepository } from '../../contracts';
 
 const { global, infrastructure } = injectionTokens;
 

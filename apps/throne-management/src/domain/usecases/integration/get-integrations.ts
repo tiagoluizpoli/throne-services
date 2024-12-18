@@ -1,6 +1,6 @@
 import type { Either, UnexpectedError } from '@solutions/core/domain';
 import type { GetAllParams, GetAllResult } from '@solutions/core/domain/usecases';
-import type { Integration } from '../entities';
+import type { Integration } from '../../entities';
 
 export interface GetIntegrationsParams extends GetAllParams {}
 
