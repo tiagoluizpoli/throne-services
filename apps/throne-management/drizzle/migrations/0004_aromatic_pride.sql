@@ -1,1 +1,0 @@
-ALTER TABLE "schema" DROP COLUMN IF EXISTS "code";

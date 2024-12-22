@@ -41,6 +41,7 @@ export class DrizzleMappingRepository implements MappingRepository {
           type: mapping.type,
           sourceSchemaId: schemaId[0].id,
           targetSchemaId: schemaId[1].id,
+          mappingTemplate: mapping.mappingTemplate,
           mappedSchema: mapping.mappedSchema,
           createdAt: mapping.createdAt,
         })

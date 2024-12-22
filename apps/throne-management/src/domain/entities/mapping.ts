@@ -13,7 +13,8 @@ interface MappingProps {
   sourceSchema?: Schema;
   targetSchemaId: string;
   targetSchema?: Schema;
-  mappedSchema: object;
+  mappingTemplate?: object;
+  mappedSchema?: string;
   createdAt: Date;
 }
 
@@ -50,7 +51,11 @@ export class Mapping extends Entity<MappingProps> {
     return this.props.targetSchema;
   }
 
-  get mappedSchema(): object {
+  get mappingTemplate(): object | undefined {
+    return this.props.mappingTemplate;
+  }
+
+  get mappedSchema(): string | undefined {
     return this.props.mappedSchema;
   }
 

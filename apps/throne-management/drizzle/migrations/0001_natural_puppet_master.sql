@@ -1,0 +1,1 @@
+ALTER TABLE "mapping" ALTER COLUMN "mappingTemplate" DROP NOT NULL;

@@ -1,5 +1,5 @@
 {
-  "id": "cc0c77dd-db7b-4e99-89b6-75dafda338e6",
+  "id": "6dbc8ce1-e36a-4c71-80b7-e5bf3e96239a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -122,7 +122,7 @@
           "name": "targetUrl",
           "type": "varchar(256)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "description": {
           "name": "description",
@@ -136,6 +136,12 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "deletedAt": {
+          "name": "deletedAt",
+          "type": "timestamp (3)",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -151,7 +157,13 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "unique_integrationCode_tenantCode_sourceMethod_targetMethod_targetUrl": {
+          "name": "unique_integrationCode_tenantCode_sourceMethod_targetMethod_targetUrl",
+          "nullsNotDistinct": false,
+          "columns": ["tenantId", "code"]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -192,11 +204,17 @@
           "primaryKey": false,
           "notNull": true
         },
-        "mappedSchema": {
-          "name": "mappedSchema",
+        "mappingTemplate": {
+          "name": "mappingTemplate",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": true
+        },
+        "jsonataSchema": {
+          "name": "jsonataSchema",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "createdAt": {
           "name": "createdAt",
@@ -262,12 +280,6 @@
         "integrationId": {
           "name": "integrationId",
           "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "code": {
-          "name": "code",
-          "type": "varchar(128)",
           "primaryKey": false,
           "notNull": true
         },

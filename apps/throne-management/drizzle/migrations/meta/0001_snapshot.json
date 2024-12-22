@@ -1,6 +1,6 @@
 {
-  "id": "b2ab994a-5728-4551-91fe-a440d711be17",
-  "prevId": "cc0c77dd-db7b-4e99-89b6-75dafda338e6",
+  "id": "ccc79e08-657a-42ac-89da-e2bfcc3a0489",
+  "prevId": "6dbc8ce1-e36a-4c71-80b7-e5bf3e96239a",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -122,7 +122,7 @@
           "name": "targetUrl",
           "type": "varchar(256)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "description": {
           "name": "description",
@@ -136,6 +136,12 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "deletedAt": {
+          "name": "deletedAt",
+          "type": "timestamp (3)",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -198,11 +204,17 @@
           "primaryKey": false,
           "notNull": true
         },
-        "mappedSchema": {
-          "name": "mappedSchema",
+        "mappingTemplate": {
+          "name": "mappingTemplate",
           "type": "jsonb",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "jsonataSchema": {
+          "name": "jsonataSchema",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "createdAt": {
           "name": "createdAt",
@@ -268,12 +280,6 @@
         "integrationId": {
           "name": "integrationId",
           "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "code": {
-          "name": "code",
-          "type": "varchar(128)",
           "primaryKey": false,
           "notNull": true
         },

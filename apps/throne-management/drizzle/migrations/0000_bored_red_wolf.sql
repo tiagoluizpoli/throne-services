@@ -18,9 +18,11 @@ CREATE TABLE IF NOT EXISTS "integration" (
 	"uniqueCode" varchar(256),
 	"sourceMethod" "Method" DEFAULT 'GET' NOT NULL,
 	"targetMethod" "Method" DEFAULT 'GET' NOT NULL,
-	"targetUrl" varchar(256),
+	"targetUrl" varchar(256) NOT NULL,
 	"description" text,
-	"createdAt" timestamp (3) DEFAULT now() NOT NULL
+	"createdAt" timestamp (3) DEFAULT now() NOT NULL,
+	"deletedAt" timestamp (3),
+	CONSTRAINT "unique_integrationCode_tenantCode_sourceMethod_targetMethod_targetUrl" UNIQUE("tenantId","code")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "mapping" (
@@ -29,7 +31,8 @@ CREATE TABLE IF NOT EXISTS "mapping" (
 	"type" "MappingType" NOT NULL,
 	"sourceSchemaId" uuid NOT NULL,
 	"targetSchemaId" uuid NOT NULL,
-	"mappedSchema" jsonb NOT NULL,
+	"mappingTemplate" jsonb NOT NULL,
+	"jsonataSchema" text,
 	"createdAt" timestamp (3) DEFAULT now() NOT NULL,
 	CONSTRAINT "unique_integrationId_type" UNIQUE("integrationId","type")
 );
@@ -37,7 +40,6 @@ CREATE TABLE IF NOT EXISTS "mapping" (
 CREATE TABLE IF NOT EXISTS "schema" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"integrationId" uuid NOT NULL,
-	"code" varchar(128) NOT NULL,
 	"name" varchar(128) NOT NULL,
 	"schema" jsonb NOT NULL,
 	"createdAt" timestamp (3) DEFAULT now() NOT NULL

@@ -12,16 +12,21 @@ import { type Either, UnexpectedError, left, right } from '@solutions/core/domai
 import type { Logger } from '@solutions/logger';
 import type { DatabaseError } from 'pg';
 import { inject, injectable } from 'tsyringe';
+import { SchemaParser } from './helpers';
 
 const { global, infrastructure } = injectionTokens;
 
 @injectable()
 export class DbCreateMapping implements CreateMapping {
+  private readonly schemaParser: SchemaParser;
+
   constructor(
     @inject(infrastructure.integrationRepository) private readonly integrationRepository: IntegrationRepository,
     @inject(infrastructure.mappingRepository) private readonly mappingRepository: MappingRepository,
     @inject(global.logger) private readonly logger: Logger,
-  ) {}
+  ) {
+    this.schemaParser = new SchemaParser();
+  }
 
   execute = async (params: CreateMappingParams): Promise<Either<CreateMappingPossibleErrors, void>> => {
     try {
@@ -60,9 +65,6 @@ export class DbCreateMapping implements CreateMapping {
         sourceSchema,
         targetSchemaId: targetSchema.id,
         targetSchema,
-        mappedSchema: {
-          fakeSchema: 'fake',
-        },
         createdAt: new Date(),
       });
 

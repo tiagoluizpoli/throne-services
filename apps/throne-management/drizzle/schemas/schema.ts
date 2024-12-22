@@ -62,7 +62,8 @@ export const mappingTable = pgTable(
     targetSchemaId: uuid('targetSchemaId')
       .references(() => schemaTable.id)
       .notNull(),
-    mappedSchema: jsonb('mappedSchema').notNull(),
+    mappingTemplate: jsonb('mappingTemplate'),
+    mappedSchema: text('jsonataSchema'),
     createdAt: timestamp('createdAt', { precision: 3 }).notNull().defaultNow(),
   },
   (table) => [unique('unique_integrationId_type').on(table.integrationId, table.type)],
