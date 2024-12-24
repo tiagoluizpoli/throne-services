@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm';
 import { integer, jsonb, pgEnum, pgTable, text, timestamp, unique, uuid, varchar } from 'drizzle-orm/pg-core';
 
 export const tenantTable = pgTable('tenant', {
@@ -81,3 +82,26 @@ export const executionTable = pgTable('execution', {
   status: executionStatusEnum('status').default('processing').notNull(),
   error: jsonb('error'),
 });
+
+export const integrationRelations = relations(integrationTable, ({ one, many }) => ({
+  tenant: one(tenantTable, {
+    fields: [integrationTable.tenantId],
+    references: [tenantTable.id],
+  }),
+  mapping: many(mappingTable),
+}));
+
+export const mappingRelations = relations(mappingTable, ({ one }) => ({
+  integration: one(integrationTable, {
+    fields: [mappingTable.integrationId],
+    references: [integrationTable.id],
+  }),
+  sourceSchema: one(schemaTable, {
+    fields: [mappingTable.sourceSchemaId],
+    references: [schemaTable.id],
+  }),
+  targetSchema: one(schemaTable, {
+    fields: [mappingTable.targetSchemaId],
+    references: [schemaTable.id],
+  }),
+}));
