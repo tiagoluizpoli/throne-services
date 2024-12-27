@@ -5,6 +5,7 @@ import {
   DbGetIntegrationById,
   DbGetIntegrations,
   DbUpdateIntegration,
+  DbUpdateMapping,
 } from '@/application';
 import type {
   CreateIntegration,
@@ -13,6 +14,7 @@ import type {
   GetIntegrationById,
   GetIntegrations,
   UpdateIntegration,
+  UpdateMapping,
 } from '@/domain';
 
 import { registerInjection } from '../helpers';
@@ -27,4 +29,5 @@ export const registerApplicationInjections = () => {
   registerInjection<GetIntegrations>(application.getIntegrations, DbGetIntegrations);
   registerInjection<GetIntegrationById>(application.getIntegrationById, DbGetIntegrationById);
   registerInjection<CreateMapping>(application.createMapping, DbCreateMapping);
+  registerInjection<UpdateMapping>(application.updateMapping, DbUpdateMapping);
 };

@@ -3,8 +3,8 @@ Content-Type: application/json
 x-throne-tenant: yeshua
 
 {
-  "name": "Yeshua",
-  "code": "yeshua",
+  "name": "Yahweh",
+  "code": "yahweh",
   "description": "Não tem",
   "sourceMethod": "GET",
   "targetMethod": "GET",
@@ -12,14 +12,14 @@ x-throne-tenant: yeshua
 }
 
 ### Update Integration
-PUT http://localhost:8001/api/v1/integrations/f9902ab2-f90c-4447-8d12-ba821ff7d1ae
+PUT http://localhost:8001/api/v1/integrations/fa089cf6-a2ac-4919-a5ca-512b8fe36ded
 Content-Type: application/json
 x-throne-tenant: yeshua
 
 {
-  "name": "Yeshua",
-  "code": "batata",
-  "description": "test",
+  "name": "Yahweh",
+  "code": "yahweh",
+  "description": "test 2",
   "sourceMethod": "GET",
   "targetMethod": "GET",
   "targetUrl": "http://localhost:3000/api/v1/integrationsd"
@@ -37,6 +37,6 @@ Content-Type: application/json
 x-throne-tenant: yeshua
 
 ### Get Integration by Id
-GET http://localhost:8001/api/v1/integrations/fc43865e-096b-4bc3-9bbf-eb573b24bf23
+GET http://localhost:8001/api/v1/integrations/6ba2371f-4774-4fc8-ae7e-7688db962b1a
 Content-Type: application/json
 x-throne-tenant: yeshua

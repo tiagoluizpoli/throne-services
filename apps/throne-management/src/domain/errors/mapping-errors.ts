@@ -10,3 +10,14 @@ export class MappingAlreadyExistsError extends Error implements UseCaseError {
   code: string;
   uuid?: string;
 }
+
+export class MappingNotFoundError extends Error implements UseCaseError {
+  constructor() {
+    super('Mapping not found');
+    this.name = 'MappingNotFoundError';
+    this.code = 'MAPPING_NOT_FOUND_ERROR';
+  }
+
+  code: string;
+  uuid?: string;
+}

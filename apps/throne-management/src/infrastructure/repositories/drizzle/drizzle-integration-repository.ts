@@ -76,6 +76,7 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
     const { tenantCode, search, pageIndex, pageSize, orderBy, orderDirection } = params;
 
     const tenantId = sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, tenantCode)).getSQL()})`;
+
     const where = and(
       isNull(integrationTable.deletedAt),
       eq(integrationTable.tenantId, tenantId),
@@ -86,6 +87,7 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
           )
         : undefined,
     );
+
     const count = await db
       .select()
       .from(integrationTable)
@@ -112,22 +114,25 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
   };
 
   getById = async (params: IntegrationRepositoryGetByIdParams): Promise<Integration | undefined> => {
-    const result = await db
-      .select()
-      .from(integrationTable)
-      .leftJoin(tenantTable, eq(tenantTable.id, integrationTable.tenantId))
-      .where(
-        and(
-          isNull(integrationTable.deletedAt),
-          eq(integrationTable.id, params.id),
-          eq(
-            integrationTable.tenantId,
-            sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, params.tenantCode))})`,
-          ),
+    const result = await db.query.integrationTable.findFirst({
+      with: {
+        tenant: true,
+        mapping: {
+          with: {
+            sourceSchema: true,
+            targetSchema: true,
+          },
+        },
+      },
+      where: and(
+        isNull(integrationTable.deletedAt),
+        eq(integrationTable.id, params.id),
+        eq(
+          integrationTable.tenantId,
+          sql`(${db.select({ id: tenantTable.id }).from(tenantTable).where(eq(tenantTable.code, params.tenantCode))})`,
         ),
-      )
-      .limit(1)
-      .execute();
+      ),
+    });
 
     return IntegrationMapper.toDomain(result);
   };

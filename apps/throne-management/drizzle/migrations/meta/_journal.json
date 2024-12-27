@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1734834810714,
-      "tag": "0000_bored_red_wolf",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1734884934605,
-      "tag": "0001_natural_puppet_master",
+      "when": 1735277031551,
+      "tag": "0000_sticky_magik",
       "breakpoints": true
     }
   ]

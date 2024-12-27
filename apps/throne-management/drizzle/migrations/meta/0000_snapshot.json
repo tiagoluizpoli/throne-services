@@ -1,5 +1,5 @@
 {
-  "id": "6dbc8ce1-e36a-4c71-80b7-e5bf3e96239a",
+  "id": "ce4095a2-1544-4301-afb2-1f90b49771f4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -208,7 +208,7 @@
           "name": "mappingTemplate",
           "type": "jsonb",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "jsonataSchema": {
           "name": "jsonataSchema",

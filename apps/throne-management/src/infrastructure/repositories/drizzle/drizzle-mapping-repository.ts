@@ -1,8 +1,10 @@
-import type { MappingRepository } from '@/application';
+import type { GetByIdMappingParams, MappingRepository } from '@/application';
 import type { Mapping } from '@/domain';
 import { db } from '@/main/clients';
+import { and, eq } from 'drizzle-orm';
 
 import { mappingTable, schemaTable } from 'drizzle/schemas';
+import { MappingMapper } from './mappers';
 
 export class DrizzleMappingRepository implements MappingRepository {
   create = async (mapping: Mapping): Promise<void> => {
@@ -47,7 +49,61 @@ export class DrizzleMappingRepository implements MappingRepository {
         })
         .execute();
     });
+  };
 
-    console.log({ result });
+  update = async (mapping: Mapping): Promise<void> => {
+    const { sourceSchema, targetSchema } = mapping;
+
+    const result = await db.transaction(async (tx) => {
+      if (sourceSchema) {
+        await tx
+          .update(schemaTable)
+          .set({ name: sourceSchema.name, schema: sourceSchema.schema })
+          .where(and(eq(schemaTable.integrationId, sourceSchema.integrationId), eq(schemaTable.id, sourceSchema.id)))
+          .execute();
+      }
+
+      if (targetSchema) {
+        await tx
+          .update(schemaTable)
+          .set({ name: targetSchema.name, schema: targetSchema.schema })
+          .where(and(eq(schemaTable.integrationId, targetSchema.integrationId), eq(schemaTable.id, targetSchema.id)))
+          .execute();
+      }
+
+      if (mapping.mappingTemplate || mapping.mappedSchema) {
+        await tx
+          .update(mappingTable)
+          .set({
+            mappingTemplate: mapping.mappingTemplate,
+            mappedSchema: mapping.mappedSchema,
+          })
+          .where(and(eq(mappingTable.integrationId, mapping.integrationId), eq(mappingTable.id, mapping.id)))
+          .execute();
+      }
+    });
+  };
+
+  getById = async (params: GetByIdMappingParams): Promise<Mapping | undefined> => {
+    const { integrationId, mappingId, tenantCode } = params;
+    const result = await db.query.mappingTable.findFirst({
+      with: {
+        integration: {
+          with: {
+            tenant: true,
+          },
+        },
+        sourceSchema: true,
+        targetSchema: true,
+      },
+      where: (mappingTable, { eq, and }) =>
+        and(eq(mappingTable.id, mappingId), eq(mappingTable.integrationId, integrationId)),
+    });
+
+    if (!result) {
+      return undefined;
+    }
+
+    return MappingMapper.toDomain(result);
   };
 }

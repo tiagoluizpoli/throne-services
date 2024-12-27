@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS "mapping" (
 	"type" "MappingType" NOT NULL,
 	"sourceSchemaId" uuid NOT NULL,
 	"targetSchemaId" uuid NOT NULL,
-	"mappingTemplate" jsonb NOT NULL,
+	"mappingTemplate" jsonb,
 	"jsonataSchema" text,
 	"createdAt" timestamp (3) DEFAULT now() NOT NULL,
 	CONSTRAINT "unique_integrationId_type" UNIQUE("integrationId","type")

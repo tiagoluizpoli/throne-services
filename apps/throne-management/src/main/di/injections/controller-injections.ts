@@ -5,6 +5,7 @@ import {
   GetIntegrationByIdController,
   GetIntegrationsController,
   UpdateIntegrationController,
+  UpdateMappingController,
 } from '@/api';
 import type { Controller } from '@solutions/core/api';
 import { registerInjection } from '../helpers';
@@ -19,4 +20,5 @@ export const registerControllerInjections = () => {
   registerInjection<Controller>(controller.getIntegrations, GetIntegrationsController);
   registerInjection<Controller>(controller.getIntegrationById, GetIntegrationByIdController);
   registerInjection<Controller>(controller.createMapping, CreateMappingController);
+  registerInjection<Controller>(controller.updateMapping, UpdateMappingController);
 };

@@ -1,10 +1,13 @@
 import { adaptRoute } from '@solutions/core/main';
 import { Router } from 'express';
 import { injectionTokens } from '../di/injection-tokens';
+import { mappingRouter } from './mapping-routes';
+
+const { controller } = injectionTokens;
 
 export const integrationRouter = Router();
 
-const { controller } = injectionTokens;
+integrationRouter.use('/:integrationId/mappings', mappingRouter);
 
 integrationRouter.post('/', adaptRoute(controller.createIntegration));
 integrationRouter.put('/:integrationId', adaptRoute(controller.updateIntegration));

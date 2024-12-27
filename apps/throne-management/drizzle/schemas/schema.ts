@@ -91,6 +91,10 @@ export const integrationRelations = relations(integrationTable, ({ one, many }) 
   mapping: many(mappingTable),
 }));
 
+export const tenantRelations = relations(tenantTable, ({ many }) => ({
+  integration: many(integrationTable),
+}));
+
 export const mappingRelations = relations(mappingTable, ({ one }) => ({
   integration: one(integrationTable, {
     fields: [mappingTable.integrationId],
