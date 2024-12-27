@@ -3,7 +3,7 @@ Content-Type: application/json
 x-throne-tenant: yeshua
 
 {
-  "type": "input",
+  "type": "output",
   "sourceSchemaProps": {
     "name": "source schema",
     "schema": {
@@ -14,6 +14,17 @@ x-throne-tenant: yeshua
         },
         "age": {
           "type": "number"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "street": {
+              "type": "string"
+            },
+            "number": {
+              "type": "number"
+            }
+          }
         }
       }
     }
@@ -28,6 +39,17 @@ x-throne-tenant: yeshua
         },
         "age": {
           "type": "number"
+        },
+        "endereco": {
+          "type": "object",
+          "properties": {
+            "rua": {
+              "type": "string"
+            },
+            "numero": {
+              "type": "number"
+            }
+          }
         }
       }
     }
@@ -68,6 +90,39 @@ x-throne-tenant: yeshua
         },
         "age": {
           "type": "number"
+        }
+      }
+    }
+  }
+}
+
+
+### Update Mapping Template
+PUT http://localhost:8001/api/v1/integrations/6ba2371f-4774-4fc8-ae7e-7688db962b1a/mappings/8a458d8d-8862-4ae1-97f8-014a78bd375a/template
+Content-Type: application/json
+x-throne-tenant: yeshua
+
+{
+  "mappingTemplate": {
+    "name": {
+      "type": "string",
+      "sourcePath": ["name"]
+    },
+    "age": {
+      "type": "number",
+      "sourcePath": ["age"]
+    },
+    "endereco": {
+      "type": "object",
+      "sourcePath": ["endereco"],
+      "properties": {
+        "rua": {
+          "type": "string",
+          "sourcePath": ["endereco", "rua"]
+        },
+        "numero": {
+          "type": "number",
+          "sourcePath": ["endereco", "numero"]
         }
       }
     }

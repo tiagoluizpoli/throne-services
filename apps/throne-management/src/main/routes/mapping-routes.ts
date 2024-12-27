@@ -10,3 +10,4 @@ const { controller } = injectionTokens;
 
 mappingRouter.post('/', adaptRoute(controller.createMapping));
 mappingRouter.put('/:mappingId', adaptRoute(controller.updateMapping));
+mappingRouter.put('/:mappingId/template', adaptRoute(controller.updateMappingTemplate));

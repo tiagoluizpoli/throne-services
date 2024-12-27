@@ -17,6 +17,7 @@ export const injectionTokens = {
     getIntegrationById: 'application.get-integration-by-id',
     createMapping: 'application.create-mapping',
     updateMapping: 'application.update-mapping',
+    updateMappingTemplate: 'application.update-mapping-template',
   },
   controller: {
     createIntegration: 'controller.create-integration',
@@ -26,5 +27,6 @@ export const injectionTokens = {
     getIntegrationById: 'controller.get-integration-by-id',
     createMapping: 'controller.create-mapping',
     updateMapping: 'controller.update-mapping',
+    updateMappingTemplate: 'controller.update-mapping-template',
   },
 };

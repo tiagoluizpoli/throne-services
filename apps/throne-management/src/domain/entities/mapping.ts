@@ -63,6 +63,11 @@ export class Mapping extends Entity<MappingProps> {
     return this.props.createdAt;
   }
 
+  update(props: Pick<MappingProps, 'mappingTemplate' | 'mappedSchema'>): void {
+    this.props.mappingTemplate = props.mappingTemplate;
+    this.props.mappedSchema = props.mappedSchema;
+  }
+
   public static create(props: MappingProps, id?: string): Mapping {
     const mapping = new Mapping(props, id);
     return mapping;
