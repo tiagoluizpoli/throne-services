@@ -1,4 +1,4 @@
-import type { Tenant } from '@/domain/entities';
+import type { Mapping, Tenant } from '@/domain/entities';
 import { Entity } from '@solutions/core/domain';
 import { generateUniqueId } from '../helpers';
 
@@ -15,6 +15,7 @@ interface IntegrationProps {
   sourceMethod: Method;
   targetMethod: Method;
   targetUrl: string;
+  mappings?: Mapping[];
   createdAt: Date;
 }
 
@@ -22,7 +23,7 @@ type CreateIntegrationMandatoryProps = Pick<
   IntegrationProps,
   'tenantCode' | 'code' | 'name' | 'description' | 'sourceMethod' | 'targetMethod' | 'targetUrl'
 >;
-type CreateIntegrationOptionalProps = Partial<Pick<IntegrationProps, 'uniqueCode' | 'createdAt'>>;
+type CreateIntegrationOptionalProps = Partial<Pick<IntegrationProps, 'uniqueCode' | 'mappings' | 'createdAt'>>;
 
 type CreateIntegrationProps = CreateIntegrationMandatoryProps & CreateIntegrationOptionalProps;
 
@@ -65,6 +66,10 @@ export class Integration extends Entity<IntegrationProps> {
 
   get description(): string | undefined {
     return this.props.description;
+  }
+
+  get mappings(): Mapping[] | undefined {
+    return this.props.mappings;
   }
 
   get createdAt(): Date {

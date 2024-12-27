@@ -40,6 +40,25 @@ export class GetIntegrationByIdController implements Controller {
       targetMethod: integration.targetMethod,
       targetUrl: integration.targetUrl,
       uniqueCode: integration.uniqueCode,
+      mappings: integration.mappings?.map((m) => ({
+        id: m.id,
+        type: m.type,
+        sourceSchema: {
+          id: m.sourceSchemaId,
+          name: m.sourceSchema?.name,
+          schema: m.sourceSchema?.schema,
+          createdAt: m.sourceSchema?.createdAt,
+        },
+        targetSchema: {
+          id: m.targetSchemaId,
+          name: m.targetSchema?.name,
+          schema: m.targetSchema?.schema,
+          createdAt: m.targetSchema?.createdAt,
+        },
+
+        targetSchemaId: m.targetSchemaId,
+        createdAt: m.createdAt,
+      })),
       description: integration.description,
       createdAt: integration.createdAt,
     };

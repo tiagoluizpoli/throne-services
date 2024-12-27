@@ -41,6 +41,7 @@ export class DbGetIntegrationById implements GetIntegrationById {
 
       return right(integration);
     } catch (error) {
+      console.error({ error });
       this.logger.error('DbGetIntegrationById.execute :: an error has occurred', { error: JSON.stringify(error) });
 
       return left(new UnexpectedError());

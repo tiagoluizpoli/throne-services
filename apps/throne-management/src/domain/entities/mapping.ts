@@ -7,7 +7,7 @@ export type MappingType = (typeof MappingTypes)[number];
 
 interface MappingProps {
   integrationId: string;
-  integration: Integration;
+  integration?: Integration;
   type: MappingType;
   sourceSchemaId: string;
   sourceSchema?: Schema;
@@ -27,7 +27,7 @@ export class Mapping extends Entity<MappingProps> {
     return this.props.integrationId;
   }
 
-  get integration(): Integration {
+  get integration(): Integration | undefined {
     return this.props.integration;
   }
 

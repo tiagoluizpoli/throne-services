@@ -3,7 +3,7 @@ import type { Integration } from './integration';
 
 interface SchemaProps {
   integrationId: string;
-  integration: Integration;
+  integration?: Integration;
   name: string;
   schema: object;
   createdAt: Date;
@@ -18,7 +18,7 @@ export class Schema extends Entity<SchemaProps> {
     return this.props.integrationId;
   }
 
-  get integration(): Integration {
+  get integration(): Integration | undefined {
     return this.props.integration;
   }
 
@@ -32,6 +32,11 @@ export class Schema extends Entity<SchemaProps> {
 
   get createdAt(): Date {
     return this.props.createdAt;
+  }
+
+  public update({ name, schema }: Pick<SchemaProps, 'name' | 'schema'>): void {
+    this.props.name = name;
+    this.props.schema = schema;
   }
 
   public static create(props: SchemaProps, id?: string): Schema {
