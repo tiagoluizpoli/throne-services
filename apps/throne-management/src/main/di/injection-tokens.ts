@@ -18,6 +18,7 @@ export const injectionTokens = {
     createMapping: 'application.create-mapping',
     updateMapping: 'application.update-mapping',
     updateMappingTemplate: 'application.update-mapping-template',
+    deleteMapping: 'application.delete-mapping',
   },
   controller: {
     createIntegration: 'controller.create-integration',
@@ -28,5 +29,6 @@ export const injectionTokens = {
     createMapping: 'controller.create-mapping',
     updateMapping: 'controller.update-mapping',
     updateMappingTemplate: 'controller.update-mapping-template',
+    deleteMapping: 'controller.delete-mapping',
   },
 };
