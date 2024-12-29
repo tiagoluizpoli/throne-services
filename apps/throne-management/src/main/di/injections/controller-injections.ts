@@ -2,6 +2,7 @@ import {
   CreateIntegrationController,
   CreateMappingController,
   DeleteIntegrationController,
+  DeleteMappingController,
   GetIntegrationByIdController,
   GetIntegrationsController,
   UpdateIntegrationController,
@@ -20,7 +21,9 @@ export const registerControllerInjections = () => {
   registerInjection<Controller>(controller.deleteIntegration, DeleteIntegrationController);
   registerInjection<Controller>(controller.getIntegrations, GetIntegrationsController);
   registerInjection<Controller>(controller.getIntegrationById, GetIntegrationByIdController);
+
   registerInjection<Controller>(controller.createMapping, CreateMappingController);
   registerInjection<Controller>(controller.updateMapping, UpdateMappingController);
   registerInjection<Controller>(controller.updateMappingTemplate, UpdateMappingTemplateController);
+  registerInjection<Controller>(controller.deleteMapping, DeleteMappingController);
 };
