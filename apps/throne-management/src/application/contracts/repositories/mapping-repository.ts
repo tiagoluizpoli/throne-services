@@ -6,8 +6,15 @@ export interface GetByIdMappingParams {
   mappingId: string;
 }
 
+export interface DeleteMappingParams {
+  tenantCode: string;
+  integrationId: string;
+  mappingId: string;
+}
+
 export interface MappingRepository {
   create: (mapping: Mapping) => Promise<void>;
   update: (mapping: Mapping) => Promise<void>;
   getById: (params: GetByIdMappingParams) => Promise<Mapping | undefined>;
+  delete: (params: DeleteMappingParams) => Promise<void>;
 }

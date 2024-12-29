@@ -1,7 +1,7 @@
-import type { GetByIdMappingParams, MappingRepository } from '@/application';
+import type { DeleteMappingParams, GetByIdMappingParams, MappingRepository } from '@/application';
 import type { Mapping } from '@/domain';
 import { db } from '@/main/clients';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 
 import { mappingTable, schemaTable } from 'drizzle/schemas';
 import { MappingMapper } from './mappers';
@@ -105,5 +105,23 @@ export class DrizzleMappingRepository implements MappingRepository {
     }
 
     return MappingMapper.toDomain(result);
+  };
+
+  delete = async (params: DeleteMappingParams): Promise<void> => {
+    const { integrationId, mappingId } = params;
+
+    await db.transaction(async (tx) => {
+      const schemasToDelete = await tx
+        .delete(mappingTable)
+        .where(and(eq(mappingTable.integrationId, integrationId), eq(mappingTable.id, mappingId)))
+        .returning({ sourceSchemaId: mappingTable.sourceSchemaId, targetSchemaId: mappingTable.targetSchemaId });
+
+      const schemas = [schemasToDelete[0].sourceSchemaId, schemasToDelete[0].targetSchemaId];
+
+      await tx
+        .delete(schemaTable)
+        .where(and(eq(schemaTable.integrationId, integrationId), inArray(schemaTable.id, schemas)))
+        .execute();
+    });
   };
 }
