@@ -1,5 +1,5 @@
 import type { DeleteMapping, DeleteMappingParams, DeleteMappingPossibleErrors } from '@/domain';
-import { type Either, UnexpectedError, left, right } from '@solutions/core/domain';
+import { type Either, UnexpectedError, type UseCaseError, left, right } from '@solutions/core/domain';
 
 import type { MappingRepository } from '@/application/contracts';
 import { injectionTokens } from '@/main/di/injection-tokens';
@@ -23,7 +23,14 @@ export class DbDeleteMapping implements DeleteMapping {
 
       return right(undefined);
     } catch (error) {
+      const useCaseError: UseCaseError = error as UseCaseError;
+
+      if (useCaseError.code === 'MAPPING_NOT_FOUND_ERROR') {
+        return left(useCaseError);
+      }
+
       this.logger.error('DbDeleteMapping.execute :: an error has occurred', { error: JSON.stringify(error) });
+
       return left(new UnexpectedError());
     }
   };

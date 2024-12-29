@@ -3,6 +3,7 @@ import type { Mapping } from '@/domain';
 import { db } from '@/main/clients';
 import { and, eq, inArray } from 'drizzle-orm';
 
+import { MappingNotFoundError } from '@/domain/errors';
 import { mappingTable, schemaTable } from 'drizzle/schemas';
 import { MappingMapper } from './mappers';
 
@@ -115,6 +116,10 @@ export class DrizzleMappingRepository implements MappingRepository {
         .delete(mappingTable)
         .where(and(eq(mappingTable.integrationId, integrationId), eq(mappingTable.id, mappingId)))
         .returning({ sourceSchemaId: mappingTable.sourceSchemaId, targetSchemaId: mappingTable.targetSchemaId });
+
+      if (schemasToDelete.length === 0) {
+        throw new MappingNotFoundError();
+      }
 
       const schemas = [schemasToDelete[0].sourceSchemaId, schemasToDelete[0].targetSchemaId];
 
