@@ -4,11 +4,12 @@ import type {
   IntegrationRepositoryGetAllParams,
   IntegrationRepositoryGetAllResult,
   IntegrationRepositoryGetByIdParams,
+  IntegrationRepositoryGetExecutionByIdResult,
 } from '@/application';
 import type { Integration } from '@/domain';
 import { db } from '@/main/clients';
 import { and, asc, desc, eq, isNull, like, or, sql } from 'drizzle-orm';
-import { integrationTable, tenantTable } from 'drizzle/schemas';
+import { integrationTable, mappingTable, tenantTable } from 'drizzle/schemas';
 import { injectable } from 'tsyringe';
 import { IntegrationMapper } from './mappers';
 
@@ -135,5 +136,17 @@ export class DrizzleIntegrationRepository implements IntegrationRepository {
     });
 
     return IntegrationMapper.toDomain(result);
+  };
+
+  getExecutionById = async (
+    params: IntegrationRepositoryGetByIdParams,
+  ): Promise<IntegrationRepositoryGetExecutionByIdResult | undefined> => {
+    const result = await db.select().from(mappingTable).where(eq(mappingTable.integrationId, params.id)).execute();
+    console.log(result);
+
+    return {
+      requestMappedSchema: 'request',
+      responseMappedSchema: 'response',
+    };
   };
 }
